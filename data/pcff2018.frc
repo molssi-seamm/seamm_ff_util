@@ -5522,6 +5522,15 @@
 
 #templates pcff
 {
+    "ar": {
+        "2018.08.02": {
+            "smarts": [
+                "[Ar:1]"
+            ],
+            "description": "Argon atom",
+            "overrides": []
+        }
+    },
     "c": {
         "2017.12.15": {
             "smarts": [
