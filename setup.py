@@ -14,7 +14,7 @@ with open('HISTORY.rst') as history_file:
 requirements = [
     'pillow',
     'logging',
-    'molssi_util',
+    'seamm_util',
     'packaging',
     'pprint',
 ]
@@ -26,7 +26,7 @@ requirements = [
 # 'tkinter',
 
 setup_requirements = [
-    'pytest-runner',
+    # 'pytest-runner',
     # TODO(paulsaxe): put setup requirements (distutils extensions, etc.) here
 ]
 
@@ -42,7 +42,7 @@ setup(
     long_description=readme + '\n\n' + history,
     author="Paul Saxe",
     author_email='psaxe@molssi.org',
-    url='https://github.com/paulsaxe/forcefield',
+    url='https://github.com/molssi-seam/forcefield',
     packages=find_packages(include=['forcefield']),
     include_package_data=True,
     install_requires=requirements,
