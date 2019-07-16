@@ -3,7 +3,7 @@
 
 import json
 import logging
-import molssi_util
+import seamm_util
 import os.path
 import packaging.version
 import pprint
@@ -428,14 +428,14 @@ class Forcefield(object):
                 raise RuntimeError("Forcefield type '{}' not supported".format(
                     self.fftype))
         else:
-            ext = molssi_util.splitext(self.filename)
+            ext = seamm_util.splitext(self.filename)
             if ext in self._ff_extensions:
                 reader = self._ff_readers[self._ff_extensions[ext]]
             else:
                 raise RuntimeError(
                     "Don't recognize forcefield by extension '{}'".format(ext))
 
-        with molssi_util.Open(self.filename, 'r') as fd:
+        with seamm_util.Open(self.filename, 'r') as fd:
             reader(fd)
 
         if False:

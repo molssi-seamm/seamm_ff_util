@@ -14,7 +14,7 @@ with open('HISTORY.rst') as history_file:
 requirements = [
     'pillow',
     'logging',
-    'molssi_util',
+    'seamm_util',
     'packaging',
     'pprint',
 ]
