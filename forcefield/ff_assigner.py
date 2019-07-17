@@ -73,7 +73,7 @@ class FFAssigner(object):
             n_atoms = molecule.GetNumAtoms()
             logger.debug("'{}' has {} atoms".format(smiles, n_atoms))
 
-        atom_types = ['?']*n_atoms
+        atom_types = ['?'] * n_atoms
         templates = self.forcefield.get_templates()
         for atom_type in templates:
             template = templates[atom_type]
@@ -84,7 +84,7 @@ class FFAssigner(object):
                 for atom in pattern.GetAtoms():
                     map_num = atom.GetAtomMapNum()
                     if map_num:
-                        ind_map[map_num-1] = atom.GetIdx()
+                        ind_map[map_num - 1] = atom.GetIdx()
                 map_list = [ind_map[x] for x in sorted(ind_map)]
 
                 matches = molecule.GetSubstructMatches(pattern)
@@ -108,12 +108,12 @@ class FFAssigner(object):
         if len(untyped) > 0:
             logger.warning('The forcefield does not have atom types for'
                            ' the molecule!. See missing_atom_types.png'
-                           ' for more detail.'
-                           )
+                           ' for more detail.')
             tmp = rdkit.Chem.AllChem.Compute2DCoords(molecule)
-            img = rdkit.Chem.Draw.MolToImage(
-                molecule, size=(1000, 1000), highlightAtoms=untyped,
-                highlightColor=(0, 1, 0))
+            img = rdkit.Chem.Draw.MolToImage(molecule,
+                                             size=(1000, 1000),
+                                             highlightAtoms=untyped,
+                                             highlightColor=(0, 1, 0))
             img.save('missing_atom_types.png')
 
             if self.have_tk:

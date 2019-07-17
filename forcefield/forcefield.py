@@ -10,7 +10,6 @@ import pprint
 
 logger = logging.getLogger(__name__)
 
-
 metadata = {
     'bond_increments': {
         'equation': ['I'],
@@ -71,8 +70,9 @@ metadata = {
         }
     },
     'quartic_angle': {
-        'equation': ['K2*(Theta-Theta0)^2 + K3*(Theta-Theta0)^3'
-                     '+ K4*(Theta-Theta0)^4'],
+        'equation':
+        ['K2*(Theta-Theta0)^2 + K3*(Theta-Theta0)^3'
+         '+ K4*(Theta-Theta0)^4'],
         'constants': [
             ('Theta0', 'degree'),
             ('K2', 'kcal/mol/radian^2'),
@@ -103,9 +103,11 @@ metadata = {
         }
     },
     'torsion_3': {
-        'equation': ['V1 * [1 + cos(Phi - Phi0_1)]'
-                     ' + V2 * [1 + cos(2*Phi - Phi0_2)]'
-                     ' + V3 * [1 + cos(3*Phi - Phi0_3)]'],
+        'equation': [
+            'V1 * [1 + cos(Phi - Phi0_1)]'
+            ' + V2 * [1 + cos(2*Phi - Phi0_2)]'
+            ' + V3 * [1 + cos(3*Phi - Phi0_3)]'
+        ],
         'constants': [
             ('V1', 'kcal/mol'),
             ('Phi0_1', 'degree'),
@@ -279,10 +281,9 @@ metadata = {
         }
     },
     'angle-angle-torsion_1': {
-        'equation': [
-            'K * (Theta_L - Theta0_L) * (Theta_R - Theta0_R) * '
-            '(Phi - Phi0_1'
-        ],
+        'equation':
+        ['K * (Theta_L - Theta0_L) * (Theta_R - Theta0_R) * '
+         '(Phi - Phi0_1'],
         'constants': [
             ('K', 'kcal/mol/degree^2/degree'),
         ],
@@ -295,9 +296,7 @@ metadata = {
         }
     },
     'torsion-torsion_1': {
-        'equation': [
-            'K * cos(Phi_L) * cos(Phi_R)'
-        ],
+        'equation': ['K * cos(Phi_L) * cos(Phi_R)'],
         'constants': [
             ('K', 'kcal/mol'),
         ],
@@ -309,7 +308,6 @@ metadata = {
             'flip': 0
         }
     },
-
 }
 
 
@@ -493,9 +491,9 @@ class Forcefield(object):
                         continue
 
                     if len(words) < 2:
-                        logger.warning(
-                            section + ' section does not have a label!\n\t' +
-                            '\n\t'.join(fd.stack()))
+                        logger.warning(section +
+                                       ' section does not have a label!\n\t' +
+                                       '\n\t'.join(fd.stack()))
                         label = 'missing'
                         priority = 0
                     else:
@@ -806,10 +804,7 @@ class Forcefield(object):
             raise RuntimeError(msg)
         self.data[section][label] = data
         parameters = data['parameters'] = {}
-        data['constants'] = [
-            ('deltaij', 'e'),
-            ('deltaji', 'e')
-        ]
+        data['constants'] = [('deltaij', 'e'), ('deltaji', 'e')]
 
         for line in data['lines']:
             words = line.split()
@@ -905,7 +900,7 @@ class Forcefield(object):
         flipped = False
         if n == 1:
             i = atom_types[0]
-            return ((i,), flipped)
+            return ((i, ), flipped)
         elif n == 2:
             i, j = atom_types
             if symmetry == 'like_bond':
@@ -982,7 +977,7 @@ class Forcefield(object):
             version, reference = words[0:2]
             symmetry = data['topology']['symmetry']
             n_atoms = data['topology']['n_atoms']
-            key, flipped = self.make_canonical(symmetry, words[2:2+n_atoms])
+            key, flipped = self.make_canonical(symmetry, words[2:2 + n_atoms])
 
             if key not in parameters:
                 parameters[key] = {}
@@ -993,17 +988,17 @@ class Forcefield(object):
                 logger.error(msg)
                 raise RuntimeError(msg)
             params = parameters[key][V] = {'reference': reference}
-            values = words[2+n_atoms:]
+            values = words[2 + n_atoms:]
             if 'fill' in data['topology']:
                 n = data['topology']['fill']
                 if n > 0:
-                    if len(values) < 2*n:
+                    if len(values) < 2 * n:
                         values.extend(values[0:n])
             if flipped and 'flip' in data['topology']:
                 n = data['topology']['flip']
                 if n > 0:
                     first = values[0:n]
-                    values = values[n:2*n]
+                    values = values[n:2 * n]
                     values.extend(first)
             for constant, value in zip(data['constants'], values):
                 params[constant[0]] = value
@@ -1047,10 +1042,9 @@ class Forcefield(object):
                         break
                 if key is None:
                     raise RuntimeError(
-                        "Cannot find version '{}'".format(version)
-                        + " for functional form '{}'".format(fform)
-                        + " of forcefield '{}'".format(forcefield)
-                    )
+                        "Cannot find version '{}'".format(version) +
+                        " for functional form '{}'".format(fform) +
+                        " of forcefield '{}'".format(forcefield))
             self.ff['functional_forms'][fform] = fforms[fform][key]
             if fform in metadata:
                 term = metadata[fform]['topology']['type']
@@ -1213,15 +1207,15 @@ class Forcefield(object):
                     right.append(key[0])
         if len(left) > 0:
             if len(right) == 0:
-                key, flipped = self.make_canonical(
-                    'like_angle', (left[0], jauto, kauto))
+                key, flipped = self.make_canonical('like_angle',
+                                                   (left[0], jauto, kauto))
                 if key in self.ff['quadratic_angle']:
                     return ('automatic', key, 'quadratic_angle',
                             self.ff['quadratic_angle'][key])
             else:
                 if left[0] < right[0]:
-                    key, flipped = self.make_canonical(
-                        'like_angle', (left[0], jauto, kauto))
+                    key, flipped = self.make_canonical('like_angle',
+                                                       (left[0], jauto, kauto))
                     if key in self.ff['quadratic_angle']:
                         return ('automatic', key, 'quadratic_angle',
                                 self.ff['quadratic_angle'][key])
@@ -1232,8 +1226,8 @@ class Forcefield(object):
                         return ('automatic', key, 'quadratic_angle',
                                 self.ff['quadratic_angle'][key])
         elif len(right) > 0:
-            key, flipped = self.make_canonical(
-                'like_angle', (iauto, jauto, right[0]))
+            key, flipped = self.make_canonical('like_angle',
+                                               (iauto, jauto, right[0]))
             if key in self.ff['quadratic_angle']:
                 return ('automatic', key, 'quadratic_angle',
                         self.ff['quadratic_angle'][key])
@@ -1261,8 +1255,8 @@ class Forcefield(object):
         """
 
         # parameter directly available
-        result = self._torsion_parameters_helper(
-            i, j, k, l, self.ff['torsion_3'])
+        result = self._torsion_parameters_helper(i, j, k, l,
+                                                 self.ff['torsion_3'])
         if result is not None:
             return ('explicit', result[0], 'torsion_3', result[2])
 
@@ -1271,8 +1265,8 @@ class Forcefield(object):
         jeq = self.ff['equivalence'][j]['torsion']
         keq = self.ff['equivalence'][k]['torsion']
         leq = self.ff['equivalence'][l]['torsion']
-        result = self._torsion_parameters_helper(
-            ieq, jeq, keq, leq, self.ff['torsion_3'])
+        result = self._torsion_parameters_helper(ieq, jeq, keq, leq,
+                                                 self.ff['torsion_3'])
         if result is not None:
             return ('equivalent', result[0], 'torsion_3', result[2])
 
@@ -1281,8 +1275,8 @@ class Forcefield(object):
         jauto = self.ff['auto_equivalence'][j]['torsion_center_atom']
         kauto = self.ff['auto_equivalence'][k]['torsion_center_atom']
         lauto = self.ff['auto_equivalence'][l]['torsion_end_atom']
-        key, flipped = self.make_canonical(
-            'like_torsion', (iauto, jauto, kauto, lauto))
+        key, flipped = self.make_canonical('like_torsion',
+                                           (iauto, jauto, kauto, lauto))
         if key in self.ff['torsion_1']:
             return ('automatic', key, 'torsion_1', self.ff['torsion_1'][key])
 
@@ -1324,28 +1318,27 @@ class Forcefield(object):
                         return ('automatic', key, 'torsion_1',
                                 self.ff['torsion_1'][key])
         elif len(right) > 0:
-            key, flipped = self.make_canonical(
-                'like_torsion', (iauto, jauto, kauto, right[0]))
+            key, flipped = self.make_canonical('like_torsion',
+                                               (iauto, jauto, kauto, right[0]))
             if key in self.ff['torsion_1']:
                 return ('automatic', key, 'torsion_1',
                         self.ff['torsion_1'][key])
 
-        key, flipped = self.make_canonical(
-            'like_torsion', (iauto, jauto, kauto, '*'))
+        key, flipped = self.make_canonical('like_torsion',
+                                           (iauto, jauto, kauto, '*'))
         if key in self.ff['torsion_1']:
             return ('automatic', key, 'torsion_1', self.ff['torsion_1'][key])
-        key, flipped = self.make_canonical(
-            'like_torsion', ('*', jauto, kauto, lauto))
+        key, flipped = self.make_canonical('like_torsion',
+                                           ('*', jauto, kauto, lauto))
         if key in self.ff['torsion_1']:
             return ('automatic', key, 'torsion_1', self.ff['torsion_1'][key])
-        key, flipped = self.make_canonical(
-            'like_torsion', ('*', jauto, kauto, '*'))
+        key, flipped = self.make_canonical('like_torsion',
+                                           ('*', jauto, kauto, '*'))
         if key in self.ff['torsion_1']:
             return ('automatic', key, 'torsion_1', self.ff['torsion_1'][key])
 
-        raise RuntimeError(
-            'No torsion parameters for {}-{}-{}-{}'.format(i, j, k, l)
-        )
+        raise RuntimeError('No torsion parameters for {}-{}-{}-{}'.format(
+            i, j, k, l))
 
     def _torsion_parameters_helper(self, i, j, k, l, section):
         """Return the torsion parameters given four atom types
@@ -1399,16 +1392,13 @@ class Forcefield(object):
             return ('automatic', result[0], 'wilson_out_of_plane', result[1])
 
         if zero:
-            parameters = {
-                'K': 0.0,
-                'Chi0': 0.0
-            }
+            parameters = {'K': 0.0, 'Chi0': 0.0}
             return ('zeroed', ('*', '*', '*', '*'), 'wilson_out_of_plane',
                     parameters)
         else:
             raise RuntimeError(
-                'No out-of-plane parameters for {}-{}-{}-{}'.format(i, j, k, l)
-            )
+                'No out-of-plane parameters for {}-{}-{}-{}'.format(
+                    i, j, k, l))
 
     def _oop_parameters_helper(self, i, j, k, l):
         """Return the oop parameters given four atoms types
@@ -1455,7 +1445,7 @@ class Forcefield(object):
 
         # parameter directly available
         if j is None:
-            key = (i,)
+            key = (i, )
         else:
             key, flipped = self.make_canonical('like_bond', (i, j))
         if key in self.ff['nonbond(9-6)']:
@@ -1465,7 +1455,7 @@ class Forcefield(object):
         # try equivalences
         ieq = self.ff['equivalence'][i]['nonbond']
         if j is None:
-            key = (ieq,)
+            key = (ieq, )
         else:
             jeq = self.ff['equivalence'][j]['nonbond']
             key, flipped = self.make_canonical('like_bond', (ieq, jeq))
@@ -1476,7 +1466,7 @@ class Forcefield(object):
         # try automatic equivalences
         iauto = self.ff['auto_equivalence'][i]['nonbond']
         if j is None:
-            key = (iauto,)
+            key = (iauto, )
         else:
             jauto = self.ff['auto_equivalence'][j]['nonbond']
             key, flipped = self.make_canonical('like_bond', (iauto, jauto))
@@ -1501,10 +1491,7 @@ class Forcefield(object):
             self.bond_parameters(i, j)
         b2_type, b2_types, b2_form, b2_parameters = \
             self.bond_parameters(j, k)
-        values = {
-            'R10': b1_parameters['R0'],
-            'R20': b2_parameters['R0']
-        }
+        values = {'R10': b1_parameters['R0'], 'R20': b2_parameters['R0']}
 
         # parameters directly available
         result = self._angle_parameters_helper(i, j, k, self.ff['bond-bond'])
@@ -1533,11 +1520,14 @@ class Forcefield(object):
             return ('equivalent', result[0], 'bond-bond', values)
 
         if zero:
-            return ('zeroed', ('*', '*', '*'), 'bond-bond',
-                    {'K': '0.0', 'R10': '1.5', 'R20': '1.5'})
+            return ('zeroed', ('*', '*', '*'), 'bond-bond', {
+                'K': '0.0',
+                'R10': '1.5',
+                'R20': '1.5'
+            })
         else:
-            raise RuntimeError(
-                'No bond-bond parameters for {}-{}-{}'.format(i, j, k))
+            raise RuntimeError('No bond-bond parameters for {}-{}-{}'.format(
+                i, j, k))
 
     def _angle_parameters_helper(self, i, j, k, section):
         """Return the angle-like parameters given three atom types
@@ -1571,14 +1561,11 @@ class Forcefield(object):
             self.bond_parameters(i, j)
         b3_type, b3_types, b3_form, b3_parameters = \
             self.bond_parameters(k, l)
-        values = {
-            'R10': b1_parameters['R0'],
-            'R30': b3_parameters['R0']
-        }
+        values = {'R10': b1_parameters['R0'], 'R30': b3_parameters['R0']}
 
         # parameter directly available
-        result = self._torsion_parameters_helper(
-            i, j, k, l, self.ff['bond-bond_1_3'])
+        result = self._torsion_parameters_helper(i, j, k, l,
+                                                 self.ff['bond-bond_1_3'])
         if result is not None:
             if result[1]:
                 values = {
@@ -1593,8 +1580,8 @@ class Forcefield(object):
         jeq = self.ff['equivalence'][j]['torsion']
         keq = self.ff['equivalence'][k]['torsion']
         leq = self.ff['equivalence'][l]['torsion']
-        result = self._torsion_parameters_helper(
-            ieq, jeq, keq, leq, self.ff['bond-bond_1_3'])
+        result = self._torsion_parameters_helper(ieq, jeq, keq, leq,
+                                                 self.ff['bond-bond_1_3'])
         if result is not None:
             if result[1]:
                 values = {
@@ -1605,18 +1592,12 @@ class Forcefield(object):
             return ('equivalent', result[0], 'bond-bond_1_3', values)
 
         if zero:
-            parameters = {
-                'K': '0.0',
-                'R10': '1.5',
-                'R30': '1.5'
-            }
+            parameters = {'K': '0.0', 'R10': '1.5', 'R30': '1.5'}
             return ('equivalent', ('*', '*', '*', '*'), 'bond-bond_1_3',
                     parameters)
         else:
-            raise RuntimeError(
-                'No bond-bond_1_3 parameters for ' +
-                '{}-{}-{}-{}'.format(i, j, k, l)
-            )
+            raise RuntimeError('No bond-bond_1_3 parameters for ' +
+                               '{}-{}-{}-{}'.format(i, j, k, l))
 
     def bond_angle_parameters(self, i, j, k, zero=False):
         """Return the bond-angle parameters given three atoms types
@@ -1674,11 +1655,15 @@ class Forcefield(object):
                 return ('equivalent', result[0], 'bond-angle', parameters)
 
         if zero:
-            return ('zeroed', ('*', '*', '*'), 'bond-angle',
-                    {'K12': '0.0', 'K23': '0.0', 'R10': '1.5', 'R20': '1.5'})
+            return ('zeroed', ('*', '*', '*'), 'bond-angle', {
+                'K12': '0.0',
+                'K23': '0.0',
+                'R10': '1.5',
+                'R20': '1.5'
+            })
         else:
-            raise RuntimeError(
-                'No bond-angle parameters for {}-{}-{}'.format(i, j, k))
+            raise RuntimeError('No bond-angle parameters for {}-{}-{}'.format(
+                i, j, k))
 
     def angle_angle_parameters(self, i, j, k, l, zero=False):
         """Return the angle_angle parameters given four atoms types
@@ -1692,20 +1677,14 @@ class Forcefield(object):
             self.angle_parameters(k, j, l)
         Theta10 = a1_parameters['Theta0']
         Theta20 = a2_parameters['Theta0']
-        values = {
-            'Theta10': Theta10,
-            'Theta20': Theta20
-        }
+        values = {'Theta10': Theta10, 'Theta20': Theta20}
 
         # parameter directly available
-        result = self._angle_angle_parameters_helper(
-            i, j, k, l, self.ff['angle-angle'])
+        result = self._angle_angle_parameters_helper(i, j, k, l,
+                                                     self.ff['angle-angle'])
         if result is not None:
             if result[1]:
-                values = {
-                    'Theta10': Theta20,
-                    'Theta20': Theta10
-                }
+                values = {'Theta10': Theta20, 'Theta20': Theta10}
                 values.update(result[2])
                 ii, jj, kk, ll = result[0]
                 return ('explicit', (ll, jj, kk, ii), 'angle-angle', values)
@@ -1718,14 +1697,11 @@ class Forcefield(object):
         jeq = self.ff['equivalence'][j]['angle']
         keq = self.ff['equivalence'][k]['angle']
         leq = self.ff['equivalence'][l]['angle']
-        result = self._angle_angle_parameters_helper(
-            ieq, jeq, keq, leq, self.ff['angle-angle'])
+        result = self._angle_angle_parameters_helper(ieq, jeq, keq, leq,
+                                                     self.ff['angle-angle'])
         if result is not None:
             if result[1]:
-                values = {
-                    'Theta10': Theta20,
-                    'Theta20': Theta10
-                }
+                values = {'Theta10': Theta20, 'Theta20': Theta10}
                 values.update(result[2])
                 ii, jj, kk, ll = result[0]
                 return ('equivalent', (ll, jj, kk, ii), 'angle-angle', values)
@@ -1734,17 +1710,11 @@ class Forcefield(object):
                 return ('equivalent', result[0], 'angle-angle', values)
 
         if zero:
-            parameters = {
-                'K': 0.0,
-                'Theta10': '109.0',
-                'Theta20': '109.0'
-            }
-            return ('zeroed', ('*', '*', '*', '*'), 'angle-angle',
-                    parameters)
+            parameters = {'K': 0.0, 'Theta10': '109.0', 'Theta20': '109.0'}
+            return ('zeroed', ('*', '*', '*', '*'), 'angle-angle', parameters)
         else:
             raise RuntimeError(
-                'No angle-angle parameters for {}-{}-{}-{}'.format(i, j, k, l)
-            )
+                'No angle-angle parameters for {}-{}-{}-{}'.format(i, j, k, l))
 
     def _angle_angle_parameters_helper(self, i, j, k, l, section):
         """Return the torsion parameters given four atom types
@@ -1783,14 +1753,11 @@ class Forcefield(object):
             self.bond_parameters(i, j)
         b2_type, b2_types, b2_form, b2_parameters = \
             self.bond_parameters(k, l)
-        values = {
-            'R0_L': b1_parameters['R0'],
-            'R0_R': b2_parameters['R0']
-        }
+        values = {'R0_L': b1_parameters['R0'], 'R0_R': b2_parameters['R0']}
 
         # parameters directly available
-        result = self._torsion_parameters_helper(
-            i, j, k, l, self.ff['end_bond-torsion_3'])
+        result = self._torsion_parameters_helper(i, j, k, l,
+                                                 self.ff['end_bond-torsion_3'])
         if result is not None:
             if result[1]:
                 parameters = {
@@ -1818,8 +1785,8 @@ class Forcefield(object):
         jeq = self.ff['equivalence'][j]['torsion']
         keq = self.ff['equivalence'][k]['torsion']
         leq = self.ff['equivalence'][l]['torsion']
-        result = self._torsion_parameters_helper(
-            ieq, jeq, keq, leq, self.ff['end_bond-torsion_3'])
+        result = self._torsion_parameters_helper(ieq, jeq, keq, leq,
+                                                 self.ff['end_bond-torsion_3'])
         if result is not None:
             if result[1]:
                 parameters = {
@@ -1856,10 +1823,8 @@ class Forcefield(object):
             return ('equivalent', ('*', '*', '*', '*'), 'end_bond-torsion_3',
                     parameters)
         else:
-            raise RuntimeError(
-                'No end_bond-torsion_3 parameters for ' +
-                '{}-{}-{}-{}'.format(i, j, k, l)
-            )
+            raise RuntimeError('No end_bond-torsion_3 parameters for ' +
+                               '{}-{}-{}-{}'.format(i, j, k, l))
 
     def middle_bond_torsion_3_parameters(self, i, j, k, l, zero=False):
         """Return the middle bond - torsion_3 parameters given four atom types
@@ -1869,17 +1834,14 @@ class Forcefield(object):
         # Get the reference bond lengths...
         b1_type, b1_types, b1_form, b1_parameters = \
             self.bond_parameters(j, k)
-        values = {
-            'R0': b1_parameters['R0']
-        }
+        values = {'R0': b1_parameters['R0']}
 
         # parameters directly available
         result = self._torsion_parameters_helper(
             i, j, k, l, self.ff['middle_bond-torsion_3'])
         if result is not None:
             values.update(result[2])
-            return ('explicit', result[0], 'middle_bond-torsion_3',
-                    values)
+            return ('explicit', result[0], 'middle_bond-torsion_3', values)
 
         # try equivalences
         ieq = self.ff['equivalence'][i]['torsion']
@@ -1890,18 +1852,18 @@ class Forcefield(object):
             ieq, jeq, keq, leq, self.ff['middle_bond-torsion_3'])
         if result is not None:
             values.update(result[2])
-            return ('equivalent', result[0], 'middle_bond-torsion_3',
-                    values)
+            return ('equivalent', result[0], 'middle_bond-torsion_3', values)
 
         if zero:
-            return ('zeroed', ('*', '*', '*', '*'),
-                    'middle_bond-torsion_3',
-                    {'R0': '1.5', 'V1': '0.0',
-                     'V2': '0.0', 'V3': '0.0'})
+            return ('zeroed', ('*', '*', '*', '*'), 'middle_bond-torsion_3', {
+                'R0': '1.5',
+                'V1': '0.0',
+                'V2': '0.0',
+                'V3': '0.0'
+            })
         else:
-            raise RuntimeError(
-                'No middle_bond-torsion_3 parameters for ' +
-                '{}-{}-{}-{}'.format(i, j, k, l))
+            raise RuntimeError('No middle_bond-torsion_3 parameters for ' +
+                               '{}-{}-{}-{}'.format(i, j, k, l))
 
     def angle_torsion_3_parameters(self, i, j, k, l, zero=False):
         """Return the angle - torsion_3 parameters given four atom types
@@ -1919,8 +1881,8 @@ class Forcefield(object):
         }
 
         # parameters directly available
-        result = self._torsion_parameters_helper(
-            i, j, k, l, self.ff['angle-torsion_3'])
+        result = self._torsion_parameters_helper(i, j, k, l,
+                                                 self.ff['angle-torsion_3'])
         if result is not None:
             if result[1]:
                 parameters = {
@@ -1940,16 +1902,15 @@ class Forcefield(object):
             else:
                 parameters = dict(**result[2])
                 parameters.update(values)
-                return ('explicit', result[0], 'angle-torsion_3',
-                        parameters)
+                return ('explicit', result[0], 'angle-torsion_3', parameters)
 
         # try equivalences
         ieq = self.ff['equivalence'][i]['torsion']
         jeq = self.ff['equivalence'][j]['torsion']
         keq = self.ff['equivalence'][k]['torsion']
         leq = self.ff['equivalence'][l]['torsion']
-        result = self._torsion_parameters_helper(
-            ieq, jeq, keq, leq, self.ff['angle-torsion_3'])
+        result = self._torsion_parameters_helper(ieq, jeq, keq, leq,
+                                                 self.ff['angle-torsion_3'])
         if result is not None:
             if result[1]:
                 parameters = {
@@ -1969,8 +1930,7 @@ class Forcefield(object):
             else:
                 parameters = dict(**result[2])
                 parameters.update(values)
-                return ('equivalent', result[0], 'angle-torsion_3',
-                        parameters)
+                return ('equivalent', result[0], 'angle-torsion_3', parameters)
 
         if zero:
             parameters = {
@@ -1982,14 +1942,12 @@ class Forcefield(object):
                 'V3_R': '0.0',
                 'Theta0_L': '109.0',
                 'Theta0_R': '109.0'
-                }
+            }
             return ('zeroed', ('*', '*', '*', '*'), 'angle-torsion_3',
                     parameters)
         else:
-            raise RuntimeError(
-                'No angle-torsion_3 parameters for ' +
-                '{}-{}-{}-{}'.format(i, j, k, l)
-            )
+            raise RuntimeError('No angle-torsion_3 parameters for ' +
+                               '{}-{}-{}-{}'.format(i, j, k, l))
 
     def angle_angle_torsion_1_parameters(self, i, j, k, l, zero=False):
         """Return the angle - angle - torsion_1 parameters given four atom types
@@ -2011,8 +1969,7 @@ class Forcefield(object):
             i, j, k, l, self.ff['angle-angle-torsion_1'])
         if result is not None:
             values.update(result[2])
-            return ('explicit', result[0], 'angle-angle-torsion_1',
-                    values)
+            return ('explicit', result[0], 'angle-angle-torsion_1', values)
 
         # try equivalences
         ieq = self.ff['equivalence'][i]['torsion']
@@ -2023,22 +1980,15 @@ class Forcefield(object):
             ieq, jeq, keq, leq, self.ff['angle-angle-torsion_1'])
         if result is not None:
             values.update(result[2])
-            return ('equivalent', result[0], 'angle-angle-torsion_1',
-                    values)
+            return ('equivalent', result[0], 'angle-angle-torsion_1', values)
 
         if zero:
-            parameters = {
-                'Theta0_L': '109.0',
-                'Theta0_R': '109.0',
-                'K': '0.0'
-            }
+            parameters = {'Theta0_L': '109.0', 'Theta0_R': '109.0', 'K': '0.0'}
             return ('zeroed', ('*', '*', '*', '*'), 'angle-angle-torsion_1',
                     parameters)
         else:
-            raise RuntimeError(
-                'No angle-angle-torsion_1 parameters for ' +
-                '{}-{}-{}-{}'.format(i, j, k, l)
-            )
+            raise RuntimeError('No angle-angle-torsion_1 parameters for ' +
+                               '{}-{}-{}-{}'.format(i, j, k, l))
 
     def get_templates(self):
         """Return the templates dict
@@ -2094,17 +2044,17 @@ class Forcefield(object):
 
         # atoms bonded to each atom i
         bonds_from_atom = self.topology['bonds_from_atom'] = {}
-        for i in range(1, n_atoms+1):
+        for i in range(1, n_atoms + 1):
             bonds_from_atom[i] = []
         for i, j in bonds:
             bonds_from_atom[i].append(j)
             bonds_from_atom[j].append(i)
-        for i in range(1, n_atoms+1):
+        for i in range(1, n_atoms + 1):
             bonds_from_atom[i].sort()
 
         # angles
         angles = self.topology['angles'] = []
-        for j in range(1, n_atoms+1):
+        for j in range(1, n_atoms + 1):
             for i in bonds_from_atom[j]:
                 for k in bonds_from_atom[j]:
                     if i < k:
@@ -2123,12 +2073,12 @@ class Forcefield(object):
 
         # Out-of-planes
         oops = self.topology['oops'] = []
-        for m in range(1, n_atoms+1):
+        for m in range(1, n_atoms + 1):
             if len(bonds_from_atom[m]) == 3:
                 i, j, k = bonds_from_atom[m]
                 oops.append((i, m, j, k))
         if style == 'LAMMPS':
-            for m in range(1, n_atoms+1):
+            for m in range(1, n_atoms + 1):
                 if len(bonds_from_atom[m]) == 4:
                     i, j, k, l = bonds_from_atom[m]
                     oops.append((i, m, j, k))
@@ -2151,7 +2101,7 @@ class Forcefield(object):
             types = self.topology['types']
             bonds_from_atom = self.topology['bonds_from_atom']
             total_q = 0.0
-            for i in range(1, n_atoms+1):
+            for i in range(1, n_atoms + 1):
                 itype = types[i]
                 q = 0.0
                 for j in bonds_from_atom[i]:
@@ -2161,8 +2111,7 @@ class Forcefield(object):
                 charges.append(q)
                 total_q += q
             if abs(total_q) > 0.0001:
-                logger.warning(
-                    'Total charge is not zero: {}'.format(total_q))
+                logger.warning('Total charge is not zero: {}'.format(total_q))
                 logger.info('Charges from increments:\n' +
                             pprint.pformat(charges))
             else:
@@ -2184,7 +2133,7 @@ class Forcefield(object):
 
         for itype, xyz in zip(types, coordinates):
             if itype in atom_types:
-                index = atom_types.index(itype)+1
+                index = atom_types.index(itype) + 1
             else:
                 atom_types.append(itype)
                 index = len(atom_types)
@@ -2204,10 +2153,10 @@ class Forcefield(object):
         for itype in types[1:]:
             parameters_type, real_types, form, parameter_values = \
                 self.nonbond_parameters(itype)
-            new_value = (form, parameter_values, (itype,),
-                         parameters_type, real_types)
+            new_value = (form, parameter_values, (itype, ), parameters_type,
+                         real_types)
             index = None
-            for value, count in zip(parameters, range(1, len(parameters)+1)):
+            for value, count in zip(parameters, range(1, len(parameters) + 1)):
                 if new_value == value:
                     index = count
                     break
@@ -2231,7 +2180,7 @@ class Forcefield(object):
             new_value = (form, parameter_values, (types[i], types[j]),
                          parameters_type, real_types)
             index = None
-            for value, count in zip(parameters, range(1, len(parameters)+1)):
+            for value, count in zip(parameters, range(1, len(parameters) + 1)):
                 if new_value == value:
                     index = count
                     break
@@ -2252,11 +2201,11 @@ class Forcefield(object):
         for i, j, k in angles:
             parameters_type, real_types, form, parameter_values = \
                 self.angle_parameters(types[i], types[j], types[k])
-            new_value = (form, parameter_values,
-                         (types[i], types[j], types[k]),
-                         parameters_type, real_types)
+            new_value = (form, parameter_values, (types[i], types[j],
+                                                  types[k]), parameters_type,
+                         real_types)
             index = None
-            for value, count in zip(parameters, range(1, len(parameters)+1)):
+            for value, count in zip(parameters, range(1, len(parameters) + 1)):
                 if new_value == value:
                     index = count
                     break
@@ -2277,11 +2226,11 @@ class Forcefield(object):
         for i, j, k, l in torsions:
             parameters_type, real_types, form, parameter_values = \
                 self.torsion_parameters(types[i], types[j], types[k], types[l])
-            new_value = (form, parameter_values,
-                         (types[i], types[j], types[k], types[l]),
-                         parameters_type, real_types)
+            new_value = (form, parameter_values, (types[i], types[j], types[k],
+                                                  types[l]), parameters_type,
+                         real_types)
             index = None
-            for value, count in zip(parameters, range(1, len(parameters)+1)):
+            for value, count in zip(parameters, range(1, len(parameters) + 1)):
                 if new_value == value:
                     index = count
                     break
@@ -2303,11 +2252,11 @@ class Forcefield(object):
             parameters_type, real_types, form, parameter_values = \
                 self.oop_parameters(types[i], types[j], types[k], types[l],
                                     zero=True)
-            new_value = (form, parameter_values,
-                         (types[i], types[j], types[k], types[l]),
-                         parameters_type, real_types)
+            new_value = (form, parameter_values, (types[i], types[j], types[k],
+                                                  types[l]), parameters_type,
+                         real_types)
             index = None
-            for value, count in zip(parameters, range(1, len(parameters)+1)):
+            for value, count in zip(parameters, range(1, len(parameters) + 1)):
                 if new_value == value:
                     index = count
                     break
@@ -2329,11 +2278,11 @@ class Forcefield(object):
             parameters_type, real_types, form, parameter_values = \
                 self.bond_bond_parameters(
                     types[i], types[j], types[k], zero=True)
-            new_value = (form, parameter_values,
-                         (types[i], types[j], types[k]),
-                         parameters_type, real_types)
+            new_value = (form, parameter_values, (types[i], types[j],
+                                                  types[k]), parameters_type,
+                         real_types)
             index = None
-            for value, count in zip(parameters, range(1, len(parameters)+1)):
+            for value, count in zip(parameters, range(1, len(parameters) + 1)):
                 if new_value == value:
                     index = count
                     break
@@ -2355,11 +2304,11 @@ class Forcefield(object):
             parameters_type, real_types, form, parameter_values = \
                 self.bond_angle_parameters(
                     types[i], types[j], types[k], zero=True)
-            new_value = (form, parameter_values,
-                         (types[i], types[j], types[k]),
-                         parameters_type, real_types)
+            new_value = (form, parameter_values, (types[i], types[j],
+                                                  types[k]), parameters_type,
+                         real_types)
             index = None
-            for value, count in zip(parameters, range(1, len(parameters)+1)):
+            for value, count in zip(parameters, range(1, len(parameters) + 1)):
                 if new_value == value:
                     index = count
                     break
@@ -2381,11 +2330,11 @@ class Forcefield(object):
             parameters_type, real_types, form, parameter_values = \
                 self.middle_bond_torsion_3_parameters(
                     types[i], types[j], types[k], types[l], zero=True)
-            new_value = (form, parameter_values,
-                         (types[i], types[j], types[k], types[l]),
-                         parameters_type, real_types)
+            new_value = (form, parameter_values, (types[i], types[j], types[k],
+                                                  types[l]), parameters_type,
+                         real_types)
             index = None
-            for value, count in zip(parameters, range(1, len(parameters)+1)):
+            for value, count in zip(parameters, range(1, len(parameters) + 1)):
                 if new_value == value:
                     index = count
                     break
@@ -2407,11 +2356,11 @@ class Forcefield(object):
             parameters_type, real_types, form, parameter_values = \
                 self.end_bond_torsion_3_parameters(
                     types[i], types[j], types[k], types[l], zero=True)
-            new_value = (form, parameter_values,
-                         (types[i], types[j], types[k], types[l]),
-                         parameters_type, real_types)
+            new_value = (form, parameter_values, (types[i], types[j], types[k],
+                                                  types[l]), parameters_type,
+                         real_types)
             index = None
-            for value, count in zip(parameters, range(1, len(parameters)+1)):
+            for value, count in zip(parameters, range(1, len(parameters) + 1)):
                 if new_value == value:
                     index = count
                     break
@@ -2433,11 +2382,11 @@ class Forcefield(object):
             parameters_type, real_types, form, parameter_values = \
                 self.angle_torsion_3_parameters(
                     types[i], types[j], types[k], types[l], zero=True)
-            new_value = (form, parameter_values,
-                         (types[i], types[j], types[k], types[l]),
-                         parameters_type, real_types)
+            new_value = (form, parameter_values, (types[i], types[j], types[k],
+                                                  types[l]), parameters_type,
+                         real_types)
             index = None
-            for value, count in zip(parameters, range(1, len(parameters)+1)):
+            for value, count in zip(parameters, range(1, len(parameters) + 1)):
                 if new_value == value:
                     index = count
                     break
@@ -2459,11 +2408,11 @@ class Forcefield(object):
             parameters_type, real_types, form, parameter_values = \
                 self.angle_angle_torsion_1_parameters(
                     types[i], types[j], types[k], types[l], zero=True)
-            new_value = (form, parameter_values,
-                         (types[i], types[j], types[k], types[l]),
-                         parameters_type, real_types)
+            new_value = (form, parameter_values, (types[i], types[j], types[k],
+                                                  types[l]), parameters_type,
+                         real_types)
             index = None
-            for value, count in zip(parameters, range(1, len(parameters)+1)):
+            for value, count in zip(parameters, range(1, len(parameters) + 1)):
                 if new_value == value:
                     index = count
                     break
@@ -2485,11 +2434,11 @@ class Forcefield(object):
             parameters_type, real_types, form, parameter_values = \
                 self.bond_bond_1_3_parameters(
                     types[i], types[j], types[k], types[l], zero=True)
-            new_value = (form, parameter_values,
-                         (types[i], types[j], types[k], types[l]),
-                         parameters_type, real_types)
+            new_value = (form, parameter_values, (types[i], types[j], types[k],
+                                                  types[l]), parameters_type,
+                         real_types)
             index = None
-            for value, count in zip(parameters, range(1, len(parameters)+1)):
+            for value, count in zip(parameters, range(1, len(parameters) + 1)):
                 if new_value == value:
                     index = count
                     break
@@ -2518,20 +2467,30 @@ class Forcefield(object):
             K1 = parameter_values['K']
             Theta10 = parameter_values['Theta10']
             Theta30 = parameter_values['Theta20']
-            tmp = self.angle_angle_parameters(
-                    types[k], types[j], types[i], types[l], zero=True)[3]
+            tmp = self.angle_angle_parameters(types[k],
+                                              types[j],
+                                              types[i],
+                                              types[l],
+                                              zero=True)[3]
             K2 = tmp['K']
             Theta20 = tmp['Theta20']
-            tmp = self.angle_angle_parameters(
-                    types[i], types[j], types[l], types[k], zero=True)[3]
+            tmp = self.angle_angle_parameters(types[i],
+                                              types[j],
+                                              types[l],
+                                              types[k],
+                                              zero=True)[3]
             K3 = tmp['K']
-            new_value = (form, {'K1': K1, 'K2': K2, 'K3': K3,
-                                'Theta10': Theta10, 'Theta20': Theta20,
-                                'Theta30': Theta30},
-                         (types[i], types[j], types[k], types[l]),
-                         parameters_type, real_types)
+            new_value = (form, {
+                'K1': K1,
+                'K2': K2,
+                'K3': K3,
+                'Theta10': Theta10,
+                'Theta20': Theta20,
+                'Theta30': Theta30
+            }, (types[i], types[j], types[k], types[l]), parameters_type,
+                         real_types)
             index = None
-            for value, count in zip(parameters, range(1, len(parameters)+1)):
+            for value, count in zip(parameters, range(1, len(parameters) + 1)):
                 if new_value == value:
                     index = count
                     break

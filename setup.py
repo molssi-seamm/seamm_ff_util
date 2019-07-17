@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """The setup script."""
 
 from setuptools import setup, find_packages
@@ -38,7 +37,8 @@ test_requirements = [
 setup(
     name='forcefield',
     version='0.1.0',
-    description="Forcefield reads and writes forcefields, assigns them to molecules, and creates energy expressions.",
+    description=("Forcefield reads and writes forcefields, assigns them "
+                 "to molecules, and creates energy expressions."),
     long_description=readme + '\n\n' + history,
     author="Paul Saxe",
     author_email='psaxe@molssi.org',

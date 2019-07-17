@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """Tests for `forcefield` package."""
 
 from forcefield import forcefield  # nopep8
@@ -8,11 +7,13 @@ from forcefield import forcefield  # nopep8
 
 def test_bond_explicit(pcff):
     """Simple test of known bond parameters"""
-    expected = {'K2': '345.0000',
-                'K3': '-691.8900',
-                'K4': '844.6000',
-                'R0': '1.1010',
-                'reference': '8'}
+    expected = {
+        'K2': '345.0000',
+        'K3': '-691.8900',
+        'K4': '844.6000',
+        'R0': '1.1010',
+        'reference': '8'
+    }
 
     i = 'c'
     j = 'h'
@@ -35,11 +36,13 @@ def test_bond_explicit_ji(pcff):
 
 def test_bond_equivalent(pcff):
     """Simple test of bond parameters using equivalencies"""
-    expected = {'K2': '372.8251',
-                'K3': '-803.4526',
-                'K4': '894.3173',
-                'R0': '1.0982',
-                'reference': '8'}
+    expected = {
+        'K2': '372.8251',
+        'K3': '-803.4526',
+        'K4': '894.3173',
+        'R0': '1.0982',
+        'reference': '8'
+    }
 
     i = 'c5'
     j = 'hp'
@@ -51,9 +54,7 @@ def test_bond_equivalent(pcff):
 
 def test_bond_auto(pcff):
     """Simple test of bond parameters using automatic parameters"""
-    expected = {'K2': '223.6000',
-                'R0': '1.9200',
-                'reference': '2'}
+    expected = {'K2': '223.6000', 'R0': '1.9200', 'reference': '2'}
 
     i = 'c5'
     j = 'br'

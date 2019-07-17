@@ -46,16 +46,23 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
+	find . -name '.pytype' -exec rm -fr {} +
 
-lint: ## check style with flake8
-	flake8 forcefield tests
+lint: ## check style with isort, yapf and flake8
+	#	isort --check-only --diff --recursive setup.py forcefield tests
+	yapf --diff --recursive  setup.py forcefield tests
+	#	flake8 setup.py forcefield tests
+
+format: ## reformat with with yapf and isort
+	#	isort --recursive --atomic setup.py forcefield tests
+	yapf --recursive --in-place setup.py forcefield tests
+
+typing: ## check typing
+	pytype forcefield
+#	mypy -p forcefield
 
 test: ## run tests quickly with the default Python
-	py.test
-
-dependencies:
-	pur -r requirements_dev.txt
-	pip install -r requirements_dev.txt
+	pytest
 
 test-all: ## run tests on every Python version with tox
 	tox

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """Tests for `forcefield` package."""
 
 from forcefield import forcefield  # nopep8
@@ -9,8 +8,12 @@ from forcefield import forcefield  # nopep8
 def test_bond_bond_explicit(pcff):
     """Test of bond_bond parameters, which should fine explicit ones"""
 
-    expected = {'K': '3.3872', 'reference': '1',
-                'R20': '1.1010', 'R10': '1.5300'}
+    expected = {
+        'K': '3.3872',
+        'reference': '1',
+        'R20': '1.1010',
+        'R10': '1.5300'
+    }
 
     i = 'h'
     j = 'c'
@@ -35,8 +38,12 @@ def test_bond_bond_explicit_kji(pcff):
 
 def test_bond_bond_equivalent(pcff):
     """Simple test of bond_bond parameters using equivalencies"""
-    expected = {'K': '3.3872', 'reference': '1',
-                'R20': '1.1010', 'R10': '1.5300'}
+    expected = {
+        'K': '3.3872',
+        'reference': '1',
+        'R20': '1.1010',
+        'R10': '1.5300'
+    }
 
     i = 'h'
     j = 'c'

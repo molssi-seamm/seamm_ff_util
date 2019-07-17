@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """Tests for `forcefield` package."""
 
 from forcefield import forcefield  # nopep8
@@ -9,8 +8,13 @@ from forcefield import forcefield  # nopep8
 def test_bond_angle_explicit(pcff):
     """Test of bond_angle parameters, which should fine explicit ones"""
 
-    expected = {'K12': '20.7540', 'K23': '11.4210', 'reference': '1',
-                'R10': '1.5300', 'R20': '1.1010'}
+    expected = {
+        'K12': '20.7540',
+        'K23': '11.4210',
+        'reference': '1',
+        'R10': '1.5300',
+        'R20': '1.1010'
+    }
 
     i = 'c'
     j = 'c'
@@ -24,8 +28,13 @@ def test_bond_angle_explicit(pcff):
 def test_bond_angle_explicit_kji(pcff):
     """known bond_angle parameters, ordered backwards"""
 
-    expected = {'K12': '11.4210', 'K23': '20.7540', 'reference': '1',
-                'R10': '1.5300', 'R20': '1.1010'}
+    expected = {
+        'K12': '11.4210',
+        'K23': '20.7540',
+        'reference': '1',
+        'R10': '1.5300',
+        'R20': '1.1010'
+    }
     i = 'h'
     j = 'c'
     k = 'c'
@@ -37,8 +46,13 @@ def test_bond_angle_explicit_kji(pcff):
 
 def test_bond_angle_equivalent(pcff):
     """Simple test of bond_angle parameters using equivalencies"""
-    expected = {'K12': '20.7540', 'K23': '11.4210', 'reference': '1',
-                'R10': '1.5300', 'R20': '1.1010'}
+    expected = {
+        'K12': '20.7540',
+        'K23': '11.4210',
+        'reference': '1',
+        'R10': '1.5300',
+        'R20': '1.1010'
+    }
 
     i = 'c'
     j = 'c1'

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """Fixtires for testing the 'forcefield' package."""
 
 import pytest

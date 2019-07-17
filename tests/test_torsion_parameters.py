@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """Tests for `forcefield` package."""
 
 from forcefield import forcefield  # nopep8
@@ -9,13 +8,15 @@ from forcefield import forcefield  # nopep8
 def test_torsion_explicit(pcff):
     """Test of torsion parameters, which should find explicit ones"""
 
-    expected = {'Phi0_1': '0.0',
-                'Phi0_2': '0.0',
-                'Phi0_3': '0.0',
-                'V1': '0.0000',
-                'V2': '0.0000',
-                'V3': '-0.2000',
-                'reference': '8'}
+    expected = {
+        'Phi0_1': '0.0',
+        'Phi0_2': '0.0',
+        'Phi0_3': '0.0',
+        'V1': '0.0000',
+        'V2': '0.0000',
+        'V3': '-0.2000',
+        'reference': '8'
+    }
 
     i = 'h'
     j = 'c'
@@ -42,13 +43,15 @@ def test_torsion_explicit_lkji(pcff):
 
 def test_torsion_equivalent(pcff):
     """Simple test of torsion parameters using equivalencies"""
-    expected = {'Phi0_1': '0.0',
-                'Phi0_2': '0.0',
-                'Phi0_3': '0.0',
-                'V1': '0.0000',
-                'V2': '1.8769',
-                'V3': '0.0000',
-                'reference': '1'}
+    expected = {
+        'Phi0_1': '0.0',
+        'Phi0_2': '0.0',
+        'Phi0_3': '0.0',
+        'V1': '0.0000',
+        'V2': '1.8769',
+        'V3': '0.0000',
+        'reference': '1'
+    }
 
     i = 'hp'
     j = 'c5'
@@ -62,10 +65,12 @@ def test_torsion_equivalent(pcff):
 
 def test_torsion_auto(pcff):
     """test of torsion parameters using automatic parameters"""
-    expected = {'KPhi': '3.0000',
-                'Phi0': '180.0000',
-                'n': '2',
-                'reference': '2'}
+    expected = {
+        'KPhi': '3.0000',
+        'Phi0': '180.0000',
+        'n': '2',
+        'reference': '2'
+    }
 
     i = 'hp'
     j = 'c5'

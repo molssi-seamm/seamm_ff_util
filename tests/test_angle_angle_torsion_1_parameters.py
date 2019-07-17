@@ -9,8 +9,12 @@ def test_angle_angle_torsion_1_explicit(pcff):
     """Test of angle_angle_torsion_1 parameters, which should find
     explicit ones"""
 
-    expected = {'K': '-14.3155', 'reference': '1',
-                'Theta0_L': '110.7700', 'Theta0_R': '108.4000'}
+    expected = {
+        'K': '-14.3155',
+        'reference': '1',
+        'Theta0_L': '110.7700',
+        'Theta0_R': '108.4000'
+    }
 
     i = 'h'
     j = 'c'
@@ -26,8 +30,12 @@ def test_angle_angle_torsion_1_explicit(pcff):
 def test_angle_angle_torsion_1_explicit_lkji(pcff):
     """known angle_angle_torsion_1 parameters, ordered backwards"""
 
-    expected = {'K': '-14.3155', 'reference': '1',
-                'Theta0_L': '108.4000', 'Theta0_R': '110.7700'}
+    expected = {
+        'K': '-14.3155',
+        'reference': '1',
+        'Theta0_L': '108.4000',
+        'Theta0_R': '110.7700'
+    }
 
     i = 'c_0'
     j = 'c'
@@ -43,8 +51,12 @@ def test_angle_angle_torsion_1_explicit_lkji(pcff):
 def test_angle_angle_torsion_1_equivalent(pcff):
     """Simple test of angle_angle_torsion_1 parameters using equivalencies"""
 
-    expected = {'K': '-5.8888', 'reference': '1',
-                'Theta0_L': '111.0000', 'Theta0_R': '120.0500'}
+    expected = {
+        'K': '-5.8888',
+        'reference': '1',
+        'Theta0_L': '111.0000',
+        'Theta0_R': '120.0500'
+    }
 
     i = 'h'
     j = 'c'
