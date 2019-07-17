@@ -3,10 +3,10 @@
 
 import logging
 from PIL import ImageTk
-# import rdkit
-# import rdkit.Chem
-# import rdkit.Chem.Draw
-# import rdkit.Chem.AllChem
+import rdkit
+import rdkit.Chem
+import rdkit.Chem.Draw
+import rdkit.Chem.AllChem
 import re
 import tkinter as tk
 
