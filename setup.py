@@ -12,7 +12,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'pillow',
-    'logging',
+    'logging>=0.4.9.6',
     'seamm_util',
     'packaging',
     'pprint',
