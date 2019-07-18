@@ -11,7 +11,7 @@ from forcefield.ff_assigner import FFAssigner
 def pcff():
     """A forcefield object initialized with PCFF
     """
-    pcff = Forcefield('data/pcff2017.frc')
+    pcff = Forcefield('data/pcff2018.frc')
     pcff.initialize_biosym_forcefield()
     return pcff
 
