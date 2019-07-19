@@ -36,7 +36,7 @@ test_requirements = [
 
 setup(
     name='seamm_ff_util',
-    version='0.1.0',
+    version='0.2.0',
     description=("The SEAMM Forcefield utilities read and write forcefields, "
                  "assigns them to molecules, and creates energy expressions."),
     long_description=readme + '\n\n' + history,
