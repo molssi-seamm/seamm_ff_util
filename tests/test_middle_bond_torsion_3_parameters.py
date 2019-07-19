@@ -20,7 +20,7 @@ def test_middle_bond_torsion_3_explicit(pcff):
     i = 'h'
     j = 'c'
     k = 'c'
-    l = 'c_0'
+    l = 'c_0'  # noqa: E741
     ptype, key, form, parameters = pcff.middle_bond_torsion_3_parameters(
         i, j, k, l)
     assert ptype == "explicit"
@@ -42,7 +42,7 @@ def test_middle_bond_torsion_3_explicit_lkji(pcff):
     i = 'c_0'
     j = 'c'
     k = 'c'
-    l = 'h'
+    l = 'h'  # noqa: E741
     ptype, key, form, parameters = pcff.middle_bond_torsion_3_parameters(
         i, j, k, l)
     assert ptype == "explicit"
@@ -63,7 +63,7 @@ def test_middle_bond_torsion_3_equivalent(pcff):
     i = 'h'
     j = 'c'
     k = 'c5'
-    l = 'c5'
+    l = 'c5'  # noqa: E741
     ptype, key, form, parameters = pcff.middle_bond_torsion_3_parameters(
         i, j, k, l)
     assert ptype == "equivalent"

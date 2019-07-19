@@ -19,7 +19,7 @@ def test_angle_angle_torsion_1_explicit(pcff):
     i = 'h'
     j = 'c'
     k = 'c'
-    l = 'c_0'
+    l = 'c_0'  # noqa: E741
     ptype, key, form, parameters = pcff.angle_angle_torsion_1_parameters(
         i, j, k, l)
     assert ptype == "explicit"
@@ -40,7 +40,7 @@ def test_angle_angle_torsion_1_explicit_lkji(pcff):
     i = 'c_0'
     j = 'c'
     k = 'c'
-    l = 'h'
+    l = 'h'  # noqa: E741
     ptype, key, form, parameters = pcff.angle_angle_torsion_1_parameters(
         i, j, k, l)
     assert ptype == "explicit"
@@ -61,7 +61,7 @@ def test_angle_angle_torsion_1_equivalent(pcff):
     i = 'h'
     j = 'c'
     k = 'c5'
-    l = 'c5'
+    l = 'c5'  # noqa: E741
     ptype, key, form, parameters = pcff.angle_angle_torsion_1_parameters(
         i, j, k, l)
     assert ptype == "equivalent"

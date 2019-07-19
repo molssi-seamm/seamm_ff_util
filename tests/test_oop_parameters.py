@@ -13,7 +13,7 @@ def test_oop_explicit(pcff):
     i = 'h'
     j = 'cp'
     k = 'np'
-    l = 'op'
+    l = 'op'  # noqa: E741
     ptype, key, form, parameters = pcff.oop_parameters(i, j, k, l)
     assert ptype == "explicit"
     assert key == ('h', 'cp', 'np', 'op')
@@ -25,7 +25,7 @@ def test_oop_explicit_lkji(pcff):
     i = 'h'
     j = 'cp'
     k = 'np'
-    l = 'op'
+    l = 'op'  # noqa: E741
     ptype, key, form, parameters = pcff.oop_parameters(i, j, k, l)
     ptype2, key2, form, parameters2 = pcff.oop_parameters(l, j, k, i)
     assert ptype2 == "explicit"
@@ -40,7 +40,7 @@ def test_oop_equivalent(pcff):
     i = 'hp'
     j = 'c5'
     k = 'np'
-    l = 'op'
+    l = 'op'  # noqa: E741
     ptype, key, form, parameters = pcff.oop_parameters(i, j, k, l)
     assert ptype == "equivalent"
     assert key == ('h', 'cp', 'np', 'op')
@@ -54,7 +54,7 @@ def test_oop_auto(pcff):
     i = 'hp'
     j = 'c_0'
     k = 'co'
-    l = 'br'
+    l = 'br'  # noqa: E741
     ptype, key, form, parameters = pcff.oop_parameters(i, j, k, l)
     assert ptype == "automatic"
     assert key == ('*', "c'_", '*', '*')

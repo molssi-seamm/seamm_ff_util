@@ -18,7 +18,7 @@ def test_angle_angle_explicit(pcff):
     i = 'h'
     j = 'c'
     k = 'h'
-    l = 'n+'
+    l = 'n+'  # noqa: E741
     ptype, key, form, parameters = pcff.angle_angle_parameters(i, j, k, l)
     assert ptype == "explicit"
     assert key == ('h', 'c', 'h', 'n+')
@@ -30,7 +30,7 @@ def test_angle_angle_explicit_ljki(pcff):
     i = 'h'
     j = 'c'
     k = 'h'
-    l = 'n+'
+    l = 'n+'  # noqa: E741
     ptype, key, form, parameters = pcff.angle_angle_parameters(i, j, k, l)
     ptype2, key2, form, parameters2 = pcff.angle_angle_parameters(l, j, k, i)
     assert ptype2 == "explicit"
@@ -50,7 +50,7 @@ def test_angle_angle_equivalent(pcff):
     i = 'c5'
     j = 'cp'
     k = 'c_1'
-    l = 'c5'
+    l = 'c5'  # noqa: E741
     ptype, key, form, parameters = pcff.angle_angle_parameters(i, j, k, l)
     assert ptype == "equivalent"
     assert key == ('cp', 'cp', 'c_1', 'cp')

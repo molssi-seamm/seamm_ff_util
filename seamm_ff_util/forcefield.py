@@ -440,7 +440,7 @@ class Forcefield(object):
             section = 'bond_increments'
             try:
                 print(json.dumps(self.data[section], indent=4))
-            except:
+            except:  # noqa: E722
                 pprint.pprint(self.data[section])
 
     def _read_biosym_ff(self, fd):
@@ -522,7 +522,7 @@ class Forcefield(object):
                             method = Forcefield.__dict__[method_name]
                             method(self, result)
 
-        except IOError as e:
+        except IOError:
             logger.exception("Encountered I/O error opening '{}'".format(
                 self.filename))
             raise
@@ -634,7 +634,7 @@ class Forcefield(object):
         > Masses from CRC 1973/74 pages B-250.
 
         !Ver Ref  Type     Mass      Element   connection   Comment
-        !--- ---  -----  ----------  -------   ----------   ---------------------------
+        !--- ---  -----  ----------  -------   ----------   -------------------
         2.1 11   Ag     107.86800     Ag          0        Silver metal
         2.1 11   Al      26.98200     Al          0        Aluminium metal
         ...
@@ -739,7 +739,7 @@ class Forcefield(object):
         2.0  1     Br    Br   Br     Br_   Br_        Br_       Br_       Br_          Br_      Br_
         2.0  1     Cl    Cl   Cl     Cl_   Cl_        Cl_       Cl_       Cl_          Cl_      Cl_
         ...
-        """  # nopep8
+        """  # noqa: E501
         section = data['section']
         label = data['label']
 
@@ -918,26 +918,26 @@ class Forcefield(object):
                     flipped = True
                 return ((i, j, k), flipped)
         elif n == 4:
-            i, j, k, l = atom_types
+            i, j, k, l = atom_types  # noqa: E741
             if symmetry == 'like_torsion':
                 # order canonically, j<k; i<l if j==k
                 if j == k and i > l:
-                    i, l = l, i
+                    i, l = l, i  # noqa: E741
                     flipped = True
                 elif j > k:
-                    i, j, k, l = l, k, j, i
+                    i, j, k, l = l, k, j, i  # noqa: E741
                     flipped = True
                 return ((i, j, k, l), flipped)
             elif symmetry == 'like_oop':
                 # j is central atom
                 # order canonically, i<k<l; i=k<l or i<k=l
-                i, k, l = sorted((i, k, l))
+                i, k, l = sorted((i, k, l))  # noqa: E741
                 flipped = [i, j, k, l] != atom_types
                 return ((i, j, k, l), flipped)
             elif symmetry == 'like_angle-angle':
                 # order canonically, i<l;
                 if i > l:
-                    i, l = l, i
+                    i, l = l, i  # noqa: E741
                     flipped = True
                 return ((i, j, k, l), flipped)
 
@@ -1062,7 +1062,7 @@ class Forcefield(object):
             section = 'bond_increments'
             try:
                 print(json.dumps(self.ff[section], indent=4))
-            except:
+            except:  # noqa: E722
                 pprint.pprint(self.ff[section])
 
     def _get_parameters(self, functional_form, Version):
@@ -2067,7 +2067,7 @@ class Forcefield(object):
                 if i == k:
                     continue
                 for l in bonds_from_atom[k]:
-                    if l == j:
+                    if l == j:  # noqa: E741
                         continue
                     torsions.append((i, j, k, l))
 
@@ -2080,7 +2080,7 @@ class Forcefield(object):
         if style == 'LAMMPS':
             for m in range(1, n_atoms + 1):
                 if len(bonds_from_atom[m]) == 4:
-                    i, j, k, l = bonds_from_atom[m]
+                    i, j, k, l = bonds_from_atom[m]  # noqa: E741
                     oops.append((i, m, j, k))
                     oops.append((i, m, j, l))
                     oops.append((i, m, k, l))
