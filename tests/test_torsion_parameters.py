@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Tests for `forcefield` package."""
+"""Tests for `seamm_ff_util` package."""
 
-from forcefield import forcefield  # nopep8
+import seamm_ff_util  # noqa: F401
 
 
 def test_torsion_explicit(pcff):
@@ -21,7 +21,7 @@ def test_torsion_explicit(pcff):
     i = 'h'
     j = 'c'
     k = 'c'
-    l = 'br'
+    l = 'br'  # noqa: E741
     ptype, key, form, parameters = pcff.torsion_parameters(i, j, k, l)
     assert ptype == "explicit"
     assert key == ('br', 'c', 'c', 'h')
@@ -33,7 +33,7 @@ def test_torsion_explicit_lkji(pcff):
     i = 'h'
     j = 'c'
     k = 'c'
-    l = 'br'
+    l = 'br'  # noqa: E741
     ptype, key, form, parameters = pcff.torsion_parameters(i, j, k, l)
     ptype2, key2, form, parameters2 = pcff.torsion_parameters(l, k, j, i)
     assert ptype2 == "explicit"
@@ -56,7 +56,7 @@ def test_torsion_equivalent(pcff):
     i = 'hp'
     j = 'c5'
     k = 'c5'
-    l = 'hp'
+    l = 'hp'  # noqa: E741
     ptype, key, form, parameters = pcff.torsion_parameters(i, j, k, l)
     assert ptype == "equivalent"
     assert key == ('h', 'cp', 'cp', 'h')
@@ -75,7 +75,7 @@ def test_torsion_auto(pcff):
     i = 'hp'
     j = 'c5'
     k = 'c5'
-    l = 'br'
+    l = 'br'  # noqa: E741
     ptype, key, form, parameters = pcff.torsion_parameters(i, j, k, l)
     assert ptype == "automatic"
     assert key == ('*', 'cp_', 'cp_', '*')

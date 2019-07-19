@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Tests for `forcefield` package."""
+"""Tests for `seamm_ff_util` package."""
 
-from forcefield import forcefield  # nopep8
+import seamm_ff_util  # noqa: F401
 
 
 def test_bond_bond_1_3_explicit(pcff):
@@ -18,7 +18,7 @@ def test_bond_bond_1_3_explicit(pcff):
     i = 'h'
     j = 'c'
     k = 'cp'
-    l = 'cp'
+    l = 'cp'  # noqa: E741
     ptype, key, form, parameters = pcff.bond_bond_1_3_parameters(i, j, k, l)
     assert ptype == "explicit"
     assert key == ('h', 'c', 'cp', 'cp')
@@ -30,7 +30,7 @@ def test_bond_bond_1_3_explicit_kji(pcff):
     i = 'h'
     j = 'c'
     k = 'cp'
-    l = 'cp'
+    l = 'cp'  # noqa: E741
     ptype, key, form, parameters = pcff.bond_bond_1_3_parameters(i, j, k, l)
     ptype2, key2, form, parameters2 = pcff.bond_bond_1_3_parameters(l, k, j, i)
     assert ptype2 == "explicit"
@@ -50,7 +50,7 @@ def test_bond_bond_1_3_equivalent(pcff):
     i = 'h'
     j = 'c1'
     k = 'cp'
-    l = 'cp'
+    l = 'cp'  # noqa: E741
     ptype, key, form, parameters = pcff.bond_bond_1_3_parameters(i, j, k, l)
     assert ptype == "equivalent"
     assert key == ('h', 'c', 'cp', 'cp')

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Tests for `forcefield` package."""
 
-from forcefield import forcefield  # nopep8
+import seamm_ff_util  # noqa: F401
 
 
 def test_angle_explicit(pcff):

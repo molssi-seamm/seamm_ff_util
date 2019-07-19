@@ -1,5 +1,5 @@
-Welcome to Forcefield's documentation!
-======================================
+Welcome to the documentation for the SEAMM Forcefield Utilities!
+================================================================
 
 Contents:
 

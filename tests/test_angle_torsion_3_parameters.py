@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Tests for `forcefield` package."""
+"""Tests for `seamm_ff_util` package."""
 
-from forcefield import forcefield  # nopep8
+import seamm_ff_util  # noqa: F401
 
 
 def test_angle_torsion_3_explicit(pcff):
@@ -24,7 +24,7 @@ def test_angle_torsion_3_explicit(pcff):
     i = 'h'
     j = 'c'
     k = 'c'
-    l = 'c_0'
+    l = 'c_0'  # noqa: E741
     ptype, key, form, parameters = pcff.angle_torsion_3_parameters(i, j, k, l)
     assert ptype == "explicit"
     assert key == ('h', 'c', 'c', 'c_0')
@@ -49,7 +49,7 @@ def test_angle_torsion_3_explicit_kji(pcff):
     i = 'c_0'
     j = 'c'
     k = 'c'
-    l = 'h'
+    l = 'h'  # noqa: E741
     ptype, key, form, parameters = pcff.angle_torsion_3_parameters(i, j, k, l)
     assert ptype == "explicit"
     assert key == ('c_0', 'c', 'c', 'h')
@@ -74,7 +74,7 @@ def test_angle_torsion_3_equivalent(pcff):
     i = 'h'
     j = 'c'
     k = 'c5'
-    l = 'c5'
+    l = 'c5'  # noqa: E741
     ptype, key, form, parameters = pcff.angle_torsion_3_parameters(i, j, k, l)
     assert ptype == "equivalent"
     assert key == ('h', 'c', 'cp', 'cp')

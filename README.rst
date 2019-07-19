@@ -1,28 +1,31 @@
-==========
-Forcefield
-==========
+==========================
+SEAMM Forcefield Utilities
+==========================
 
 
-.. image:: https://img.shields.io/pypi/v/forcefield.svg
-        :target: https://pypi.python.org/pypi/forcefield
+.. image:: https://img.shields.io/pypi/v/seamm_ff_util.svg
+        :target: https://pypi.python.org/pypi/seamm_ff_util
 
-.. image:: https://img.shields.io/travis/paulsaxe/forcefield.svg
-        :target: https://travis-ci.org/paulsaxe/forcefield
+.. image:: https://travis-ci.org/molssi-seamm/seamm_ff_util.svg?branch=master
+        :target: https://travis-ci.org/molssi-seamm/seamm_ff_util
 
-.. image:: https://readthedocs.org/projects/forcefield/badge/?version=latest
-        :target: https://forcefield.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/custom-step/badge/?version=latest
+        :target: https://custom-step.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://pyup.io/repos/github/paulsaxe/forcefield/shield.svg
-     :target: https://pyup.io/repos/github/paulsaxe/forcefield/
+.. image:: https://pyup.io/repos/github/molssi-seamm/seamm_ff_util/shield.svg
+     :target: https://pyup.io/repos/github/molssi-seamm/seamm_ff_util/
      :alt: Updates
 
+.. image:: https://codecov.io/gh/molssi-seamm/seamm_ff_util/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/molssi-seamm/seamm_ff_util
 
-Forcefield reads and writes forcefields, assigns them to molecules, and creates energy expressions.
+
+The SEAMM Forcefield Utilities read and write forcefields, assigns them to molecules, and creates energy expressions.
 
 
 * Free software: BSD license
-* Documentation: https://forcefield.readthedocs.io.
+* Documentation: https://seamm_ff_util.readthedocs.io.
 
 
 Features
