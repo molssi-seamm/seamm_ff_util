@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Fixtires for testing the 'forcefield' package."""
+"""Fixtures for testing the 'seamm_ff_util' package."""
 
 import pytest
-from forcefield.forcefield import Forcefield  # nopep8
-from forcefield.ff_assigner import FFAssigner
+from seamm_ff_util import Forcefield  # nopep8
+from seamm_ff_util import FFAssigner
 
 
 @pytest.fixture(scope='session')

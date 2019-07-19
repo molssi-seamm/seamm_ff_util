@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Tests for `forcefield` package."""
+"""Tests for `seamm_ff_util` package."""
 
-from forcefield import forcefield  # nopep8
+import seamm_ff_util  # noqa: F401
 
 
 def test_middle_bond_torsion_3_explicit(pcff):

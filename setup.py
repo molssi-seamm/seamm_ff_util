@@ -35,28 +35,26 @@ test_requirements = [
 ]
 
 setup(
-    name='forcefield',
+    name='seamm_ff_util',
     version='0.1.0',
-    description=("Forcefield reads and writes forcefields, assigns them "
-                 "to molecules, and creates energy expressions."),
+    description=("The SEAMM Forcefield utilities read and write forcefields, "
+                 "assigns them to molecules, and creates energy expressions."),
     long_description=readme + '\n\n' + history,
     author="Paul Saxe",
     author_email='psaxe@molssi.org',
-    url='https://github.com/molssi-seam/forcefield',
-    packages=find_packages(include=['forcefield']),
+    url='https://github.com/molssi-seam/seamm_ff_util',
+    packages=find_packages(include=['seamm_ff_util']),
     include_package_data=True,
     install_requires=requirements,
     license="BSD license",
     zip_safe=False,
-    keywords='forcefield',
+    keywords='seamm_ff_util',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3  :: Only',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',

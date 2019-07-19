@@ -8,13 +8,13 @@ Installation
 Stable release
 --------------
 
-To install Forcefield, run this command in your terminal:
+To install the SEAMM Forcefield Utilities, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install forcefield
+    $ pip install seamm_ff_util
 
-This is the preferred method to install Forcefield, as it will always install the most recent stable release. 
+This is the preferred method to install the SEAMM Forcefield Utilities, as it will always install the most recent stable release. 
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -32,13 +32,13 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/paulsaxe/forcefield
+    $ git clone git://github.com/molssi-seamm/seamm_ff_util
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://github.com/paulsaxe/forcefield/tarball/master
+    $ curl  -OL https://github.com/molssi-seamm/seamm_ff_util/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/paulsaxe/forcefield
-.. _tarball: https://github.com/paulsaxe/forcefield/tarball/master
+.. _Github repo: https://github.com/molssi-seamm/seamm_ff_util
+.. _tarball: https://github.com/molssi-seamm/seamm_ff_util/tarball/master

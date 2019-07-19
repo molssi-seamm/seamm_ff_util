@@ -2,6 +2,6 @@
 Usage
 =====
 
-To use Forcefield in a project::
+To use the SEAMM Forcefield Utilities in a project::
 
-    import forcefield
+    import seamm_ff_util

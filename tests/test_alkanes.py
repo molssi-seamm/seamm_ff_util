@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Tests for `forcefield.ff_assigner` package."""
+"""Tests for `seamm_ff_util.ff_assigner` package."""
 
 
 def test_methane(pcff_assigner):

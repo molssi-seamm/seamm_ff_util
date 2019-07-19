@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-"""Unit test package for forcefield."""
+"""Unit test package for the SEAMM Forcefield Utilities."""

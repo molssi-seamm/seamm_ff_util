@@ -49,17 +49,17 @@ clean-test: ## remove test and coverage artifacts
 	find . -name '.pytype' -exec rm -fr {} +
 
 lint: ## check style with isort, yapf and flake8
-	#	isort --check-only --diff --recursive setup.py forcefield tests
-	yapf --diff --recursive  setup.py forcefield tests
-	#	flake8 setup.py forcefield tests
+	flake8 seamm_ff_util tests
+	yapf --diff --recursive  seamm_ff_util tests
+#	isort --check-only --diff --recursive seamm_ff_util tests
 
 format: ## reformat with with yapf and isort
-	#	isort --recursive --atomic setup.py forcefield tests
-	yapf --recursive --in-place setup.py forcefield tests
+	yapf --recursive --in-place seamm_ff_util tests
+#	isort --recursive --atomic seamm_ff_util tests
 
 typing: ## check typing
-	pytype forcefield
-#	mypy -p forcefield
+	pytype seamm_ff_util
+#	mypy -p seamm_ff_util
 
 test: ## run tests quickly with the default Python
 	pytest
@@ -68,15 +68,15 @@ test-all: ## run tests on every Python version with tox
 	tox
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source forcefield -m pytest
+	coverage run --source seamm_ff_util -m pytest
 	coverage report -m
 	coverage html
 	$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/forcefield.rst
+	rm -f docs/seamm_ff_util.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ forcefield
+	sphinx-apidoc -o docs/ seamm_ff_util
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html
@@ -94,8 +94,9 @@ dist: clean ## builds source and wheel package
 	ls -l dist
 
 install: clean ## install the package to the active Python's site-packages
-	python setup.py install
+	python setup.py sdist bdist_wheel
+	python -m twine upload dist/*
 
 uninstall: clean ## uninstall the package
-	pip uninstall --yes forcefield
+	pip uninstall --yes seamm_ff_util
 
