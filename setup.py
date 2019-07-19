@@ -12,17 +12,11 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'pillow',
-    'logging>=0.4.9.6',
     'seamm_util',
     'packaging',
     'pprint',
 ]
 # 'rdkit' must be installed by hand using conda
-# 'json',
-# 'os.path',
-# 'packaging.version',
-# 're',
-# 'tkinter',
 
 setup_requirements = [
     # 'pytest-runner',
