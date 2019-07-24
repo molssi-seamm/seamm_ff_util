@@ -54,7 +54,7 @@ deploy:
   provider: pypi
   distributions: sdist bdist_wheel
   on:
-    python: 3.6
+    # python: 3.6
     repo: molssi-seamm/seamm_ff_util
     tags: true
   user: seamm
