@@ -41,8 +41,8 @@ setup(
     description=("The SEAMM Forcefield utilities read and write forcefields, "
                  "assigns them to molecules, and creates energy expressions."),
     long_description=readme + '\n\n' + history,
-    # version=versioneer.get_version(),
-    version='0.2.1',
+    version=versioneer.get_version(),
+    # version='0.2.1',
     cmdclass=versioneer.get_cmdclass(),
     license='BSD-3-Clause',
 
