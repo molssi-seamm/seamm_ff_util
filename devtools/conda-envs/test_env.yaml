@@ -14,4 +14,8 @@ dependencies:
   # Pip-only installs
   - pip:
     - codecov
+    - pillow
+    - seamm_util
+    - packaging
+    - pprint
 

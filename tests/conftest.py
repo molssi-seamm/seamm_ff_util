@@ -3,8 +3,8 @@
 """Fixtures for testing the 'seamm_ff_util' package."""
 
 import pytest
-from seamm_ff_util.seamm_ff_util.forcefield import Forcefield
-from seamm_ff_util.seamm_ff_util.ff_assigner import FFAssigner
+from seamm_ff_util import Forcefield
+from seamm_ff_util import FFAssigner
 
 
 @pytest.fixture(scope='session')
