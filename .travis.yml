@@ -42,7 +42,7 @@ install:
 
 
 script:
-  - pytest -v --cov=seamm_ff_util seamm_ff_util/tests/
+  - pytest -v --cov=seamm_ff_util tests/
 
 notifications:
     email: false
