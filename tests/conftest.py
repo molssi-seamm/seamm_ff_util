@@ -3,7 +3,7 @@
 """Fixtures for testing the 'seamm_ff_util' package."""
 
 import pytest
-from seamm_ff_util import Forcefield  # nopep8
+from seamm_ff_util import Forcefield
 from seamm_ff_util import FFAssigner
 
 

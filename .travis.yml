@@ -1,9 +1,55 @@
 language: python
-dist: xenial
-python:
-- 3.7
-- 3.6
-- 3.5
+
+# Run jobs on container-based infrastructure, can be overridden per job
+
+matrix:
+  include:
+    # Extra includes for OSX since python language is not available by default on OSX
+    - os: osx
+      language: generic
+      env: PYTHON_VER=3.6
+    - os: osx
+      language: generic
+      env: PYTHON_VER=3.7
+
+
+    - os: linux
+      language: generic  # No need to set Python version since its conda
+      env: PYTHON_VER=3.6
+    - os: linux
+      language: generic
+      env: PYTHON_VER=3.7
+
+
+before_install:
+    # Additional info about the build
+  - uname -a
+  - df -h
+  - ulimit -a
+
+    # Install the Python environment
+  - source devtools/travis-ci/before_install.sh
+  - python -V
+
+install:
+
+    # Create test environment for package
+  - python devtools/scripts/create_conda_env.py -n=test -p=$PYTHON_VER devtools/conda-envs/test_env.yaml
+    # Activate the test environment
+  - conda activate test
+    # Build and install package
+  - python setup.py develop --no-deps
+
+
+script:
+  - pytest -v --cov=seamm_ff_util tests/
+
+notifications:
+    email: false
+
+after_success:
+  - codecov
+
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
@@ -14,20 +60,3 @@ deploy:
   user: seamm
   password:
     secure: jNdTF3Y1G6PK8MEcINiUJby6YqklWJ3wCyjPUJhU+ZPSqoTPidpLVh5sE9zRYmKiQoAYqhG+Cq59rUSBpdyragRQM1ox/oy65MUyQE65J9V0oq9gO/vumTLXPo0btB/VUOVVmIlLBYG/C3z6S68A4UAXHuhAm3uOJj9kziwuzQbLZy3ziUK3C6DFl8EHv6ECBMPIt8vAhv/BKYw1VtdoxeLKinMhy3UceIuxkKU8/bbuQFqKU8NxJHg4COEc2uDaH2xcnRTKT8v5D7maXFK3yj3xQFxASf/B0A/leZRmWnb49EvG8gyAX4LvrfhV/55BWCYf5csgvYuJsvquOxWHB5FsSKaPCx60a0ZJB0wSsWXl1ebAIjO/FUYSef/zM7gE2zZZg5G4QD1mV8CMQX/SUGGWPLY2pOR8XaEh+SOLjs3wdWN98zSZRYT7ucg0U2bDvOVuKujvQcX3nJzn1UjO2zXX5gKK9CbDF0kPC9cpZzRdXMUwMXAYk0QZotmMOMlzUXbvv6aJ5Mhjwzu3+9oFLZ5H4+n5jw2/5ESCX35QslWG5fde3QprX2bG+EmDqPv4fYJ35FoQqAfXiLvwC99ofWmM2cG3/ADg59/FLRpvNMLDx9423e21hxiY7yLu5gGY7YD/sErH179VsLCZnHziNorL21JBxf502aEzSBd3Wt0=
-matrix:
-  fast_finish: true
-stages:
-- lint
-- check
-- test
-install:
-- pip install -U tox-travis
-- pip install -U codecov
-jobs:
-  include:
-  - stage: lint
-    script: tox -e lint
-    python: '3.6'
-script: tox -e coverage
-after_success:
-- codecov -e TOX_ENV
