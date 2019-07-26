@@ -9,8 +9,8 @@ SEAMM Forcefield Utilities
 .. image:: https://travis-ci.org/molssi-seamm/seamm_ff_util.svg?branch=master
         :target: https://travis-ci.org/molssi-seamm/seamm_ff_util
 
-.. image:: https://readthedocs.org/projects/custom-step/badge/?version=latest
-        :target: https://seamm_ff_util.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/seamm-ff-util/badge/?version=latest
+        :target: https://seamm-ff-util.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
 .. image:: https://pyup.io/repos/github/molssi-seamm/seamm_ff_util/shield.svg
