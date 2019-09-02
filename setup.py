@@ -24,7 +24,6 @@ requirements = [
     'pillow',
     'seamm_util',
     'packaging',
-    'pprint',
 ]
 # 'rdkit' must be installed by hand using conda
 
