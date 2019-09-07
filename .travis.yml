@@ -53,6 +53,7 @@ after_success:
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
+  skip_existing: true
   on:
     # python: 3.6
     condition: $PYTHON_VER = 3.7
