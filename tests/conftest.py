@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 """Fixtures for testing the 'seamm_ff_util' package."""
 
 import pytest

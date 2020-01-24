@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 """Tests for `seamm_ff_util` package."""
 
 import seamm_ff_util  # noqa: F401
@@ -26,7 +27,8 @@ def test_end_bond_torsion_3_explicit(pcff):
     k = 'c'
     l = 'c_0'  # noqa: E741
     ptype, key, form, parameters = pcff.end_bond_torsion_3_parameters(
-        i, j, k, l)
+        i, j, k, l
+    )
     assert ptype == "explicit"
     assert key == ('h', 'c', 'c', 'c_0')
     assert parameters == expected
@@ -52,7 +54,8 @@ def test_end_bond_torsion_3_explicit_kji(pcff):
     k = 'c'
     l = 'h'  # noqa: E741
     ptype, key, form, parameters = pcff.end_bond_torsion_3_parameters(
-        i, j, k, l)
+        i, j, k, l
+    )
     assert ptype == "explicit"
     assert key == ('c_0', 'c', 'c', 'h')
     assert parameters == expected
@@ -77,7 +80,8 @@ def test_end_bond_torsion_3_equivalent(pcff):
     k = 'c5'
     l = 'c5'  # noqa: E741
     ptype, key, form, parameters = pcff.end_bond_torsion_3_parameters(
-        i, j, k, l)
+        i, j, k, l
+    )
     assert ptype == "equivalent"
     assert key == ('h', 'c', 'cp', 'cp')
     assert parameters == expected

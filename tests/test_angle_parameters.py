@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 """Tests for `forcefield` package."""
 
 import seamm_ff_util  # noqa: F401

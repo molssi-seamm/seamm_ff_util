@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 """Tests for `seamm_ff_util` package."""
 
 import seamm_ff_util  # noqa: F401
@@ -21,7 +22,8 @@ def test_angle_angle_torsion_1_explicit(pcff):
     k = 'c'
     l = 'c_0'  # noqa: E741
     ptype, key, form, parameters = pcff.angle_angle_torsion_1_parameters(
-        i, j, k, l)
+        i, j, k, l
+    )
     assert ptype == "explicit"
     assert key == ('c_0', 'c', 'c', 'h')
     assert parameters == expected
@@ -42,7 +44,8 @@ def test_angle_angle_torsion_1_explicit_lkji(pcff):
     k = 'c'
     l = 'h'  # noqa: E741
     ptype, key, form, parameters = pcff.angle_angle_torsion_1_parameters(
-        i, j, k, l)
+        i, j, k, l
+    )
     assert ptype == "explicit"
     assert key == ('c_0', 'c', 'c', 'h')
     assert parameters == expected
@@ -63,7 +66,8 @@ def test_angle_angle_torsion_1_equivalent(pcff):
     k = 'c5'
     l = 'c5'  # noqa: E741
     ptype, key, form, parameters = pcff.angle_angle_torsion_1_parameters(
-        i, j, k, l)
+        i, j, k, l
+    )
     assert ptype == "equivalent"
     assert key == ('h', 'c', 'cp', 'cp')
     assert parameters == expected

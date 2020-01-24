@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 """Main class for handling forcefields"""
 
 import logging
@@ -14,6 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 class FFAssigner(object):
+
     def __init__(self, forcefield, have_tk=False):
         """Handle the assignment of the forcefield to the structure
 
@@ -31,7 +33,8 @@ class FFAssigner(object):
         """
         if smiles is None:
             raise RuntimeError(
-                "Cannot assign the forcefield without a structure!")
+                "Cannot assign the forcefield without a structure!"
+            )
 
         logger.debug("SMILES = '{}'".format(smiles))
 
@@ -67,8 +70,11 @@ class FFAssigner(object):
         if add_hydrogens:
             molecule = rdkit.Chem.AddHs(molecule)
             n_atoms = molecule.GetNumAtoms()
-            logger.debug("'{}' has {} atoms with hydrogens added".format(
-                smiles, n_atoms))
+            logger.debug(
+                "'{}' has {} atoms with hydrogens added".format(
+                    smiles, n_atoms
+                )
+            )
         else:
             n_atoms = molecule.GetNumAtoms()
             logger.debug("'{}' has {} atoms".format(smiles, n_atoms))
@@ -106,14 +112,18 @@ class FFAssigner(object):
             i += 1
 
         if len(untyped) > 0:
-            logger.warning('The forcefield does not have atom types for'
-                           ' the molecule!. See missing_atom_types.png'
-                           ' for more detail.')
+            logger.warning(
+                'The forcefield does not have atom types for'
+                ' the molecule!. See missing_atom_types.png'
+                ' for more detail.'
+            )
             tmp = rdkit.Chem.AllChem.Compute2DCoords(molecule)
-            img = rdkit.Chem.Draw.MolToImage(molecule,
-                                             size=(1000, 1000),
-                                             highlightAtoms=untyped,
-                                             highlightColor=(0, 1, 0))
+            img = rdkit.Chem.Draw.MolToImage(
+                molecule,
+                size=(1000, 1000),
+                highlightAtoms=untyped,
+                highlightColor=(0, 1, 0)
+            )
             img.save('missing_atom_types.png')
 
             if self.have_tk:

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 """Tests for `seamm_ff_util` package."""
 
 import seamm_ff_util  # noqa: F401
@@ -12,7 +13,7 @@ def test_nonbond_explicit(pcff):
     i = 'h'
     ptype, key, form, parameters = pcff.nonbond_parameters(i)
     assert ptype == "explicit"
-    assert key == ('h', )
+    assert key == ('h',)
     assert parameters == expected
 
 
@@ -23,5 +24,5 @@ def test_nonbond_equivalent(pcff):
     i = 'c5'
     ptype, key, form, parameters = pcff.nonbond_parameters(i)
     assert ptype == "equivalent"
-    assert key == ('cp', )
+    assert key == ('cp',)
     assert parameters == expected
