@@ -1,21 +1,26 @@
 name: test
+
 channels:
   - rdkit
+
 dependencies:
     # Base depends
   - python
   - pip
+  - pillow
+  - rdkit
 
     # Testing
+  - coverage
+  - flake8
   - pytest
   - pytest-cov
-  - rdkit
+  - pytest-runner
 
   # Pip-only installs
   - pip:
-    - codecov
-    - pillow
-    - seamm_util
-    - packaging
     - pprint
+    - seamm_util>=0.7
 
+      # Testing
+    - yapf
