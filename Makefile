@@ -50,16 +50,13 @@ clean-test: ## remove test and coverage artifacts
 
 lint: ## check style with isort, yapf and flake8
 	flake8 seamm_ff_util tests
-#	yapf --diff --recursive  seamm_ff_util tests
-#	isort --check-only --diff --recursive seamm_ff_util tests
+	yapf --diff --recursive  seamm_ff_util tests
 
 format: ## reformat with with yapf and isort
 	yapf --recursive --in-place seamm_ff_util tests
-#	isort --recursive --atomic seamm_ff_util tests
 
 typing: ## check typing
 	pytype seamm_ff_util
-#	mypy -p seamm_ff_util
 
 test: ## run tests quickly with the default Python
 	pytest
