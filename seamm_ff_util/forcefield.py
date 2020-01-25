@@ -83,8 +83,10 @@ metadata = {
         {
             'equation':
                 [
-                    'K2*(Theta-Theta0)^2 + K3*(Theta-Theta0)^3'
-                    '+ K4*(Theta-Theta0)^4'
+                    (
+                        'K2*(Theta-Theta0)^2 + K3*(Theta-Theta0)^3'
+                        '+ K4*(Theta-Theta0)^4'
+                    )
                 ],
             'constants':
                 [
@@ -123,9 +125,11 @@ metadata = {
         {
             'equation':
                 [
-                    'V1 * [1 + cos(Phi - Phi0_1)]'
-                    ' + V2 * [1 + cos(2*Phi - Phi0_2)]'
-                    ' + V3 * [1 + cos(3*Phi - Phi0_3)]'
+                    (
+                        'V1 * [1 + cos(Phi - Phi0_1)]'
+                        ' + V2 * [1 + cos(2*Phi - Phi0_2)]'
+                        ' + V3 * [1 + cos(3*Phi - Phi0_3)]'
+                    )
                 ],
             'constants':
                 [
@@ -167,8 +171,10 @@ metadata = {
                 [
                     'eps(ij) [2(r(ij)*/r(ij))**9 - 3(r(ij)*/r(ij))**6]',
                     'r(ij) = [(r(i)**6 + r(j)**6))/2]**(1/6)',
-                    'eps(ij) = 2 * sqrt(eps(i) * eps(j)) * '
-                    'r(i)^3 * r(j)^3/[r(i)^6 + r(j)^6]'
+                    (
+                        'eps(ij) = 2 * sqrt(eps(i) * eps(j)) * '
+                        'r(i)^3 * r(j)^3/[r(i)^6 + r(j)^6]'
+                    )
                 ],
             'constants': [('r', 'angstrom'), ('eps', 'kcal/mol')],
             'topology':
@@ -241,12 +247,16 @@ metadata = {
         {
             'equation':
                 [
-                    '(R_L - R0_L) * (V1_L * [1 + cos(Phi - Phi0_1)]'
-                    ' + V2_L * [1 + cos(2*Phi - Phi0_2)]'
-                    ' + V3_L * [1 + cos(3*Phi - Phi0_3)])',
-                    '(R_R - R0_R) * (V1_R * [1 + cos(Phi - Phi0_1)]'
-                    ' + V2_R * [1 + cos(2*Phi - Phi0_2)]'
-                    ' + V3_R * [1 + cos(3*Phi - Phi0_3)])',
+                    (
+                        '(R_L - R0_L) * (V1_L * [1 + cos(Phi - Phi0_1)]'
+                        ' + V2_L * [1 + cos(2*Phi - Phi0_2)]'
+                        ' + V3_L * [1 + cos(3*Phi - Phi0_3)])'
+                    ),
+                    (
+                        '(R_R - R0_R) * (V1_R * [1 + cos(Phi - Phi0_1)]'
+                        ' + V2_R * [1 + cos(2*Phi - Phi0_2)]'
+                        ' + V3_R * [1 + cos(3*Phi - Phi0_3)])'
+                    )
                 ],
             'constants':
                 [
@@ -270,9 +280,11 @@ metadata = {
         {
             'equation':
                 [
-                    '(R_M - R0_M) * (V1 * [1 + cos(Phi - Phi0_1)]'
-                    ' + V2 * [1 + cos(2*Phi - Phi0_2)]'
-                    ' + V3 * [1 + cos(3*Phi - Phi0_3)])',
+                    (
+                        '(R_M - R0_M) * (V1 * [1 + cos(Phi - Phi0_1)]'
+                        ' + V2 * [1 + cos(2*Phi - Phi0_2)]'
+                        ' + V3 * [1 + cos(3*Phi - Phi0_3)])'
+                    )
                 ],
             'constants':
                 [
@@ -293,12 +305,18 @@ metadata = {
         {
             'equation':
                 [
-                    '(Theta_L - Theta0_L) * (V1_L * [1 + cos(Phi - Phi0_1)]'
-                    ' + V2_L * [1 + cos(2*Phi - Phi0_2)]'
-                    ' + V3_L * [1 + cos(3*Phi - Phi0_3)])',
-                    '(Theta_R - Theta0_R) * (V1_R * [1 + cos(Phi - Phi0_1)]'
-                    ' + V2_R * [1 + cos(2*Phi - Phi0_2)]'
-                    ' + V3_R * [1 + cos(3*Phi - Phi0_3)])',
+                    (
+                        '(Theta_L - Theta0_L)'
+                        '* (V1_L * [1 + cos(Phi - Phi0_1)]'
+                        ' + V2_L * [1 + cos(2*Phi - Phi0_2)]'
+                        ' + V3_L * [1 + cos(3*Phi - Phi0_3)])'
+                    ),
+                    (
+                        '(Theta_R - Theta0_R)'
+                        ' * (V1_R * [1 + cos(Phi - Phi0_1)]'
+                        ' + V2_R * [1 + cos(2*Phi - Phi0_2)]'
+                        ' + V3_R * [1 + cos(3*Phi - Phi0_3)])'
+                    )
                 ],
             'constants':
                 [
@@ -322,8 +340,10 @@ metadata = {
         {
             'equation':
                 [
-                    'K * (Theta_L - Theta0_L) * (Theta_R - Theta0_R) * '
-                    '(Phi - Phi0_1'
+                    (
+                        'K * (Theta_L - Theta0_L) * (Theta_R - Theta0_R) * '
+                        '(Phi - Phi0_1)'
+                    )
                 ],
             'constants': [('K', 'kcal/mol/degree^2/degree')],
             'topology':
@@ -480,7 +500,7 @@ class Forcefield(object):
         with seamm_util.Open(self.filename, 'r') as fd:
             reader(fd)
 
-        if False:
+        if logger.isEnabledFor(logging.DEBUG):
             section = 'bond_increments'
             try:
                 print(json.dumps(self.data[section], indent=4))
@@ -952,7 +972,7 @@ class Forcefield(object):
             i = atom_types[0]
             return ((i,), flipped)
         elif n == 2:
-            i, j = atom_types
+            i, j = atom_types[0:1]
             if symmetry == 'like_bond':
                 # order canonically, i<j
                 if i > j:
@@ -960,7 +980,7 @@ class Forcefield(object):
                     flipped = True
                 return ((i, j), flipped)
         elif n == 3:
-            i, j, k = atom_types
+            i, j, k = atom_types[0:2]
             if symmetry == 'like_angle':
                 # order canonically, i<k
                 if i > k:
@@ -968,7 +988,7 @@ class Forcefield(object):
                     flipped = True
                 return ((i, j, k), flipped)
         elif n == 4:
-            i, j, k, l = atom_types  # noqa: E741
+            i, j, k, l = atom_types[0:3]  # noqa: E741
             if symmetry == 'like_torsion':
                 # order canonically, j<k; i<l if j==k
                 if j == k and i > l:
@@ -1109,7 +1129,7 @@ class Forcefield(object):
         for fform in self.ff['functional_forms']:
             self._get_parameters(fform, V)
 
-        if False:
+        if logger.isEnabledFor(logging.DEBUG):
             section = 'bond_increments'
             try:
                 print(json.dumps(self.ff[section], indent=4))

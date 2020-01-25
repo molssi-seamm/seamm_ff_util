@@ -117,7 +117,7 @@ class FFAssigner(object):
                 ' the molecule!. See missing_atom_types.png'
                 ' for more detail.'
             )
-            tmp = rdkit.Chem.AllChem.Compute2DCoords(molecule)
+            rdkit.Chem.AllChem.Compute2DCoords(molecule)
             img = rdkit.Chem.Draw.MolToImage(
                 molecule,
                 size=(1000, 1000),
