@@ -20,30 +20,22 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [
-    'pillow',
-    'seamm_util',
-    'packaging',
-]
-# 'rdkit' must be installed by hand using conda
+with open('requirements_install.txt') as fd:
+    requirements = fd.read()
 
-# test_requirements = [
-#     'pytest',
-#     # TODO: put package test requirements here
-# ]
+# 'rdkit' must be installed by hand using conda
 
 setup(
     # Self-descriptive entries which should always be present
     name='seamm_ff_util',
     author="Paul Saxe",
     author_email='psaxe@molssi.org',
-    description=("The SEAMM Forcefield utilities read and write forcefields, "
-                 "assigns them to molecules, and creates energy expressions."),
+    description=short_description[1],
     long_description=readme + '\n\n' + history,
     version=versioneer.get_version(),
-    # version='0.2.1',
     cmdclass=versioneer.get_cmdclass(),
     license='BSD-3-Clause',
+    url='https://github.com/molssi-seam/seamm_ff_util',
 
     # Which Python importable modules should be included when your package is installed
     # Handled automatically by setuptools. Use 'exclude' to prevent some specific
@@ -58,14 +50,12 @@ setup(
     # Allows `setup.py test` to work correctly with pytest
     setup_requires=[] + pytest_runner,
 
-    url='https://github.com/molssi-seam/seamm_ff_util',
 
     # Required packages, pulls from pip if needed; do not use for Conda
     # deployment
     install_requires=requirements,
 
     test_suite='tests',
-    # tests_require=test_requirements,
 
     # Valid platforms your code works on, adjust to your flavor
     platforms=['Linux',
@@ -75,7 +65,7 @@ setup(
 
     # Manual control if final package is compressible or not, set False to
     # prevent the .egg from being made
-    zip_safe=False,
+    # zip_safe=False,
 
     keywords='seamm_ff_util',
     classifiers=[
