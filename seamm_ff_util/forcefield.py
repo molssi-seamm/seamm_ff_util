@@ -972,7 +972,7 @@ class Forcefield(object):
             i = atom_types[0]
             return ((i,), flipped)
         elif n == 2:
-            i, j = atom_types[0:1]
+            i, j = atom_types[0:2]
             if symmetry == 'like_bond':
                 # order canonically, i<j
                 if i > j:
@@ -980,7 +980,7 @@ class Forcefield(object):
                     flipped = True
                 return ((i, j), flipped)
         elif n == 3:
-            i, j, k = atom_types[0:2]
+            i, j, k = atom_types[0:3]
             if symmetry == 'like_angle':
                 # order canonically, i<k
                 if i > k:
@@ -988,7 +988,7 @@ class Forcefield(object):
                     flipped = True
                 return ((i, j, k), flipped)
         elif n == 4:
-            i, j, k, l = atom_types[0:3]  # noqa: E741
+            i, j, k, l = atom_types[0:4]  # noqa: E741
             if symmetry == 'like_torsion':
                 # order canonically, j<k; i<l if j==k
                 if j == k and i > l:
