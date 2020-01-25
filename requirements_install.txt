@@ -1,0 +1,4 @@
+packaging
+pillow
+pprint
+seamm_util
