@@ -23,4 +23,5 @@ dependencies:
     - seamm_util>=0.7
 
       # Testing
+    - codecov
     - yapf
