@@ -20,7 +20,7 @@ dependencies:
   # Pip-only installs
   - pip:
     - pprint
-    - seamm_util>=0.7
+    - seamm_util>=0.9
 
       # Testing
     - codecov
