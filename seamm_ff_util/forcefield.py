@@ -210,6 +210,7 @@ metadata = {
             'constants': [('rmin', 'angstrom'), ('eps', 'kcal/mol')],
             'topology':
                 {
+                    'form': 'rmin-eps',
                     'type': 'pair',
                     'subtype': 'LJ 6-9',
                     'n_atoms': 1,
@@ -235,6 +236,7 @@ metadata = {
             'constants': [('sigma', 'angstrom'), ('eps', 'kcal/mol')],
             'topology':
                 {
+                    'form': 'sigma-eps',
                     'type': 'pair',
                     'subtype': 'LJ 12-6',
                     'n_atoms': 1,
@@ -567,14 +569,6 @@ class Forcefield(object):
         factor2 : float
             Conversion factor to apply to the second transformed parameter
         """
-        logger.warning('nonbond_transformation:')
-        logger.warning(in_form)
-        logger.warning(in1_units)
-        logger.warning(in2_units)
-        logger.warning(out_form)
-        logger.warning(out1_units)
-        logger.warning(out2_units)
-
         if out_form == NonbondForms.SIGMA_EPS:
             if in_form == NonbondForms.SIGMA_EPS:
                 transform = Forcefield.no_transform
@@ -594,35 +588,36 @@ class Forcefield(object):
                 transform = Forcefield.ar_br_to_sigma_eps
                 A = Q_(1.0, in1_units)**12
                 B = Q_(1.0, in2_units)**6
-                logger.warning('  A = ' + str(A))
-                logger.warning('  B = ' + str(B))
                 sigma = (A / B)**(1 / 6)
                 eps = B**2 / A
-                logger.warning('  sigma = ' + str(sigma))
-                logger.warning('  eps = ' + str(eps))
                 factor1 = sigma.to(out1_units).magnitude
                 factor2 = eps.to(out2_units).magnitude
-                logger.warning('  factor1 = ' + str(factor1))
-                logger.warning('  factor2 = ' + str(factor2))
             else:
                 raise ValueError(
-                    "Cannot handle nonbond input form '" + in_form + "'."
+                    "Cannot handle nonbond input form '" + str(in_form) + "'."
                 )
         elif out_form == NonbondForms.RMIN_EPS:
-            raise NotImplementedError(
-                "Nonbond output form '" + out_form + "' not implemented yet."
-            )
+            if in_form == NonbondForms.RMIN_EPS:
+                transform = Forcefield.no_transform
+                factor1 = Q_(1.0, in1_units).to(out1_units).magnitude
+                factor2 = Q_(1.0, in2_units).to(out2_units).magnitude
+            else:
+                raise ValueError(
+                    "Cannot handle nonbond input form '" + str(in_form) + "'."
+                )
         elif out_form == NonbondForms.A_B:
             raise NotImplementedError(
-                "Nonbond output form '" + out_form + "' not implemented yet."
+                "Nonbond output form '" + str(out_form) +
+                "' not implemented yet."
             )
         elif out_form == NonbondForms.AR_BR:
             raise NotImplementedError(
-                "Nonbond output form '" + out_form + "' not implemented yet."
+                "Nonbond output form '" + str(out_form) +
+                "' not implemented yet."
             )
         else:
             raise ValueError(
-                "Cannot handle nonbond output form '" + out_form + "'."
+                "Cannot handle nonbond output form '" + str(out_form) + "'."
             )
 
         return lambda p1, p2: transform(p1, p2, factor1, factor2)
@@ -1281,16 +1276,18 @@ class Forcefield(object):
         # Copy in the metadata about this functional form
         data.update(metadata[section])
 
+        topology = data['topology']
+
         out1, out2 = data['constants']
         out1_units = out1[1]  # angstrom, nm
         out2_units = out2[1]  # kcal/mol, kJ/mol
         parameter_1 = out1[0]
         parameter_2 = out2[0]
 
-        out_form = NonbondForms.SIGMA_EPS
+        out_form = NonbondForms(topology['form'])
 
         # Default for parameters read in
-        in_form = NonbondForms.SIGMA_EPS
+        in_form = out_form
         in1_units = 'angstrom'
         in2_units = 'kcal/mol'
 
@@ -1531,20 +1528,21 @@ class Forcefield(object):
         Handle equivalences.
         """
 
-        # parameter directly available
-        key = (i,)
-        if key in self.ff['charges']:
-            parameters = {}
-            parameters.update(self.ff['charges'][key])
-            return ('explicit', key, 'charges', parameters)
+        if 'charges' in self.ff:
+            # parameter directly available
+            key = (i,)
+            if key in self.ff['charges']:
+                parameters = {}
+                parameters.update(self.ff['charges'][key])
+                return ('explicit', key, 'charges', parameters)
 
-        # try equivalences
-        ieq = self.ff['equivalence'][i]['nonbond']
-        key = (ieq,)
-        if key in self.ff['charges']:
-            parameters = {}
-            parameters.update(self.ff['charges'][key])
-            return ('equivalent', key, 'charges', parameters)
+            # try equivalences
+            ieq = self.ff['equivalence'][i]['nonbond']
+            key = (ieq,)
+            if key in self.ff['charges']:
+                parameters = {}
+                parameters.update(self.ff['charges'][key])
+                return ('equivalent', key, 'charges', parameters)
 
         # return the default of zero
         parameters = {'Q': 0.0}
@@ -2574,6 +2572,10 @@ class Forcefield(object):
 
         eex = {}
 
+        # We will need the elements for fix shake, 1-based.
+        eex['elements'] = ['']
+        eex['elements'].extend(structure['atoms']['elements'])
+
         # The periodicity & cell parameters
         periodicity = eex['periodicity'] = structure['periodicity']
         if periodicity == 3:
@@ -2655,6 +2657,10 @@ class Forcefield(object):
                     oops.append((i, m, j, l))
                     oops.append((i, m, k, l))
                     oops.append((j, m, k, l))
+
+    def eex_charges(self, eex, structure):
+        """Do nothing routine since charges are handled by the increments."""
+        pass
 
     def eex_increment(self, eex, structure):
         """Get the charges for the structure
