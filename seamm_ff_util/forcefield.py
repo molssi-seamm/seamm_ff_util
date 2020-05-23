@@ -1586,34 +1586,27 @@ class Forcefield(object):
 
         forms = self.ff['terms']['bond']
 
-        if len(forms) != 1:
-            raise RuntimeError(
-                'Cannot handle multiple functional forms for bonds yet'
-            )
-
-        form = forms[0]
-
         # parameter directly available
-        key, flipped = self.make_canonical('like_bond', (i, j))
-        if key in self.ff[form]:
-            return ('explicit', key, form, self.ff[form][key])
+        for form in forms:
+            key, flipped = self.make_canonical('like_bond', (i, j))
+            if key in self.ff[form]:
+                return ('explicit', key, form, self.ff[form][key])
 
         # try equivalences
         ieq = self.ff['equivalence'][i]['bond']
         jeq = self.ff['equivalence'][j]['bond']
         key, flipped = self.make_canonical('like_bond', (ieq, jeq))
-        if key in self.ff[form]:
-            return ('equivalent', key, form, self.ff[form][key])
+        for form in forms:
+            if key in self.ff[form]:
+                return ('equivalent', key, form, self.ff[form][key])
 
         # try automatic equivalences
         iauto = self.ff['auto_equivalence'][i]['bond']
         jauto = self.ff['auto_equivalence'][j]['bond']
         key, flipped = self.make_canonical('like_bond', (iauto, jauto))
-        if key in self.ff['quadratic_bond']:
-            return (
-                'automatic', key, 'quadratic_bond',
-                self.ff['quadratic_bond'][key]
-            )
+        for form in forms:
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
 
         raise RuntimeError('No bond parameters for {}-{}'.format(i, j))
 
@@ -1625,111 +1618,90 @@ class Forcefield(object):
 
         forms = self.ff['terms']['angle']
 
-        if len(forms) != 1:
-            raise RuntimeError(
-                'Cannot handle multiple functional forms for angles yet'
-            )
-
-        form = forms[0]
-
-        # parameters directly available
-        result = self._angle_parameters_helper(i, j, k, self.ff[form])
-        if result is not None:
-            return ('explicit', result[0], form, result[2])
+        for form in forms:
+            # parameters directly available
+            result = self._angle_parameters_helper(i, j, k, self.ff[form])
+            if result is not None:
+                return ('explicit', result[0], form, result[2])
 
         # try equivalences
         ieq = self.ff['equivalence'][i]['angle']
         jeq = self.ff['equivalence'][j]['angle']
         keq = self.ff['equivalence'][k]['angle']
-        result = self._angle_parameters_helper(ieq, jeq, keq, self.ff[form])
-        if result is not None:
-            return ('equivalent', result[0], form, result[2])
+        for form in forms:
+            result = self._angle_parameters_helper(
+                ieq, jeq, keq, self.ff[form]
+            )
+            if result is not None:
+                return ('equivalent', result[0], form, result[2])
 
         # try automatic equivalences
         iauto = self.ff['auto_equivalence'][i]['angle_end_atom']
         jauto = self.ff['auto_equivalence'][j]['angle_center_atom']
         kauto = self.ff['auto_equivalence'][k]['angle_end_atom']
         key, flipped = self.make_canonical('like_angle', (iauto, jauto, kauto))
-        if key in self.ff['quadratic_angle']:
-            return (
-                'automatic', key, 'quadratic_angle',
-                self.ff['quadratic_angle'][key]
-            )
+        for form in forms:
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
 
         # try wildcards, which may have numerical precidence
         # Find all the single-sided wildcards, realizing that the
         # triplet might be flipped.
-        left = []
-        right = []
-        for key in self.ff['quadratic_angle']:
-            if key[0] == '*' or key[2] == '*':
-                continue
-            if jauto == key[1]:
-                if kauto == key[2] and key[0][0] == '*':
-                    left.append(key[0])
-                if kauto == key[0] and key[2][0] == '*':
-                    left.append(key[2])
-                if iauto == key[0] and key[2][0] == '*':
-                    right.append(key[2])
-                if iauto == key[2] and key[0][0] == '*':
-                    right.append(key[0])
-        if len(left) > 0:
-            if len(right) == 0:
-                key, flipped = self.make_canonical(
-                    'like_angle', (left[0], jauto, kauto)
-                )
-                if key in self.ff['quadratic_angle']:
-                    return (
-                        'automatic', key, 'quadratic_angle',
-                        self.ff['quadratic_angle'][key]
-                    )
-            else:
-                if left[0] < right[0]:
+        for form in forms:
+            left = []
+            right = []
+            for key in self.ff[form]:
+                if key[0] == '*' or key[2] == '*':
+                    continue
+                if jauto == key[1]:
+                    if kauto == key[2] and key[0][0] == '*':
+                        left.append(key[0])
+                    if kauto == key[0] and key[2][0] == '*':
+                        left.append(key[2])
+                    if iauto == key[0] and key[2][0] == '*':
+                        right.append(key[2])
+                    if iauto == key[2] and key[0][0] == '*':
+                        right.append(key[0])
+            if len(left) > 0:
+                if len(right) == 0:
                     key, flipped = self.make_canonical(
                         'like_angle', (left[0], jauto, kauto)
                     )
-                    if key in self.ff['quadratic_angle']:
-                        return (
-                            'automatic', key, 'quadratic_angle',
-                            self.ff['quadratic_angle'][key]
-                        )
+                    if key in self.ff[form]:
+                        return ('automatic', key, form, self.ff[form][key])
                 else:
-                    key, flipped = self.make_canonical(
-                        'like_angle', (iauto, jauto, right[0])
-                    )
-                    if key in self.ff['quadratic_angle']:
-                        return (
-                            'automatic', key, 'quadratic_angle',
-                            self.ff['quadratic_angle'][key]
+                    if left[0] < right[0]:
+                        key, flipped = self.make_canonical(
+                            'like_angle', (left[0], jauto, kauto)
                         )
-        elif len(right) > 0:
-            key, flipped = self.make_canonical(
-                'like_angle', (iauto, jauto, right[0])
-            )
-            if key in self.ff['quadratic_angle']:
-                return (
-                    'automatic', key, 'quadratic_angle',
-                    self.ff['quadratic_angle'][key]
+                        if key in self.ff[form]:
+                            return ('automatic', key, form, self.ff[form][key])
+                    else:
+                        key, flipped = self.make_canonical(
+                            'like_angle', (iauto, jauto, right[0])
+                        )
+                        if key in self.ff[form]:
+                            return ('automatic', key, form, self.ff[form][key])
+            elif len(right) > 0:
+                key, flipped = self.make_canonical(
+                    'like_angle', (iauto, jauto, right[0])
                 )
+                if key in self.ff[form]:
+                    return ('automatic', key, form, self.ff[form][key])
 
-        key, flipped = self.make_canonical('like_angle', ('*', jauto, kauto))
-        if key in self.ff['quadratic_angle']:
-            return (
-                'automatic', key, 'quadratic_angle',
-                self.ff['quadratic_angle'][key]
+            key, flipped = self.make_canonical(
+                'like_angle', ('*', jauto, kauto)
             )
-        key, flipped = self.make_canonical('like_angle', (iauto, jauto, '*'))
-        if key in self.ff['quadratic_angle']:
-            return (
-                'automatic', key, 'quadratic_angle',
-                self.ff['quadratic_angle'][key]
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
+            key, flipped = self.make_canonical(
+                'like_angle', (iauto, jauto, '*')
             )
-        key, flipped = self.make_canonical('like_angle', ('*', jauto, '*'))
-        if key in self.ff['quadratic_angle']:
-            return (
-                'automatic', key, 'quadratic_angle',
-                self.ff['quadratic_angle'][key]
-            )
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
+            key, flipped = self.make_canonical('like_angle', ('*', jauto, '*'))
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
 
         raise RuntimeError('No angle parameters for {}-{}-{}'.format(i, j, k))
 
@@ -1742,28 +1714,23 @@ class Forcefield(object):
 
         forms = self.ff['terms']['torsion']
 
-        if len(forms) != 1:
-            raise RuntimeError(
-                'Cannot handle multiple functional forms for torsions yet'
-            )
-
-        form = forms[0]
-
         # parameter directly available
-        result = self._torsion_parameters_helper(i, j, k, l, self.ff[form])
-        if result is not None:
-            return ('explicit', result[0], form, result[2])
+        for form in forms:
+            result = self._torsion_parameters_helper(i, j, k, l, self.ff[form])
+            if result is not None:
+                return ('explicit', result[0], form, result[2])
 
         # try equivalences
         ieq = self.ff['equivalence'][i]['torsion']
         jeq = self.ff['equivalence'][j]['torsion']
         keq = self.ff['equivalence'][k]['torsion']
         leq = self.ff['equivalence'][l]['torsion']
-        result = self._torsion_parameters_helper(
-            ieq, jeq, keq, leq, self.ff[form]
-        )
-        if result is not None:
-            return ('equivalent', result[0], form, result[2])
+        for form in forms:
+            result = self._torsion_parameters_helper(
+                ieq, jeq, keq, leq, self.ff[form]
+            )
+            if result is not None:
+                return ('equivalent', result[0], form, result[2])
 
         # try automatic equivalences
         iauto = self.ff['auto_equivalence'][i]['torsion_end_atom']
@@ -1773,79 +1740,69 @@ class Forcefield(object):
         key, flipped = self.make_canonical(
             'like_torsion', (iauto, jauto, kauto, lauto)
         )
-        if key in self.ff['torsion_1']:
-            return ('automatic', key, 'torsion_1', self.ff['torsion_1'][key])
+        for form in forms:
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
 
-        # try wildcards, which may have numerical precidence
-        # Find all the single-sided wildcards, realizing that the
-        # triplet might be flipped.
-        left = []
-        right = []
-        for key in self.ff['torsion_1']:
-            if key[0] == '*' or key[3] == '*':
-                continue
-            if jauto == key[1] and kauto == key[2]:
-                if lauto == key[3] and key[0][0] == '*':
-                    left.append(key[0])
-                if lauto == key[0] and key[3][0] == '*':
-                    left.append(key[3])
-                if iauto == key[0] and key[3][0] == '*':
-                    right.append(key[3])
-                if iauto == key[3] and key[0][0] == '*':
-                    right.append(key[0])
-        if len(left) > 0:
-            if len(right) == 0:
-                key, flipped = self.make_canonical(
-                    'like_torsion', (left[0], jauto, kauto, lauto)
-                )
-                if key in self.ff['torsion_1']:
-                    return (
-                        'automatic', key, 'torsion_1',
-                        self.ff['torsion_1'][key]
-                    )
-            else:
-                if left[0] < right[0]:
+            # try wildcards, which may have numerical precidence
+            # Find all the single-sided wildcards, realizing that the
+            # triplet might be flipped.
+            left = []
+            right = []
+            for key in self.ff[form]:
+                if key[0] == '*' or key[3] == '*':
+                    continue
+                if jauto == key[1] and kauto == key[2]:
+                    if lauto == key[3] and key[0][0] == '*':
+                        left.append(key[0])
+                    if lauto == key[0] and key[3][0] == '*':
+                        left.append(key[3])
+                    if iauto == key[0] and key[3][0] == '*':
+                        right.append(key[3])
+                    if iauto == key[3] and key[0][0] == '*':
+                        right.append(key[0])
+            if len(left) > 0:
+                if len(right) == 0:
                     key, flipped = self.make_canonical(
                         'like_torsion', (left[0], jauto, kauto, lauto)
                     )
-                    if key in self.ff['torsion_1']:
-                        return (
-                            'automatic', key, 'torsion_1',
-                            self.ff['torsion_1'][key]
-                        )
+                    if key in self.ff[form]:
+                        return ('automatic', key, form, self.ff[form][key])
                 else:
-                    key, flipped = self.make_canonical(
-                        'like_torsion', (iauto, jauto, kauto, right[0])
-                    )
-                    if key in self.ff['torsion_1']:
-                        return (
-                            'automatic', key, 'torsion_1',
-                            self.ff['torsion_1'][key]
+                    if left[0] < right[0]:
+                        key, flipped = self.make_canonical(
+                            'like_torsion', (left[0], jauto, kauto, lauto)
                         )
-        elif len(right) > 0:
-            key, flipped = self.make_canonical(
-                'like_torsion', (iauto, jauto, kauto, right[0])
-            )
-            if key in self.ff['torsion_1']:
-                return (
-                    'automatic', key, 'torsion_1', self.ff['torsion_1'][key]
+                        if key in self.ff[form]:
+                            return ('automatic', key, form, self.ff[form][key])
+                    else:
+                        key, flipped = self.make_canonical(
+                            'like_torsion', (iauto, jauto, kauto, right[0])
+                        )
+                        if key in self.ff[form]:
+                            return ('automatic', key, form, self.ff[form][key])
+            elif len(right) > 0:
+                key, flipped = self.make_canonical(
+                    'like_torsion', (iauto, jauto, kauto, right[0])
                 )
+                if key in self.ff[form]:
+                    return ('automatic', key, form, self.ff[form][key])
 
-        key, flipped = self.make_canonical(
-            'like_torsion', (iauto, jauto, kauto, '*')
-        )
-        if key in self.ff['torsion_1']:
-            return ('automatic', key, 'torsion_1', self.ff['torsion_1'][key])
-        key, flipped = self.make_canonical(
-            'like_torsion', ('*', jauto, kauto, lauto)
-        )
-        if key in self.ff['torsion_1']:
-            return ('automatic', key, 'torsion_1', self.ff['torsion_1'][key])
-        key, flipped = self.make_canonical(
-            'like_torsion', ('*', jauto, kauto, '*')
-        )
-        if key in self.ff['torsion_1']:
-            return ('automatic', key, 'torsion_1', self.ff['torsion_1'][key])
+            key, flipped = self.make_canonical(
+                'like_torsion', (iauto, jauto, kauto, '*')
+            )
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
+            key, flipped = self.make_canonical(
+                'like_torsion', ('*', jauto, kauto, lauto)
+            )
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
+            key, flipped = self.make_canonical(
+                'like_torsion', ('*', jauto, kauto, '*')
+            )
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
 
         raise RuntimeError(
             'No torsion parameters for {}-{}-{}-{}'.format(i, j, k, l)
@@ -1882,38 +1839,39 @@ class Forcefield(object):
 
         forms = self.ff['terms']['out-of-plane']
 
-        if len(forms) != 1:
-            raise RuntimeError(
-                'Cannot handle multiple functional forms for bonds yet'
-            )
-
-        form = forms[0]
-
-        result = self._oop_parameters_helper(i, j, k, l, form)
-        if result is not None:
-            return ('explicit', result[0], form, result[1])
+        for form in forms:
+            result = self._oop_parameters_helper(i, j, k, l, form)
+            if result is not None:
+                return ('explicit', result[0], form, result[1])
 
         # try equivalences
         ieq = self.ff['equivalence'][i]['oop']
         jeq = self.ff['equivalence'][j]['oop']
         keq = self.ff['equivalence'][k]['oop']
         leq = self.ff['equivalence'][l]['oop']
-        result = self._oop_parameters_helper(ieq, jeq, keq, leq, form)
-        if result is not None:
-            return ('equivalent', result[0], form, result[1])
+        for form in forms:
+            result = self._oop_parameters_helper(ieq, jeq, keq, leq, form)
+            if result is not None:
+                return ('equivalent', result[0], form, result[1])
 
         # try automatic equivalences
         iauto = self.ff['auto_equivalence'][i]['oop_end_atom']
         jauto = self.ff['auto_equivalence'][j]['oop_center_atom']
         kauto = self.ff['auto_equivalence'][k]['oop_end_atom']
         lauto = self.ff['auto_equivalence'][l]['oop_end_atom']
-        result = self._oop_parameters_helper(iauto, jauto, kauto, lauto, form)
-        if result is not None:
-            return ('automatic', result[0], form, result[1])
+        for form in forms:
+            result = self._oop_parameters_helper(
+                iauto, jauto, kauto, lauto, form
+            )
+            if result is not None:
+                return ('automatic', result[0], form, result[1])
 
         if zero:
             parameters = {'K': 0.0, 'Chi0': 0.0}
-            return ('zeroed', ('*', '*', '*', '*'), form, parameters)
+            return (
+                'zeroed', ('*', '*', '*', '*'), 'wilson_out_of_plane',
+                parameters
+            )
         else:
             raise RuntimeError(
                 'No out-of-plane parameters for {}-{}-{}-{}'.format(
