@@ -1,17 +1,48 @@
 # -*- coding: utf-8 -*-
 
+# Don't we need some versioning function in the sort? (about line 1200)
+
 """Main class for handling forcefields"""
 
+from enum import Enum
 import json
 import logging
-import seamm_util
 import os.path
 import packaging.version
 import pprint
 
+import seamm_util
+from seamm_util import Q_
+
 logger = logging.getLogger(__name__)
 
+
+class NonbondForms(Enum):
+    SIGMA_EPS = 'sigma-eps'
+    RMIN_EPS = 'rmin-eps'
+    A_B = 'A-B'
+    AR_BR = 'A/r-B/r'
+
+
+two_raised_to_one_sixth = 2**(1 / 6)
+
+# yapf: disable
 metadata = {
+    'charges':
+        {
+            'equation': ['I'],
+            'constants': [
+                ('Q', 'e'),
+            ],
+            'topology':
+                {
+                    'type': 'charges',
+                    'n_atoms': 1,
+                    'symmetry': 'none',
+                    'fill': 0,
+                    'flip': 0
+                }
+        },
     'bond_increments':
         {
             'equation': ['I'],
@@ -176,11 +207,38 @@ metadata = {
                         'r(i)^3 * r(j)^3/[r(i)^6 + r(j)^6]'
                     )
                 ],
-            'constants': [('r', 'angstrom'), ('eps', 'kcal/mol')],
+            'constants': [('rmin', 'angstrom'), ('eps', 'kcal/mol')],
             'topology':
                 {
+                    'form': 'rmin-eps',
                     'type': 'pair',
                     'subtype': 'LJ 6-9',
+                    'n_atoms': 1,
+                    'symmetry': 'none',
+                    'fill': 0,
+                    'flip': 0
+                }
+        },
+    'nonbond(12-6)':
+        {
+            'equation':
+                [
+                    'E = 4 * eps * [(sigma/r)**12 - (sigma/r)**6]',
+                    'E = eps * [(rmin/r)**12 - (rmin/r)**6]',
+                    'E = A/r**12 - B/r**6',
+                    'rmin = 2**1/6 * sigma ',
+                    'sigma = rmin / 2**1/6',
+                    'A = 4 * eps * sigma**12',
+                    'B = 4 * eps * sigma**6',
+                    'sigma = (A/B)**1/6',
+                    'eps = B**2/(4*A)'
+                ],
+            'constants': [('sigma', 'angstrom'), ('eps', 'kcal/mol')],
+            'topology':
+                {
+                    'form': 'sigma-eps',
+                    'type': 'pair',
+                    'subtype': 'LJ 12-6',
                     'n_atoms': 1,
                     'symmetry': 'none',
                     'fill': 0,
@@ -369,6 +427,7 @@ metadata = {
                 }
         },
 }
+# yapf: enable
 
 
 class Forcefield(object):
@@ -464,6 +523,143 @@ class Forcefield(object):
         """The list of current forcefields. The first is the default one"""
         return self.data['forcefields']
 
+    @staticmethod
+    def rmin_to_sigma(rmin):
+        """Convert rmin to sigma for LJ potential."""
+        return rmin / two_raised_to_one_sixth
+
+    @staticmethod
+    def sigma_to_rmin(sigma):
+        """Convert sigma to rmin for LJ potential."""
+        return sigma * two_raised_to_one_sixth
+
+    @staticmethod
+    def nonbond_transformation(
+        in_form=NonbondForms.SIGMA_EPS,
+        in1_units=None,
+        in2_units=None,
+        out_form=NonbondForms.SIGMA_EPS,
+        out1_units='angstrom',
+        out2_units='kcal/mol'
+    ):
+        """Return the transform method and unit conversions for the nonbonds.
+
+        Parameters
+        ----------
+        in_form : enum (NonbondForms)
+            The form of the parameters input ('sigma-eps', 'rmin-eps', 'A-B' or
+            'A/r-B/r')
+        in1_units : string
+            The units for the first input parameter
+        in2_units : string
+            The units for the second input parameter
+        out_form : enum (NonbondForms)
+            The form of the parameters output.
+        out1_units : string
+            The units for the first output parameter
+        out2_units : string
+            The units for the second output parameter
+
+        Returns
+        -------
+        function : function object
+            Python function to transform the parameters
+        factor1 : float
+            Conversion factor to apply to first transformed parameter
+        factor2 : float
+            Conversion factor to apply to the second transformed parameter
+        """
+        if out_form == NonbondForms.SIGMA_EPS:
+            if in_form == NonbondForms.SIGMA_EPS:
+                transform = Forcefield.no_transform
+                factor1 = Q_(1.0, in1_units).to(out1_units).magnitude
+                factor2 = Q_(1.0, in2_units).to(out2_units).magnitude
+            elif in_form == NonbondForms.RMIN_EPS:
+                transform = Forcefield.rmin_eps_to_sigma_eps
+                factor1 = Q_(1.0, in1_units).to(out1_units).magnitude
+                factor2 = Q_(1.0, in2_units).to(out2_units).magnitude
+            elif in_form == NonbondForms.A_B:
+                transform = Forcefield.a_b_to_sigma_eps
+                A = Q_(1.0, in1_units)
+                B = Q_(1.0, in2_units)
+                factor1 = (A / B)**(1 / 6).to(out1_units).magnitude
+                factor2 = (B**2 / (4 * A)).to(out2_units).magnitude
+            elif in_form == NonbondForms.AR_BR:
+                transform = Forcefield.ar_br_to_sigma_eps
+                A = Q_(1.0, in1_units)**12
+                B = Q_(1.0, in2_units)**6
+                sigma = (A / B)**(1 / 6)
+                eps = B**2 / A
+                factor1 = sigma.to(out1_units).magnitude
+                factor2 = eps.to(out2_units).magnitude
+            else:
+                raise ValueError(
+                    "Cannot handle nonbond input form '" + str(in_form) + "'."
+                )
+        elif out_form == NonbondForms.RMIN_EPS:
+            if in_form == NonbondForms.RMIN_EPS:
+                transform = Forcefield.no_transform
+                factor1 = Q_(1.0, in1_units).to(out1_units).magnitude
+                factor2 = Q_(1.0, in2_units).to(out2_units).magnitude
+            else:
+                raise ValueError(
+                    "Cannot handle nonbond input form '" + str(in_form) + "'."
+                )
+        elif out_form == NonbondForms.A_B:
+            raise NotImplementedError(
+                "Nonbond output form '" + str(out_form) +
+                "' not implemented yet."
+            )
+        elif out_form == NonbondForms.AR_BR:
+            raise NotImplementedError(
+                "Nonbond output form '" + str(out_form) +
+                "' not implemented yet."
+            )
+        else:
+            raise ValueError(
+                "Cannot handle nonbond output form '" + str(out_form) + "'."
+            )
+
+        return lambda p1, p2: transform(p1, p2, factor1, factor2)
+
+    @staticmethod
+    def no_transform(in1, in2, factor1, factor2):
+        """No transformation of nonbond parameters, just units."""
+        return in1 * factor1, in2 * factor2
+
+    @staticmethod
+    def rmin_eps_to_sigma_eps(rmin, eps, factor1, factor2):
+        """Transform nonbond parameters from rmin-eps to sigma-eps
+        and apply the unit conversion factors
+        """
+        return Forcefield.rmin_to_sigma(rmin) * factor1, eps * factor2
+
+    @staticmethod
+    def a_b_to_sigma_eps(A, B, factor1, factor2):
+        """Transform nonbond parameters from A-B to sigma-eps
+        and apply the unit conversion factors
+        """
+        if A == 0 and B == 0:
+            return 0.0, 0.0
+        else:
+            sigma = (A / B)**(1 / 6)
+            eps = B**2 / (4 * A)
+            return sigma * factor1, eps * factor2
+
+    @staticmethod
+    def ar_br_to_sigma_eps(A, B, factor1, factor2):
+        """Transform nonbond parameters from A/r-B/r to sigma-eps
+        and apply the unit conversion factors
+        """
+        if A == 0 and B == 0:
+            return 0.0, 0.0
+        else:
+            A = A**12
+            B = B**6
+            sigma = (A / B)**(1 / 6)
+            eps = B**2 / (4 * A)
+            return sigma * factor1, eps * factor2
+
     def clear(self):
         """
         Reset the object to its initial, empty, state
@@ -501,11 +697,15 @@ class Forcefield(object):
             reader(fd)
 
         if logger.isEnabledFor(logging.DEBUG):
-            section = 'bond_increments'
+            section = 'charges'
+            print()
+            print('section = ' + section)
             try:
                 print(json.dumps(self.data[section], indent=4))
             except:  # noqa: E722
                 pprint.pprint(self.data[section])
+            print(80 * '-')
+            print()
 
     def _read_biosym_ff(self, fd):
         """
@@ -571,24 +771,28 @@ class Forcefield(object):
                         else:
                             priority = 0
 
+                    logger.debug('reading ff section ' + section)
+
                     result = self._read_biosym_section(fd)
 
                     result['section'] = section
                     result['label'] = label
                     result['priority'] = priority
 
-                    # If we have metadata, we can automatically parse the
-                    # section
-                    if section in metadata:
+                    # Parse the data, looking for specialized implementations
+                    if 'nonbond' in section:
+                        method = '_parse_biosym_nonbonds'
+                    else:
+                        method = '_parse_biosym_' + section
+                    logger.info(
+                        "Parsing forcefield section '" + section + "'."
+                    )
+                    if method in Forcefield.__dict__:
+                        Forcefield.__dict__[method](self, result)
+                    elif section in metadata:
                         self._parse_biosym_section(result)
                     else:
-                        # There should be a specific parser!
-                        method_name = '_parse_biosym_' + section
-                        if method_name not in Forcefield.__dict__:
-                            logger.warning('Cannot find parser for ' + section)
-                        else:
-                            method = Forcefield.__dict__[method_name]
-                            method(self, result)
+                        logger.warning('Cannot find parser for ' + section)
 
         except IOError:
             logger.exception(
@@ -1011,6 +1215,143 @@ class Forcefield(object):
                     flipped = True
                 return ((i, j, k, l), flipped)
 
+    def _parse_biosym_nonbonds(self, data):
+        """
+        Process the nonbond parameters, accounting for different expressions
+        and units.
+
+        For example:
+            #nonbond(12-6) spc
+
+            > E = (A/r)^12 - (B/r)^6
+            >
+            > where    r(ij) is the distance between atoms i and j
+
+            @type A/r-B/r
+            @units A (kJ/mol)**(1/12)*nm
+            @units B (kJ/mol)**(1/6)*nm
+            @combination geometric
+
+            !   Ver    Ref    I            A              B
+            !--------- ---  -------   -------------  -----------
+            2020.05.13   3  o_spc       0.3428         0.37122
+            2020.05.13   3  h_spc       0.0            0.0
+
+            #nonbond(12-6) nacl
+
+            >   E = eps * [(rmin/r)^12 - (rmin/r)^6]
+            >
+            > where    r is the distance between atoms i and j
+
+            @type eps-rmin
+            @units eps kcal/mol
+            @units rmin angstrom
+            @combination geometric
+
+            !   Ver    Ref    I           Rmin        Epsilon
+            !--------- ---  -------   -------------  -----------
+            2020.05.13   4  na+         2.7275         0.0469
+            2020.05.13   4  k+          3.5275         0.0870
+            2020.05.13   5  cl-         4.5400         0.1500
+
+
+        """  # nopep8
+        logger.debug('Entering _parse_biosym_nonbonds')
+
+        section = data['section']
+        label = data['label']
+
+        logger.debug('parsing section ' + section + ' with nonbond parser')
+        logger.debug('  data keys: ' + str(data.keys()))
+
+        if section not in self.data:
+            self.data[section] = {}
+        if label in self.data[section]:
+            msg = "'{}' already defined in section '{}'".format(label, section)
+            logger.error(msg)
+            raise RuntimeError(msg)
+
+        self.data[section][label] = data
+
+        # Copy in the metadata about this functional form
+        data.update(metadata[section])
+
+        topology = data['topology']
+
+        out1, out2 = data['constants']
+        out1_units = out1[1]  # angstrom, nm
+        out2_units = out2[1]  # kcal/mol, kJ/mol
+        parameter_1 = out1[0]
+        parameter_2 = out2[0]
+
+        out_form = NonbondForms(topology['form'])
+
+        # Default for parameters read in
+        in_form = out_form
+        in1_units = 'angstrom'
+        in2_units = 'kcal/mol'
+
+        # And see if there are modifiers
+        for item in data['modifiers']:
+            modifier = item.split()
+            what = modifier[0]
+            if what == 'type':
+                try:
+                    in_form = NonbondForms(modifier[1])
+                except ValueError:
+                    raise ValueError(
+                        "Unrecognized nonbond form '" + modifier[1] + "'"
+                    )
+            elif what == 'units':
+                which = modifier[1]
+                if which in ['sigma', 'rmin', 'A']:
+                    in1_units = modifier[2]
+                elif which in ['eps', 'B']:
+                    in2_units = modifier[2]
+                else:
+                    raise ValueError(
+                        "Unrecognized nonbond parameter '" + which + "'"
+                    )
+            elif what == 'combination':
+                pass
+            else:
+                raise ValueError(
+                    "Unrecognized nonbond modifier '" + what + "' Should be "
+                    "one of 'type', 'units' or 'combination'."
+                )
+
+        # Now that we know what we are getting as parameters (in1, in2),
+        # and what we want (p1, p2), make it so!
+        transform = Forcefield.nonbond_transformation(
+            in_form, in1_units, in2_units, out_form, out1_units, out2_units
+        )
+
+        parameters = data['parameters'] = {}
+
+        for line in data['lines']:
+            version, reference, i, p1, p2 = line.split()
+
+            key = (i,)
+            if key not in parameters:
+                parameters[key] = {}
+            V = packaging.version.Version(version)
+            if V in parameters[key]:
+                msg = "value for '" + "' '".join(key) + " defined more " + \
+                      "than once in section '{}'!".format(section)
+                logger.error(msg)
+                raise RuntimeError(msg)
+
+            v1, v2 = transform(float(p1), float(p2))
+
+            parameters[key][V] = {
+                'reference': reference,
+                parameter_1: v1,
+                parameter_2: v2
+            }
+
+        if not self.keep_lines:
+            del data['lines']
+
     def _parse_biosym_section(self, data):
         """
         Process the 1-term torsion parameters
@@ -1027,6 +1368,9 @@ class Forcefield(object):
         """  # nopep8
         section = data['section']
         label = data['label']
+
+        logger.debug('parsing section ' + section + ' with generic parser')
+        logger.debug('  data keys: ' + str(data.keys()))
 
         if section not in self.data:
             self.data[section] = {}
@@ -1096,6 +1440,7 @@ class Forcefield(object):
         self.ff = {}
 
         # definition of the forcefield
+        self.ff['modifiers'] = {}
         self.ff['functional_forms'] = {}
         terms = self.ff['terms'] = {}
         fforms = self.data['forcefield'][forcefield]['parameters']
@@ -1140,15 +1485,23 @@ class Forcefield(object):
         """Select the correct version parameters from the sections for
         this functional form"""
 
+        logger.debug('_get_parameters, form = ' + functional_form)
         sections = self.ff['functional_forms'][functional_form]['sections']
 
+        logger.debug('  sections = ' + str(sections))
+
         newdata = self.ff[functional_form] = {}
+        modifiers = self.ff['modifiers'][functional_form] = {}
 
         for section in sections:
             data = self.data[functional_form][section]['parameters']
 
+            modifiers[section] = \
+                self.data[functional_form][section]['modifiers']
+
             for item in data:
 
+                # Don't we need some versioning function in the sort?
                 versions = sorted(data[item].keys(), reverse=True)
 
                 if Version is None:
@@ -1168,6 +1521,32 @@ class Forcefield(object):
             return self.ff['atom_types'][i]['mass']
 
         raise RuntimeError('no atom type data for {}'.format(i))
+
+    def charges(self, i):
+        """Return the charge given an atom type i
+
+        Handle equivalences.
+        """
+
+        if 'charges' in self.ff:
+            # parameter directly available
+            key = (i,)
+            if key in self.ff['charges']:
+                parameters = {}
+                parameters.update(self.ff['charges'][key])
+                return ('explicit', key, 'charges', parameters)
+
+            # try equivalences
+            ieq = self.ff['equivalence'][i]['nonbond']
+            key = (ieq,)
+            if key in self.ff['charges']:
+                parameters = {}
+                parameters.update(self.ff['charges'][key])
+                return ('equivalent', key, 'charges', parameters)
+
+        # return the default of zero
+        parameters = {'Q': 0.0}
+        return ('default', ('*',), 'charges', parameters)
 
     def bond_increments(self, i, j):
         """Return the bond increments given two atoms types i and j
@@ -1205,31 +1584,29 @@ class Forcefield(object):
         Handle equivalences and automatic equivalences.
         """
 
+        forms = self.ff['terms']['bond']
+
         # parameter directly available
-        key, flipped = self.make_canonical('like_bond', (i, j))
-        if key in self.ff['quartic_bond']:
-            return (
-                'explicit', key, 'quartic_bond', self.ff['quartic_bond'][key]
-            )
+        for form in forms:
+            key, flipped = self.make_canonical('like_bond', (i, j))
+            if key in self.ff[form]:
+                return ('explicit', key, form, self.ff[form][key])
 
         # try equivalences
         ieq = self.ff['equivalence'][i]['bond']
         jeq = self.ff['equivalence'][j]['bond']
         key, flipped = self.make_canonical('like_bond', (ieq, jeq))
-        if key in self.ff['quartic_bond']:
-            return (
-                'equivalent', key, 'quartic_bond', self.ff['quartic_bond'][key]
-            )
+        for form in forms:
+            if key in self.ff[form]:
+                return ('equivalent', key, form, self.ff[form][key])
 
         # try automatic equivalences
         iauto = self.ff['auto_equivalence'][i]['bond']
         jauto = self.ff['auto_equivalence'][j]['bond']
         key, flipped = self.make_canonical('like_bond', (iauto, jauto))
-        if key in self.ff['quadratic_bond']:
-            return (
-                'automatic', key, 'quadratic_bond',
-                self.ff['quadratic_bond'][key]
-            )
+        for form in forms:
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
 
         raise RuntimeError('No bond parameters for {}-{}'.format(i, j))
 
@@ -1239,108 +1616,92 @@ class Forcefield(object):
         Handle equivalences and automatic equivalences.
         """
 
-        # parameters directly available
-        result = self._angle_parameters_helper(
-            i, j, k, self.ff['quartic_angle']
-        )
-        if result is not None:
-            return ('explicit', result[0], 'quartic_angle', result[2])
+        forms = self.ff['terms']['angle']
+
+        for form in forms:
+            # parameters directly available
+            result = self._angle_parameters_helper(i, j, k, self.ff[form])
+            if result is not None:
+                return ('explicit', result[0], form, result[2])
 
         # try equivalences
         ieq = self.ff['equivalence'][i]['angle']
         jeq = self.ff['equivalence'][j]['angle']
         keq = self.ff['equivalence'][k]['angle']
-        result = self._angle_parameters_helper(
-            ieq, jeq, keq, self.ff['quartic_angle']
-        )
-        if result is not None:
-            return ('equivalent', result[0], 'quartic_angle', result[2])
+        for form in forms:
+            result = self._angle_parameters_helper(
+                ieq, jeq, keq, self.ff[form]
+            )
+            if result is not None:
+                return ('equivalent', result[0], form, result[2])
 
         # try automatic equivalences
         iauto = self.ff['auto_equivalence'][i]['angle_end_atom']
         jauto = self.ff['auto_equivalence'][j]['angle_center_atom']
         kauto = self.ff['auto_equivalence'][k]['angle_end_atom']
         key, flipped = self.make_canonical('like_angle', (iauto, jauto, kauto))
-        if key in self.ff['quadratic_angle']:
-            return (
-                'automatic', key, 'quadratic_angle',
-                self.ff['quadratic_angle'][key]
-            )
+        for form in forms:
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
 
         # try wildcards, which may have numerical precidence
         # Find all the single-sided wildcards, realizing that the
         # triplet might be flipped.
-        left = []
-        right = []
-        for key in self.ff['quadratic_angle']:
-            if key[0] == '*' or key[2] == '*':
-                continue
-            if jauto == key[1]:
-                if kauto == key[2] and key[0][0] == '*':
-                    left.append(key[0])
-                if kauto == key[0] and key[2][0] == '*':
-                    left.append(key[2])
-                if iauto == key[0] and key[2][0] == '*':
-                    right.append(key[2])
-                if iauto == key[2] and key[0][0] == '*':
-                    right.append(key[0])
-        if len(left) > 0:
-            if len(right) == 0:
-                key, flipped = self.make_canonical(
-                    'like_angle', (left[0], jauto, kauto)
-                )
-                if key in self.ff['quadratic_angle']:
-                    return (
-                        'automatic', key, 'quadratic_angle',
-                        self.ff['quadratic_angle'][key]
-                    )
-            else:
-                if left[0] < right[0]:
+        for form in forms:
+            left = []
+            right = []
+            for key in self.ff[form]:
+                if key[0] == '*' or key[2] == '*':
+                    continue
+                if jauto == key[1]:
+                    if kauto == key[2] and key[0][0] == '*':
+                        left.append(key[0])
+                    if kauto == key[0] and key[2][0] == '*':
+                        left.append(key[2])
+                    if iauto == key[0] and key[2][0] == '*':
+                        right.append(key[2])
+                    if iauto == key[2] and key[0][0] == '*':
+                        right.append(key[0])
+            if len(left) > 0:
+                if len(right) == 0:
                     key, flipped = self.make_canonical(
                         'like_angle', (left[0], jauto, kauto)
                     )
-                    if key in self.ff['quadratic_angle']:
-                        return (
-                            'automatic', key, 'quadratic_angle',
-                            self.ff['quadratic_angle'][key]
-                        )
+                    if key in self.ff[form]:
+                        return ('automatic', key, form, self.ff[form][key])
                 else:
-                    key, flipped = self.make_canonical(
-                        'like_angle', (iauto, jauto, right[0])
-                    )
-                    if key in self.ff['quadratic_angle']:
-                        return (
-                            'automatic', key, 'quadratic_angle',
-                            self.ff['quadratic_angle'][key]
+                    if left[0] < right[0]:
+                        key, flipped = self.make_canonical(
+                            'like_angle', (left[0], jauto, kauto)
                         )
-        elif len(right) > 0:
-            key, flipped = self.make_canonical(
-                'like_angle', (iauto, jauto, right[0])
-            )
-            if key in self.ff['quadratic_angle']:
-                return (
-                    'automatic', key, 'quadratic_angle',
-                    self.ff['quadratic_angle'][key]
+                        if key in self.ff[form]:
+                            return ('automatic', key, form, self.ff[form][key])
+                    else:
+                        key, flipped = self.make_canonical(
+                            'like_angle', (iauto, jauto, right[0])
+                        )
+                        if key in self.ff[form]:
+                            return ('automatic', key, form, self.ff[form][key])
+            elif len(right) > 0:
+                key, flipped = self.make_canonical(
+                    'like_angle', (iauto, jauto, right[0])
                 )
+                if key in self.ff[form]:
+                    return ('automatic', key, form, self.ff[form][key])
 
-        key, flipped = self.make_canonical('like_angle', ('*', jauto, kauto))
-        if key in self.ff['quadratic_angle']:
-            return (
-                'automatic', key, 'quadratic_angle',
-                self.ff['quadratic_angle'][key]
+            key, flipped = self.make_canonical(
+                'like_angle', ('*', jauto, kauto)
             )
-        key, flipped = self.make_canonical('like_angle', (iauto, jauto, '*'))
-        if key in self.ff['quadratic_angle']:
-            return (
-                'automatic', key, 'quadratic_angle',
-                self.ff['quadratic_angle'][key]
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
+            key, flipped = self.make_canonical(
+                'like_angle', (iauto, jauto, '*')
             )
-        key, flipped = self.make_canonical('like_angle', ('*', jauto, '*'))
-        if key in self.ff['quadratic_angle']:
-            return (
-                'automatic', key, 'quadratic_angle',
-                self.ff['quadratic_angle'][key]
-            )
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
+            key, flipped = self.make_canonical('like_angle', ('*', jauto, '*'))
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
 
         raise RuntimeError('No angle parameters for {}-{}-{}'.format(i, j, k))
 
@@ -1351,23 +1712,25 @@ class Forcefield(object):
         with numerical precedences
         """
 
+        forms = self.ff['terms']['torsion']
+
         # parameter directly available
-        result = self._torsion_parameters_helper(
-            i, j, k, l, self.ff['torsion_3']
-        )
-        if result is not None:
-            return ('explicit', result[0], 'torsion_3', result[2])
+        for form in forms:
+            result = self._torsion_parameters_helper(i, j, k, l, self.ff[form])
+            if result is not None:
+                return ('explicit', result[0], form, result[2])
 
         # try equivalences
         ieq = self.ff['equivalence'][i]['torsion']
         jeq = self.ff['equivalence'][j]['torsion']
         keq = self.ff['equivalence'][k]['torsion']
         leq = self.ff['equivalence'][l]['torsion']
-        result = self._torsion_parameters_helper(
-            ieq, jeq, keq, leq, self.ff['torsion_3']
-        )
-        if result is not None:
-            return ('equivalent', result[0], 'torsion_3', result[2])
+        for form in forms:
+            result = self._torsion_parameters_helper(
+                ieq, jeq, keq, leq, self.ff[form]
+            )
+            if result is not None:
+                return ('equivalent', result[0], form, result[2])
 
         # try automatic equivalences
         iauto = self.ff['auto_equivalence'][i]['torsion_end_atom']
@@ -1377,79 +1740,69 @@ class Forcefield(object):
         key, flipped = self.make_canonical(
             'like_torsion', (iauto, jauto, kauto, lauto)
         )
-        if key in self.ff['torsion_1']:
-            return ('automatic', key, 'torsion_1', self.ff['torsion_1'][key])
+        for form in forms:
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
 
-        # try wildcards, which may have numerical precidence
-        # Find all the single-sided wildcards, realizing that the
-        # triplet might be flipped.
-        left = []
-        right = []
-        for key in self.ff['torsion_1']:
-            if key[0] == '*' or key[3] == '*':
-                continue
-            if jauto == key[1] and kauto == key[2]:
-                if lauto == key[3] and key[0][0] == '*':
-                    left.append(key[0])
-                if lauto == key[0] and key[3][0] == '*':
-                    left.append(key[3])
-                if iauto == key[0] and key[3][0] == '*':
-                    right.append(key[3])
-                if iauto == key[3] and key[0][0] == '*':
-                    right.append(key[0])
-        if len(left) > 0:
-            if len(right) == 0:
-                key, flipped = self.make_canonical(
-                    'like_torsion', (left[0], jauto, kauto, lauto)
-                )
-                if key in self.ff['torsion_1']:
-                    return (
-                        'automatic', key, 'torsion_1',
-                        self.ff['torsion_1'][key]
-                    )
-            else:
-                if left[0] < right[0]:
+            # try wildcards, which may have numerical precidence
+            # Find all the single-sided wildcards, realizing that the
+            # triplet might be flipped.
+            left = []
+            right = []
+            for key in self.ff[form]:
+                if key[0] == '*' or key[3] == '*':
+                    continue
+                if jauto == key[1] and kauto == key[2]:
+                    if lauto == key[3] and key[0][0] == '*':
+                        left.append(key[0])
+                    if lauto == key[0] and key[3][0] == '*':
+                        left.append(key[3])
+                    if iauto == key[0] and key[3][0] == '*':
+                        right.append(key[3])
+                    if iauto == key[3] and key[0][0] == '*':
+                        right.append(key[0])
+            if len(left) > 0:
+                if len(right) == 0:
                     key, flipped = self.make_canonical(
                         'like_torsion', (left[0], jauto, kauto, lauto)
                     )
-                    if key in self.ff['torsion_1']:
-                        return (
-                            'automatic', key, 'torsion_1',
-                            self.ff['torsion_1'][key]
-                        )
+                    if key in self.ff[form]:
+                        return ('automatic', key, form, self.ff[form][key])
                 else:
-                    key, flipped = self.make_canonical(
-                        'like_torsion', (iauto, jauto, kauto, right[0])
-                    )
-                    if key in self.ff['torsion_1']:
-                        return (
-                            'automatic', key, 'torsion_1',
-                            self.ff['torsion_1'][key]
+                    if left[0] < right[0]:
+                        key, flipped = self.make_canonical(
+                            'like_torsion', (left[0], jauto, kauto, lauto)
                         )
-        elif len(right) > 0:
-            key, flipped = self.make_canonical(
-                'like_torsion', (iauto, jauto, kauto, right[0])
-            )
-            if key in self.ff['torsion_1']:
-                return (
-                    'automatic', key, 'torsion_1', self.ff['torsion_1'][key]
+                        if key in self.ff[form]:
+                            return ('automatic', key, form, self.ff[form][key])
+                    else:
+                        key, flipped = self.make_canonical(
+                            'like_torsion', (iauto, jauto, kauto, right[0])
+                        )
+                        if key in self.ff[form]:
+                            return ('automatic', key, form, self.ff[form][key])
+            elif len(right) > 0:
+                key, flipped = self.make_canonical(
+                    'like_torsion', (iauto, jauto, kauto, right[0])
                 )
+                if key in self.ff[form]:
+                    return ('automatic', key, form, self.ff[form][key])
 
-        key, flipped = self.make_canonical(
-            'like_torsion', (iauto, jauto, kauto, '*')
-        )
-        if key in self.ff['torsion_1']:
-            return ('automatic', key, 'torsion_1', self.ff['torsion_1'][key])
-        key, flipped = self.make_canonical(
-            'like_torsion', ('*', jauto, kauto, lauto)
-        )
-        if key in self.ff['torsion_1']:
-            return ('automatic', key, 'torsion_1', self.ff['torsion_1'][key])
-        key, flipped = self.make_canonical(
-            'like_torsion', ('*', jauto, kauto, '*')
-        )
-        if key in self.ff['torsion_1']:
-            return ('automatic', key, 'torsion_1', self.ff['torsion_1'][key])
+            key, flipped = self.make_canonical(
+                'like_torsion', (iauto, jauto, kauto, '*')
+            )
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
+            key, flipped = self.make_canonical(
+                'like_torsion', ('*', jauto, kauto, lauto)
+            )
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
+            key, flipped = self.make_canonical(
+                'like_torsion', ('*', jauto, kauto, '*')
+            )
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
 
         raise RuntimeError(
             'No torsion parameters for {}-{}-{}-{}'.format(i, j, k, l)
@@ -1484,27 +1837,34 @@ class Forcefield(object):
         with numerical precedences
         """
 
-        result = self._oop_parameters_helper(i, j, k, l)
-        if result is not None:
-            return ('explicit', result[0], 'wilson_out_of_plane', result[1])
+        forms = self.ff['terms']['out-of-plane']
+
+        for form in forms:
+            result = self._oop_parameters_helper(i, j, k, l, form)
+            if result is not None:
+                return ('explicit', result[0], form, result[1])
 
         # try equivalences
         ieq = self.ff['equivalence'][i]['oop']
         jeq = self.ff['equivalence'][j]['oop']
         keq = self.ff['equivalence'][k]['oop']
         leq = self.ff['equivalence'][l]['oop']
-        result = self._oop_parameters_helper(ieq, jeq, keq, leq)
-        if result is not None:
-            return ('equivalent', result[0], 'wilson_out_of_plane', result[1])
+        for form in forms:
+            result = self._oop_parameters_helper(ieq, jeq, keq, leq, form)
+            if result is not None:
+                return ('equivalent', result[0], form, result[1])
 
         # try automatic equivalences
         iauto = self.ff['auto_equivalence'][i]['oop_end_atom']
         jauto = self.ff['auto_equivalence'][j]['oop_center_atom']
         kauto = self.ff['auto_equivalence'][k]['oop_end_atom']
         lauto = self.ff['auto_equivalence'][l]['oop_end_atom']
-        result = self._oop_parameters_helper(iauto, jauto, kauto, lauto)
-        if result is not None:
-            return ('automatic', result[0], 'wilson_out_of_plane', result[1])
+        for form in forms:
+            result = self._oop_parameters_helper(
+                iauto, jauto, kauto, lauto, form
+            )
+            if result is not None:
+                return ('automatic', result[0], form, result[1])
 
         if zero:
             parameters = {'K': 0.0, 'Chi0': 0.0}
@@ -1519,7 +1879,7 @@ class Forcefield(object):
                 )
             )
 
-    def _oop_parameters_helper(self, i, j, k, l):
+    def _oop_parameters_helper(self, i, j, k, l, form):
         """Return the oop parameters given four atoms types
 
         Handles equivalences and automatic equivalences and wildcards,
@@ -1528,35 +1888,35 @@ class Forcefield(object):
 
         # parameter directly available
         key, flipped = self.make_canonical('like_oop', (i, j, k, l))
-        if key in self.ff['wilson_out_of_plane']:
-            return (key, self.ff['wilson_out_of_plane'][key])
+        if key in self.ff[form]:
+            return (key, self.ff[form][key])
 
         # try wildcards
         key, flipped = self.make_canonical('like_oop', ('*', j, k, l))
-        if key in self.ff['wilson_out_of_plane']:
-            return (key, self.ff['wilson_out_of_plane'][key])
+        if key in self.ff[form]:
+            return (key, self.ff[form][key])
         key, flipped = self.make_canonical('like_oop', (i, j, '*', l))
-        if key in self.ff['wilson_out_of_plane']:
-            return (key, self.ff['wilson_out_of_plane'][key])
+        if key in self.ff[form]:
+            return (key, self.ff[form][key])
         key, flipped = self.make_canonical('like_oop', (i, j, k, '*'))
-        if key in self.ff['wilson_out_of_plane']:
-            return (key, self.ff['wilson_out_of_plane'][key])
+        if key in self.ff[form]:
+            return (key, self.ff[form][key])
         key, flipped = self.make_canonical('like_oop', ('*', j, '*', l))
-        if key in self.ff['wilson_out_of_plane']:
-            return (key, self.ff['wilson_out_of_plane'][key])
+        if key in self.ff[form]:
+            return (key, self.ff[form][key])
         key, flipped = self.make_canonical('like_oop', ('*', j, k, '*'))
-        if key in self.ff['wilson_out_of_plane']:
-            return (key, self.ff['wilson_out_of_plane'][key])
+        if key in self.ff[form]:
+            return (key, self.ff[form][key])
         key, flipped = self.make_canonical('like_oop', (i, j, '*', '*'))
-        if key in self.ff['wilson_out_of_plane']:
-            return (key, self.ff['wilson_out_of_plane'][key])
+        if key in self.ff[form]:
+            return (key, self.ff[form][key])
         key, flipped = self.make_canonical('like_oop', ('*', j, '*', '*'))
-        if key in self.ff['wilson_out_of_plane']:
-            return (key, self.ff['wilson_out_of_plane'][key])
+        if key in self.ff[form]:
+            return (key, self.ff[form][key])
 
         return None
 
-    def nonbond_parameters(self, i, j=None):
+    def nonbond_parameters(self, i, j=None, form='nonbond(12-6)'):
         """Return the nondbond parameters given one or two atoms types i and j
 
         Handle equivalences
@@ -1567,10 +1927,8 @@ class Forcefield(object):
             key = (i,)
         else:
             key, flipped = self.make_canonical('like_bond', (i, j))
-        if key in self.ff['nonbond(9-6)']:
-            return (
-                'explicit', key, 'nonbond(9-6)', self.ff['nonbond(9-6)'][key]
-            )
+        if key in self.ff[form]:
+            return ('explicit', key, form, self.ff[form][key])
 
         # try equivalences
         ieq = self.ff['equivalence'][i]['nonbond']
@@ -1579,10 +1937,8 @@ class Forcefield(object):
         else:
             jeq = self.ff['equivalence'][j]['nonbond']
             key, flipped = self.make_canonical('like_bond', (ieq, jeq))
-        if key in self.ff['nonbond(9-6)']:
-            return (
-                'equivalent', key, 'nonbond(9-6)', self.ff['nonbond(9-6)'][key]
-            )
+        if key in self.ff[form]:
+            return ('equivalent', key, form, self.ff[form][key])
 
         # try automatic equivalences
         iauto = self.ff['auto_equivalence'][i]['nonbond']
@@ -1591,10 +1947,8 @@ class Forcefield(object):
         else:
             jauto = self.ff['auto_equivalence'][j]['nonbond']
             key, flipped = self.make_canonical('like_bond', (iauto, jauto))
-        if key in self.ff['nonbond(9-6)']:
-            return (
-                'automatic', key, 'nonbond(9-6)', self.ff['nonbond(9-6)'][key]
-            )
+        if key in self.ff[form]:
+            return ('automatic', key, form, self.ff[form][key])
 
         if j is None:
             raise RuntimeError('No nonbond parameters for {}'.format(i))
@@ -2176,6 +2530,10 @@ class Forcefield(object):
 
         eex = {}
 
+        # We will need the elements for fix shake, 1-based.
+        eex['elements'] = ['']
+        eex['elements'].extend(structure['atoms']['elements'])
+
         # The periodicity & cell parameters
         periodicity = eex['periodicity'] = structure['periodicity']
         if periodicity == 3:
@@ -2258,11 +2616,18 @@ class Forcefield(object):
                     oops.append((i, m, k, l))
                     oops.append((j, m, k, l))
 
+    def eex_charges(self, eex, structure):
+        """Do nothing routine since charges are handled by the increments."""
+        pass
+
     def eex_increment(self, eex, structure):
         """Get the charges for the structure
 
         If they do not exists on the structure, they are created
         using the bond increments and saved on the structure"""
+
+        logger.debug('entering eex_increment')
+
         ff_name = self.current_forcefield
         atoms = structure['atoms']
         if 'charges' in atoms and ff_name in atoms['charges']:
@@ -2275,7 +2640,8 @@ class Forcefield(object):
             total_q = 0.0
             for i in range(1, n_atoms + 1):
                 itype = types[i]
-                q = 0.0
+                parameters = self.charges(itype)[3]
+                q = float(parameters['Q'])
                 for j in bonds_from_atom[i]:
                     jtype = types[j]
                     parameters = self.bond_increments(itype, jtype)[3]
@@ -2285,7 +2651,8 @@ class Forcefield(object):
             if abs(total_q) > 0.0001:
                 logger.warning('Total charge is not zero: {}'.format(total_q))
                 logger.info(
-                    'Charges from increments:\n' + pprint.pformat(charges)
+                    'Charges from increments and charges:\n' +
+                    pprint.pformat(charges)
                 )
             else:
                 logger.debug(
@@ -2294,6 +2661,8 @@ class Forcefield(object):
             if 'charges' not in atoms:
                 atoms['charges'] = {}
             atoms['charges'][ff_name] = charges
+
+        logger.debug('leaving eex_increment')
 
     def eex_atoms(self, eex, structure):
         """List the atoms into the energy expression"""
@@ -2322,11 +2691,18 @@ class Forcefield(object):
         """Create the pair (non-bond) portion of the energy expression"""
         types = self.topology['types']
 
+        for pair_type in ('nonbond(12-6)', 'nonbond(9-6)'):
+            if pair_type in self.ff['functional_forms']:
+                found = True
+                break
+        if not found:
+            raise RuntimeError('Error findinf pair_type in eex_pair')
+
         result = eex['nonbonds'] = []
         parameters = eex['nonbond parameters'] = []
         for itype in types[1:]:
             parameters_type, real_types, form, parameter_values = \
-                self.nonbond_parameters(itype)
+                self.nonbond_parameters(itype, form=pair_type)
             new_value = (
                 form, parameter_values, (itype,), parameters_type, real_types
             )
