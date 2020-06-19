@@ -45,10 +45,10 @@ metadata = {
         },
     'bond_increments':
         {
-            'equation': ['I'],
+            'equation': ['delta'],
             'constants': [
-                ('Iij', 'e'),
-                ('Iji', 'e'),
+                ('deltaij', 'e'),
+                ('deltaji', 'e'),
             ],
             'topology':
                 {
@@ -1076,15 +1076,19 @@ class Forcefield(object):
             msg = "'{}' already defined in section '{}'".format(label, section)
             logger.error(msg)
             raise RuntimeError(msg)
+
         self.data[section][label] = data
+
         parameters = data['parameters'] = {}
-        data['constants'] = [('deltaij', 'e'), ('deltaji', 'e')]
+
+        # Copy in the metadata about this functional form
+        data.update(metadata[section])
 
         for line in data['lines']:
             words = line.split()
             version, reference, i, j, deltaij, deltaji = words
-            # order canonically, i>j
-            if i < j:
+            # order canonically, i<j
+            if i > j:
                 i, j = j, i
                 deltaij, deltaji = deltaji, deltaij
             key = (i, j)
@@ -1560,8 +1564,8 @@ class Forcefield(object):
             parameters = {}
             parameters.update(self.ff['bond_increments'][key])
             if flipped:
-                parameters['Iij'], parameters['Iji'] = \
-                    parameters['Iji'], parameters['Iij']
+                parameters['deltaij'], parameters['deltaji'] = \
+                    parameters['deltaji'], parameters['deltaij']
             return ('explicit', key, 'bond_increments', parameters)
 
         # try automatic equivalences
@@ -1572,8 +1576,8 @@ class Forcefield(object):
             parameters = {}
             parameters.update(self.ff['bond_increments'][key])
             if flipped:
-                parameters['Iij'], parameters['Iji'] = \
-                    parameters['Iji'], parameters['Iij']
+                parameters['deltaij'], parameters['deltaji'] = \
+                    parameters['deltaji'], parameters['deltaij']
             return ('automatic', key, 'bond_increments', parameters)
 
         raise RuntimeError('No bond increments for {}-{}'.format(i, j))
@@ -1705,7 +1709,7 @@ class Forcefield(object):
 
         raise RuntimeError('No angle parameters for {}-{}-{}'.format(i, j, k))
 
-    def torsion_parameters(self, i, j, k, l):
+    def torsion_parameters(self, i, j, k, l):  # noqa: E741
         """Return the torsion parameters given four atoms types
 
         Handles equivalences and automatic equivalences and wildcards,
@@ -1808,7 +1812,7 @@ class Forcefield(object):
             'No torsion parameters for {}-{}-{}-{}'.format(i, j, k, l)
         )
 
-    def _torsion_parameters_helper(self, i, j, k, l, section):
+    def _torsion_parameters_helper(self, i, j, k, l, section):  # noqa: E741
         """Return the torsion parameters given four atom types
         """
 
@@ -1830,7 +1834,7 @@ class Forcefield(object):
 
         return None
 
-    def oop_parameters(self, i, j, k, l, zero=False):
+    def oop_parameters(self, i, j, k, l, zero=False):  # noqa: E741
         """Return the oop parameters given four atoms types
 
         Handles equivalences and automatic equivalences and wildcards,
@@ -1879,7 +1883,7 @@ class Forcefield(object):
                 )
             )
 
-    def _oop_parameters_helper(self, i, j, k, l, form):
+    def _oop_parameters_helper(self, i, j, k, l, form):  # noqa: E741
         """Return the oop parameters given four atoms types
 
         Handles equivalences and automatic equivalences and wildcards,
@@ -2031,7 +2035,7 @@ class Forcefield(object):
 
         return None
 
-    def bond_bond_1_3_parameters(self, i, j, k, l, zero=False):
+    def bond_bond_1_3_parameters(self, i, j, k, l, zero=False):  # noqa: E741
         """Return the bond-bond_1_3 parameters given four atoms types
 
         Handles equivalences wildcards
@@ -2154,7 +2158,7 @@ class Forcefield(object):
                 'No bond-angle parameters for {}-{}-{}'.format(i, j, k)
             )
 
-    def angle_angle_parameters(self, i, j, k, l, zero=False):
+    def angle_angle_parameters(self, i, j, k, l, zero=False):  # noqa: E741
         """Return the angle_angle parameters given four atoms types
 
         Handles equivalences and wildcards
@@ -2208,7 +2212,14 @@ class Forcefield(object):
                 'No angle-angle parameters for {}-{}-{}-{}'.format(i, j, k, l)
             )
 
-    def _angle_angle_parameters_helper(self, i, j, k, l, section):
+    def _angle_angle_parameters_helper(
+        self,
+        i,
+        j,
+        k,
+        l,  # noqa: E741
+        section
+    ):
         """Return the torsion parameters given four atom types
         """
 
@@ -2237,7 +2248,14 @@ class Forcefield(object):
 
         return None
 
-    def end_bond_torsion_3_parameters(self, i, j, k, l, zero=False):
+    def end_bond_torsion_3_parameters(
+        self,
+        i,
+        j,
+        k,
+        l,  # noqa: E741
+        zero=False
+    ):
         """Return the end bond - torsion_3 parameters given four atom types
 
         Handle equivalences
@@ -2332,7 +2350,14 @@ class Forcefield(object):
                 '{}-{}-{}-{}'.format(i, j, k, l)
             )
 
-    def middle_bond_torsion_3_parameters(self, i, j, k, l, zero=False):
+    def middle_bond_torsion_3_parameters(
+        self,
+        i,
+        j,
+        k,
+        l,  # noqa: E741
+        zero=False
+    ):
         """Return the middle bond - torsion_3 parameters given four atom types
 
         Handle equivalences
@@ -2377,7 +2402,7 @@ class Forcefield(object):
                 '{}-{}-{}-{}'.format(i, j, k, l)
             )
 
-    def angle_torsion_3_parameters(self, i, j, k, l, zero=False):
+    def angle_torsion_3_parameters(self, i, j, k, l, zero=False):  # noqa: E741
         """Return the angle - torsion_3 parameters given four atom types
 
         Handle equivalences
@@ -2469,7 +2494,14 @@ class Forcefield(object):
                 '{}-{}-{}-{}'.format(i, j, k, l)
             )
 
-    def angle_angle_torsion_1_parameters(self, i, j, k, l, zero=False):
+    def angle_angle_torsion_1_parameters(
+        self,
+        i,
+        j,
+        k,
+        l,  # noqa: E741
+        zero=False
+    ):
         """Return the angle - angle - torsion_1 parameters given four atom types
 
         Handle equivalences
@@ -2596,7 +2628,7 @@ class Forcefield(object):
             for i in bonds_from_atom[j]:
                 if i == k:
                     continue
-                for l in bonds_from_atom[k]:
+                for l in bonds_from_atom[k]:  # noqa: E741
                     if l == j:  # noqa: E741
                         continue
                     torsions.append((i, j, k, l))
@@ -2645,7 +2677,7 @@ class Forcefield(object):
                 for j in bonds_from_atom[i]:
                     jtype = types[j]
                     parameters = self.bond_increments(itype, jtype)[3]
-                    q += float(parameters['Iij'])
+                    q += float(parameters['deltaij'])
                 charges.append(q)
                 total_q += q
             if abs(total_q) > 0.0001:
