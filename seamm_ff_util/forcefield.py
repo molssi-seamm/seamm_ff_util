@@ -45,10 +45,10 @@ metadata = {
         },
     'bond_increments':
         {
-            'equation': ['I'],
+            'equation': ['delta'],
             'constants': [
-                ('Iij', 'e'),
-                ('Iji', 'e'),
+                ('deltaij', 'e'),
+                ('deltaji', 'e'),
             ],
             'topology':
                 {
@@ -1076,15 +1076,19 @@ class Forcefield(object):
             msg = "'{}' already defined in section '{}'".format(label, section)
             logger.error(msg)
             raise RuntimeError(msg)
+
         self.data[section][label] = data
+
         parameters = data['parameters'] = {}
-        data['constants'] = [('deltaij', 'e'), ('deltaji', 'e')]
+
+        # Copy in the metadata about this functional form
+        data.update(metadata[section])
 
         for line in data['lines']:
             words = line.split()
             version, reference, i, j, deltaij, deltaji = words
-            # order canonically, i>j
-            if i < j:
+            # order canonically, i<j
+            if i > j:
                 i, j = j, i
                 deltaij, deltaji = deltaji, deltaij
             key = (i, j)
@@ -1537,12 +1541,13 @@ class Forcefield(object):
                 return ('explicit', key, 'charges', parameters)
 
             # try equivalences
-            ieq = self.ff['equivalence'][i]['nonbond']
-            key = (ieq,)
-            if key in self.ff['charges']:
-                parameters = {}
-                parameters.update(self.ff['charges'][key])
-                return ('equivalent', key, 'charges', parameters)
+            if 'equivalence' in self.ff:
+                ieq = self.ff['equivalence'][i]['nonbond']
+                key = (ieq,)
+                if key in self.ff['charges']:
+                    parameters = {}
+                    parameters.update(self.ff['charges'][key])
+                    return ('equivalent', key, 'charges', parameters)
 
         # return the default of zero
         parameters = {'Q': 0.0}
@@ -1560,21 +1565,22 @@ class Forcefield(object):
             parameters = {}
             parameters.update(self.ff['bond_increments'][key])
             if flipped:
-                parameters['Iij'], parameters['Iji'] = \
-                    parameters['Iji'], parameters['Iij']
+                parameters['deltaij'], parameters['deltaji'] = \
+                    parameters['deltaji'], parameters['deltaij']
             return ('explicit', key, 'bond_increments', parameters)
 
         # try automatic equivalences
-        iauto = self.ff['auto_equivalence'][i]['bond_increment']
-        jauto = self.ff['auto_equivalence'][j]['bond_increment']
-        key, flipped = self.make_canonical('like_bond', (iauto, jauto))
-        if key in self.ff['bond_increments']:
-            parameters = {}
-            parameters.update(self.ff['bond_increments'][key])
-            if flipped:
-                parameters['Iij'], parameters['Iji'] = \
-                    parameters['Iji'], parameters['Iij']
-            return ('automatic', key, 'bond_increments', parameters)
+        if 'auto_equivalence' in self.ff:
+            iauto = self.ff['auto_equivalence'][i]['bond_increment']
+            jauto = self.ff['auto_equivalence'][j]['bond_increment']
+            key, flipped = self.make_canonical('like_bond', (iauto, jauto))
+            if key in self.ff['bond_increments']:
+                parameters = {}
+                parameters.update(self.ff['bond_increments'][key])
+                if flipped:
+                    parameters['deltaij'], parameters['deltaji'] = \
+                        parameters['deltaji'], parameters['deltaij']
+                return ('automatic', key, 'bond_increments', parameters)
 
         raise RuntimeError('No bond increments for {}-{}'.format(i, j))
 
@@ -1593,20 +1599,22 @@ class Forcefield(object):
                 return ('explicit', key, form, self.ff[form][key])
 
         # try equivalences
-        ieq = self.ff['equivalence'][i]['bond']
-        jeq = self.ff['equivalence'][j]['bond']
-        key, flipped = self.make_canonical('like_bond', (ieq, jeq))
-        for form in forms:
-            if key in self.ff[form]:
-                return ('equivalent', key, form, self.ff[form][key])
+        if 'equivalence' in self.ff:
+            ieq = self.ff['equivalence'][i]['bond']
+            jeq = self.ff['equivalence'][j]['bond']
+            key, flipped = self.make_canonical('like_bond', (ieq, jeq))
+            for form in forms:
+                if key in self.ff[form]:
+                    return ('equivalent', key, form, self.ff[form][key])
 
         # try automatic equivalences
-        iauto = self.ff['auto_equivalence'][i]['bond']
-        jauto = self.ff['auto_equivalence'][j]['bond']
-        key, flipped = self.make_canonical('like_bond', (iauto, jauto))
-        for form in forms:
-            if key in self.ff[form]:
-                return ('automatic', key, form, self.ff[form][key])
+        if 'auto_equivalence' in self.ff:
+            iauto = self.ff['auto_equivalence'][i]['bond']
+            jauto = self.ff['auto_equivalence'][j]['bond']
+            key, flipped = self.make_canonical('like_bond', (iauto, jauto))
+            for form in forms:
+                if key in self.ff[form]:
+                    return ('automatic', key, form, self.ff[form][key])
 
         raise RuntimeError('No bond parameters for {}-{}'.format(i, j))
 
@@ -1625,87 +1633,97 @@ class Forcefield(object):
                 return ('explicit', result[0], form, result[2])
 
         # try equivalences
-        ieq = self.ff['equivalence'][i]['angle']
-        jeq = self.ff['equivalence'][j]['angle']
-        keq = self.ff['equivalence'][k]['angle']
-        for form in forms:
-            result = self._angle_parameters_helper(
-                ieq, jeq, keq, self.ff[form]
-            )
-            if result is not None:
-                return ('equivalent', result[0], form, result[2])
+        if 'equivalence' in self.ff:
+            ieq = self.ff['equivalence'][i]['angle']
+            jeq = self.ff['equivalence'][j]['angle']
+            keq = self.ff['equivalence'][k]['angle']
+            for form in forms:
+                result = self._angle_parameters_helper(
+                    ieq, jeq, keq, self.ff[form]
+                )
+                if result is not None:
+                    return ('equivalent', result[0], form, result[2])
 
         # try automatic equivalences
-        iauto = self.ff['auto_equivalence'][i]['angle_end_atom']
-        jauto = self.ff['auto_equivalence'][j]['angle_center_atom']
-        kauto = self.ff['auto_equivalence'][k]['angle_end_atom']
-        key, flipped = self.make_canonical('like_angle', (iauto, jauto, kauto))
-        for form in forms:
-            if key in self.ff[form]:
-                return ('automatic', key, form, self.ff[form][key])
+        if 'auto_equivalence' in self.ff:
+            iauto = self.ff['auto_equivalence'][i]['angle_end_atom']
+            jauto = self.ff['auto_equivalence'][j]['angle_center_atom']
+            kauto = self.ff['auto_equivalence'][k]['angle_end_atom']
+            key, flipped = self.make_canonical(
+                'like_angle', (iauto, jauto, kauto)
+            )
+            for form in forms:
+                if key in self.ff[form]:
+                    return ('automatic', key, form, self.ff[form][key])
 
-        # try wildcards, which may have numerical precidence
-        # Find all the single-sided wildcards, realizing that the
-        # triplet might be flipped.
-        for form in forms:
-            left = []
-            right = []
-            for key in self.ff[form]:
-                if key[0] == '*' or key[2] == '*':
-                    continue
-                if jauto == key[1]:
-                    if kauto == key[2] and key[0][0] == '*':
-                        left.append(key[0])
-                    if kauto == key[0] and key[2][0] == '*':
-                        left.append(key[2])
-                    if iauto == key[0] and key[2][0] == '*':
-                        right.append(key[2])
-                    if iauto == key[2] and key[0][0] == '*':
-                        right.append(key[0])
-            if len(left) > 0:
-                if len(right) == 0:
-                    key, flipped = self.make_canonical(
-                        'like_angle', (left[0], jauto, kauto)
-                    )
-                    if key in self.ff[form]:
-                        return ('automatic', key, form, self.ff[form][key])
-                else:
-                    if left[0] < right[0]:
+            # try wildcards, which may have numerical precidence
+            # Find all the single-sided wildcards, realizing that the
+            # triplet might be flipped.
+            for form in forms:
+                left = []
+                right = []
+                for key in self.ff[form]:
+                    if key[0] == '*' or key[2] == '*':
+                        continue
+                    if jauto == key[1]:
+                        if kauto == key[2] and key[0][0] == '*':
+                            left.append(key[0])
+                        if kauto == key[0] and key[2][0] == '*':
+                            left.append(key[2])
+                        if iauto == key[0] and key[2][0] == '*':
+                            right.append(key[2])
+                        if iauto == key[2] and key[0][0] == '*':
+                            right.append(key[0])
+                if len(left) > 0:
+                    if len(right) == 0:
                         key, flipped = self.make_canonical(
                             'like_angle', (left[0], jauto, kauto)
                         )
                         if key in self.ff[form]:
                             return ('automatic', key, form, self.ff[form][key])
                     else:
-                        key, flipped = self.make_canonical(
-                            'like_angle', (iauto, jauto, right[0])
-                        )
-                        if key in self.ff[form]:
-                            return ('automatic', key, form, self.ff[form][key])
-            elif len(right) > 0:
+                        if left[0] < right[0]:
+                            key, flipped = self.make_canonical(
+                                'like_angle', (left[0], jauto, kauto)
+                            )
+                            if key in self.ff[form]:
+                                return (
+                                    'automatic', key, form, self.ff[form][key]
+                                )
+                        else:
+                            key, flipped = self.make_canonical(
+                                'like_angle', (iauto, jauto, right[0])
+                            )
+                            if key in self.ff[form]:
+                                return (
+                                    'automatic', key, form, self.ff[form][key]
+                                )
+                elif len(right) > 0:
+                    key, flipped = self.make_canonical(
+                        'like_angle', (iauto, jauto, right[0])
+                    )
+                    if key in self.ff[form]:
+                        return ('automatic', key, form, self.ff[form][key])
+
                 key, flipped = self.make_canonical(
-                    'like_angle', (iauto, jauto, right[0])
+                    'like_angle', ('*', jauto, kauto)
+                )
+                if key in self.ff[form]:
+                    return ('automatic', key, form, self.ff[form][key])
+                key, flipped = self.make_canonical(
+                    'like_angle', (iauto, jauto, '*')
+                )
+                if key in self.ff[form]:
+                    return ('automatic', key, form, self.ff[form][key])
+                key, flipped = self.make_canonical(
+                    'like_angle', ('*', jauto, '*')
                 )
                 if key in self.ff[form]:
                     return ('automatic', key, form, self.ff[form][key])
 
-            key, flipped = self.make_canonical(
-                'like_angle', ('*', jauto, kauto)
-            )
-            if key in self.ff[form]:
-                return ('automatic', key, form, self.ff[form][key])
-            key, flipped = self.make_canonical(
-                'like_angle', (iauto, jauto, '*')
-            )
-            if key in self.ff[form]:
-                return ('automatic', key, form, self.ff[form][key])
-            key, flipped = self.make_canonical('like_angle', ('*', jauto, '*'))
-            if key in self.ff[form]:
-                return ('automatic', key, form, self.ff[form][key])
-
         raise RuntimeError('No angle parameters for {}-{}-{}'.format(i, j, k))
 
-    def torsion_parameters(self, i, j, k, l):
+    def torsion_parameters(self, i, j, k, l):  # noqa: E741
         """Return the torsion parameters given four atoms types
 
         Handles equivalences and automatic equivalences and wildcards,
@@ -1721,94 +1739,101 @@ class Forcefield(object):
                 return ('explicit', result[0], form, result[2])
 
         # try equivalences
-        ieq = self.ff['equivalence'][i]['torsion']
-        jeq = self.ff['equivalence'][j]['torsion']
-        keq = self.ff['equivalence'][k]['torsion']
-        leq = self.ff['equivalence'][l]['torsion']
-        for form in forms:
-            result = self._torsion_parameters_helper(
-                ieq, jeq, keq, leq, self.ff[form]
-            )
-            if result is not None:
-                return ('equivalent', result[0], form, result[2])
+        if 'equivalence' in self.ff:
+            ieq = self.ff['equivalence'][i]['torsion']
+            jeq = self.ff['equivalence'][j]['torsion']
+            keq = self.ff['equivalence'][k]['torsion']
+            leq = self.ff['equivalence'][l]['torsion']
+            for form in forms:
+                result = self._torsion_parameters_helper(
+                    ieq, jeq, keq, leq, self.ff[form]
+                )
+                if result is not None:
+                    return ('equivalent', result[0], form, result[2])
 
         # try automatic equivalences
-        iauto = self.ff['auto_equivalence'][i]['torsion_end_atom']
-        jauto = self.ff['auto_equivalence'][j]['torsion_center_atom']
-        kauto = self.ff['auto_equivalence'][k]['torsion_center_atom']
-        lauto = self.ff['auto_equivalence'][l]['torsion_end_atom']
-        key, flipped = self.make_canonical(
-            'like_torsion', (iauto, jauto, kauto, lauto)
-        )
-        for form in forms:
-            if key in self.ff[form]:
-                return ('automatic', key, form, self.ff[form][key])
+        if 'auto_equivalence' in self.ff:
+            iauto = self.ff['auto_equivalence'][i]['torsion_end_atom']
+            jauto = self.ff['auto_equivalence'][j]['torsion_center_atom']
+            kauto = self.ff['auto_equivalence'][k]['torsion_center_atom']
+            lauto = self.ff['auto_equivalence'][l]['torsion_end_atom']
+            key, flipped = self.make_canonical(
+                'like_torsion', (iauto, jauto, kauto, lauto)
+            )
+            for form in forms:
+                if key in self.ff[form]:
+                    return ('automatic', key, form, self.ff[form][key])
 
-            # try wildcards, which may have numerical precidence
-            # Find all the single-sided wildcards, realizing that the
-            # triplet might be flipped.
-            left = []
-            right = []
-            for key in self.ff[form]:
-                if key[0] == '*' or key[3] == '*':
-                    continue
-                if jauto == key[1] and kauto == key[2]:
-                    if lauto == key[3] and key[0][0] == '*':
-                        left.append(key[0])
-                    if lauto == key[0] and key[3][0] == '*':
-                        left.append(key[3])
-                    if iauto == key[0] and key[3][0] == '*':
-                        right.append(key[3])
-                    if iauto == key[3] and key[0][0] == '*':
-                        right.append(key[0])
-            if len(left) > 0:
-                if len(right) == 0:
-                    key, flipped = self.make_canonical(
-                        'like_torsion', (left[0], jauto, kauto, lauto)
-                    )
-                    if key in self.ff[form]:
-                        return ('automatic', key, form, self.ff[form][key])
-                else:
-                    if left[0] < right[0]:
+                # try wildcards, which may have numerical precidence
+                # Find all the single-sided wildcards, realizing that the
+                # triplet might be flipped.
+                left = []
+                right = []
+                for key in self.ff[form]:
+                    if key[0] == '*' or key[3] == '*':
+                        continue
+                    if jauto == key[1] and kauto == key[2]:
+                        if lauto == key[3] and key[0][0] == '*':
+                            left.append(key[0])
+                        if lauto == key[0] and key[3][0] == '*':
+                            left.append(key[3])
+                        if iauto == key[0] and key[3][0] == '*':
+                            right.append(key[3])
+                        if iauto == key[3] and key[0][0] == '*':
+                            right.append(key[0])
+                if len(left) > 0:
+                    if len(right) == 0:
                         key, flipped = self.make_canonical(
                             'like_torsion', (left[0], jauto, kauto, lauto)
                         )
                         if key in self.ff[form]:
                             return ('automatic', key, form, self.ff[form][key])
                     else:
-                        key, flipped = self.make_canonical(
-                            'like_torsion', (iauto, jauto, kauto, right[0])
-                        )
-                        if key in self.ff[form]:
-                            return ('automatic', key, form, self.ff[form][key])
-            elif len(right) > 0:
+                        if left[0] < right[0]:
+                            key, flipped = self.make_canonical(
+                                'like_torsion', (left[0], jauto, kauto, lauto)
+                            )
+                            if key in self.ff[form]:
+                                return (
+                                    'automatic', key, form, self.ff[form][key]
+                                )
+                        else:
+                            key, flipped = self.make_canonical(
+                                'like_torsion',
+                                (iauto, jauto, kauto, right[0])
+                            )
+                            if key in self.ff[form]:
+                                return (
+                                    'automatic', key, form, self.ff[form][key]
+                                )
+                elif len(right) > 0:
+                    key, flipped = self.make_canonical(
+                        'like_torsion', (iauto, jauto, kauto, right[0])
+                    )
+                    if key in self.ff[form]:
+                        return ('automatic', key, form, self.ff[form][key])
+
                 key, flipped = self.make_canonical(
-                    'like_torsion', (iauto, jauto, kauto, right[0])
+                    'like_torsion', (iauto, jauto, kauto, '*')
                 )
                 if key in self.ff[form]:
                     return ('automatic', key, form, self.ff[form][key])
-
-            key, flipped = self.make_canonical(
-                'like_torsion', (iauto, jauto, kauto, '*')
-            )
-            if key in self.ff[form]:
-                return ('automatic', key, form, self.ff[form][key])
-            key, flipped = self.make_canonical(
-                'like_torsion', ('*', jauto, kauto, lauto)
-            )
-            if key in self.ff[form]:
-                return ('automatic', key, form, self.ff[form][key])
-            key, flipped = self.make_canonical(
-                'like_torsion', ('*', jauto, kauto, '*')
-            )
-            if key in self.ff[form]:
-                return ('automatic', key, form, self.ff[form][key])
+                key, flipped = self.make_canonical(
+                    'like_torsion', ('*', jauto, kauto, lauto)
+                )
+                if key in self.ff[form]:
+                    return ('automatic', key, form, self.ff[form][key])
+                key, flipped = self.make_canonical(
+                    'like_torsion', ('*', jauto, kauto, '*')
+                )
+                if key in self.ff[form]:
+                    return ('automatic', key, form, self.ff[form][key])
 
         raise RuntimeError(
             'No torsion parameters for {}-{}-{}-{}'.format(i, j, k, l)
         )
 
-    def _torsion_parameters_helper(self, i, j, k, l, section):
+    def _torsion_parameters_helper(self, i, j, k, l, section):  # noqa: E741
         """Return the torsion parameters given four atom types
         """
 
@@ -1830,7 +1855,7 @@ class Forcefield(object):
 
         return None
 
-    def oop_parameters(self, i, j, k, l, zero=False):
+    def oop_parameters(self, i, j, k, l, zero=False):  # noqa: E741
         """Return the oop parameters given four atoms types
 
         Handles equivalences and automatic equivalences and wildcards,
@@ -1845,26 +1870,28 @@ class Forcefield(object):
                 return ('explicit', result[0], form, result[1])
 
         # try equivalences
-        ieq = self.ff['equivalence'][i]['oop']
-        jeq = self.ff['equivalence'][j]['oop']
-        keq = self.ff['equivalence'][k]['oop']
-        leq = self.ff['equivalence'][l]['oop']
-        for form in forms:
-            result = self._oop_parameters_helper(ieq, jeq, keq, leq, form)
-            if result is not None:
-                return ('equivalent', result[0], form, result[1])
+        if 'equivalence' in self.ff:
+            ieq = self.ff['equivalence'][i]['oop']
+            jeq = self.ff['equivalence'][j]['oop']
+            keq = self.ff['equivalence'][k]['oop']
+            leq = self.ff['equivalence'][l]['oop']
+            for form in forms:
+                result = self._oop_parameters_helper(ieq, jeq, keq, leq, form)
+                if result is not None:
+                    return ('equivalent', result[0], form, result[1])
 
         # try automatic equivalences
-        iauto = self.ff['auto_equivalence'][i]['oop_end_atom']
-        jauto = self.ff['auto_equivalence'][j]['oop_center_atom']
-        kauto = self.ff['auto_equivalence'][k]['oop_end_atom']
-        lauto = self.ff['auto_equivalence'][l]['oop_end_atom']
-        for form in forms:
-            result = self._oop_parameters_helper(
-                iauto, jauto, kauto, lauto, form
-            )
-            if result is not None:
-                return ('automatic', result[0], form, result[1])
+        if 'auto_equivalence' in self.ff:
+            iauto = self.ff['auto_equivalence'][i]['oop_end_atom']
+            jauto = self.ff['auto_equivalence'][j]['oop_center_atom']
+            kauto = self.ff['auto_equivalence'][k]['oop_end_atom']
+            lauto = self.ff['auto_equivalence'][l]['oop_end_atom']
+            for form in forms:
+                result = self._oop_parameters_helper(
+                    iauto, jauto, kauto, lauto, form
+                )
+                if result is not None:
+                    return ('automatic', result[0], form, result[1])
 
         if zero:
             parameters = {'K': 0.0, 'Chi0': 0.0}
@@ -1879,7 +1906,7 @@ class Forcefield(object):
                 )
             )
 
-    def _oop_parameters_helper(self, i, j, k, l, form):
+    def _oop_parameters_helper(self, i, j, k, l, form):  # noqa: E741
         """Return the oop parameters given four atoms types
 
         Handles equivalences and automatic equivalences and wildcards,
@@ -1931,24 +1958,26 @@ class Forcefield(object):
             return ('explicit', key, form, self.ff[form][key])
 
         # try equivalences
-        ieq = self.ff['equivalence'][i]['nonbond']
-        if j is None:
-            key = (ieq,)
-        else:
-            jeq = self.ff['equivalence'][j]['nonbond']
-            key, flipped = self.make_canonical('like_bond', (ieq, jeq))
-        if key in self.ff[form]:
-            return ('equivalent', key, form, self.ff[form][key])
+        if 'equivalence' in self.ff:
+            ieq = self.ff['equivalence'][i]['nonbond']
+            if j is None:
+                key = (ieq,)
+            else:
+                jeq = self.ff['equivalence'][j]['nonbond']
+                key, flipped = self.make_canonical('like_bond', (ieq, jeq))
+            if key in self.ff[form]:
+                return ('equivalent', key, form, self.ff[form][key])
 
         # try automatic equivalences
-        iauto = self.ff['auto_equivalence'][i]['nonbond']
-        if j is None:
-            key = (iauto,)
-        else:
-            jauto = self.ff['auto_equivalence'][j]['nonbond']
-            key, flipped = self.make_canonical('like_bond', (iauto, jauto))
-        if key in self.ff[form]:
-            return ('automatic', key, form, self.ff[form][key])
+        if 'auto_equivalence' in self.ff:
+            iauto = self.ff['auto_equivalence'][i]['nonbond']
+            if j is None:
+                key = (iauto,)
+            else:
+                jauto = self.ff['auto_equivalence'][j]['nonbond']
+                key, flipped = self.make_canonical('like_bond', (iauto, jauto))
+            if key in self.ff[form]:
+                return ('automatic', key, form, self.ff[form][key])
 
         if j is None:
             raise RuntimeError('No nonbond parameters for {}'.format(i))
@@ -1981,20 +2010,21 @@ class Forcefield(object):
             return ('explicit', result[0], 'bond-bond', values)
 
         # try equivalences
-        ieq = self.ff['equivalence'][i]['angle']
-        jeq = self.ff['equivalence'][j]['angle']
-        keq = self.ff['equivalence'][k]['angle']
-        result = self._angle_parameters_helper(
-            ieq, jeq, keq, self.ff['bond-bond']
-        )
-        if result is not None:
-            if result[1]:
-                values = {
-                    'R10': b2_parameters['R0'],
-                    'R20': b1_parameters['R0']
-                }
-            values.update(result[2])
-            return ('equivalent', result[0], 'bond-bond', values)
+        if 'equivalence' in self.ff:
+            ieq = self.ff['equivalence'][i]['angle']
+            jeq = self.ff['equivalence'][j]['angle']
+            keq = self.ff['equivalence'][k]['angle']
+            result = self._angle_parameters_helper(
+                ieq, jeq, keq, self.ff['bond-bond']
+            )
+            if result is not None:
+                if result[1]:
+                    values = {
+                        'R10': b2_parameters['R0'],
+                        'R20': b1_parameters['R0']
+                    }
+                values.update(result[2])
+                return ('equivalent', result[0], 'bond-bond', values)
 
         if zero:
             return (
@@ -2031,7 +2061,7 @@ class Forcefield(object):
 
         return None
 
-    def bond_bond_1_3_parameters(self, i, j, k, l, zero=False):
+    def bond_bond_1_3_parameters(self, i, j, k, l, zero=False):  # noqa: E741
         """Return the bond-bond_1_3 parameters given four atoms types
 
         Handles equivalences wildcards
@@ -2057,21 +2087,22 @@ class Forcefield(object):
             return ('explicit', result[0], 'bond-bond_1_3', values)
 
         # try equivalences
-        ieq = self.ff['equivalence'][i]['torsion']
-        jeq = self.ff['equivalence'][j]['torsion']
-        keq = self.ff['equivalence'][k]['torsion']
-        leq = self.ff['equivalence'][l]['torsion']
-        result = self._torsion_parameters_helper(
-            ieq, jeq, keq, leq, self.ff['bond-bond_1_3']
-        )
-        if result is not None:
-            if result[1]:
-                values = {
-                    'R10': b3_parameters['R0'],
-                    'R30': b1_parameters['R0']
-                }
-            values.update(result[2])
-            return ('equivalent', result[0], 'bond-bond_1_3', values)
+        if 'equivalence' in self.ff:
+            ieq = self.ff['equivalence'][i]['torsion']
+            jeq = self.ff['equivalence'][j]['torsion']
+            keq = self.ff['equivalence'][k]['torsion']
+            leq = self.ff['equivalence'][l]['torsion']
+            result = self._torsion_parameters_helper(
+                ieq, jeq, keq, leq, self.ff['bond-bond_1_3']
+            )
+            if result is not None:
+                if result[1]:
+                    values = {
+                        'R10': b3_parameters['R0'],
+                        'R30': b1_parameters['R0']
+                    }
+                values.update(result[2])
+                return ('equivalent', result[0], 'bond-bond_1_3', values)
 
         if zero:
             parameters = {'K': '0.0', 'R10': '1.5', 'R30': '1.5'}
@@ -2117,28 +2148,31 @@ class Forcefield(object):
                 return ('explicit', result[0], 'bond-angle', parameters)
 
         # try equivalences
-        ieq = self.ff['equivalence'][i]['angle']
-        jeq = self.ff['equivalence'][j]['angle']
-        keq = self.ff['equivalence'][k]['angle']
-        result = self._angle_parameters_helper(
-            ieq, jeq, keq, self.ff['bond-angle']
-        )
-        if result is not None:
-            if result[1]:
-                parameters = {
-                    'reference': result[2]['reference'],
-                    'K12': result[2]['K23'],
-                    'K23': result[2]['K12'],
-                    'R10': b2_parameters['R0'],
-                    'R20': b1_parameters['R0']
-                }
-                ii, jj, kk = result[0]
-                return ('equivalent', (kk, jj, ii), 'bond-angle', parameters)
-            else:
-                parameters = dict(**result[2])
-                parameters['R10'] = b1_parameters['R0']
-                parameters['R20'] = b2_parameters['R0']
-                return ('equivalent', result[0], 'bond-angle', parameters)
+        if 'equivalence' in self.ff:
+            ieq = self.ff['equivalence'][i]['angle']
+            jeq = self.ff['equivalence'][j]['angle']
+            keq = self.ff['equivalence'][k]['angle']
+            result = self._angle_parameters_helper(
+                ieq, jeq, keq, self.ff['bond-angle']
+            )
+            if result is not None:
+                if result[1]:
+                    parameters = {
+                        'reference': result[2]['reference'],
+                        'K12': result[2]['K23'],
+                        'K23': result[2]['K12'],
+                        'R10': b2_parameters['R0'],
+                        'R20': b1_parameters['R0']
+                    }
+                    ii, jj, kk = result[0]
+                    return (
+                        'equivalent', (kk, jj, ii), 'bond-angle', parameters
+                    )
+                else:
+                    parameters = dict(**result[2])
+                    parameters['R10'] = b1_parameters['R0']
+                    parameters['R20'] = b2_parameters['R0']
+                    return ('equivalent', result[0], 'bond-angle', parameters)
 
         if zero:
             return (
@@ -2154,7 +2188,7 @@ class Forcefield(object):
                 'No bond-angle parameters for {}-{}-{}'.format(i, j, k)
             )
 
-    def angle_angle_parameters(self, i, j, k, l, zero=False):
+    def angle_angle_parameters(self, i, j, k, l, zero=False):  # noqa: E741
         """Return the angle_angle parameters given four atoms types
 
         Handles equivalences and wildcards
@@ -2183,22 +2217,25 @@ class Forcefield(object):
                 return ('explicit', result[0], 'angle-angle', values)
 
         # try equivalences
-        ieq = self.ff['equivalence'][i]['angle']
-        jeq = self.ff['equivalence'][j]['angle']
-        keq = self.ff['equivalence'][k]['angle']
-        leq = self.ff['equivalence'][l]['angle']
-        result = self._angle_angle_parameters_helper(
-            ieq, jeq, keq, leq, self.ff['angle-angle']
-        )
-        if result is not None:
-            if result[1]:
-                values = {'Theta10': Theta20, 'Theta20': Theta10}
-                values.update(result[2])
-                ii, jj, kk, ll = result[0]
-                return ('equivalent', (ll, jj, kk, ii), 'angle-angle', values)
-            else:
-                values.update(result[2])
-                return ('equivalent', result[0], 'angle-angle', values)
+        if 'equivalence' in self.ff:
+            ieq = self.ff['equivalence'][i]['angle']
+            jeq = self.ff['equivalence'][j]['angle']
+            keq = self.ff['equivalence'][k]['angle']
+            leq = self.ff['equivalence'][l]['angle']
+            result = self._angle_angle_parameters_helper(
+                ieq, jeq, keq, leq, self.ff['angle-angle']
+            )
+            if result is not None:
+                if result[1]:
+                    values = {'Theta10': Theta20, 'Theta20': Theta10}
+                    values.update(result[2])
+                    ii, jj, kk, ll = result[0]
+                    return (
+                        'equivalent', (ll, jj, kk, ii), 'angle-angle', values
+                    )
+                else:
+                    values.update(result[2])
+                    return ('equivalent', result[0], 'angle-angle', values)
 
         if zero:
             parameters = {'K': 0.0, 'Theta10': '109.0', 'Theta20': '109.0'}
@@ -2208,7 +2245,14 @@ class Forcefield(object):
                 'No angle-angle parameters for {}-{}-{}-{}'.format(i, j, k, l)
             )
 
-    def _angle_angle_parameters_helper(self, i, j, k, l, section):
+    def _angle_angle_parameters_helper(
+        self,
+        i,
+        j,
+        k,
+        l,  # noqa: E741
+        section
+    ):
         """Return the torsion parameters given four atom types
         """
 
@@ -2237,7 +2281,14 @@ class Forcefield(object):
 
         return None
 
-    def end_bond_torsion_3_parameters(self, i, j, k, l, zero=False):
+    def end_bond_torsion_3_parameters(
+        self,
+        i,
+        j,
+        k,
+        l,  # noqa: E741
+        zero=False
+    ):
         """Return the end bond - torsion_3 parameters given four atom types
 
         Handle equivalences
@@ -2279,37 +2330,39 @@ class Forcefield(object):
                 )
 
         # try equivalences
-        ieq = self.ff['equivalence'][i]['torsion']
-        jeq = self.ff['equivalence'][j]['torsion']
-        keq = self.ff['equivalence'][k]['torsion']
-        leq = self.ff['equivalence'][l]['torsion']
-        result = self._torsion_parameters_helper(
-            ieq, jeq, keq, leq, self.ff['end_bond-torsion_3']
-        )
-        if result is not None:
-            if result[1]:
-                parameters = {
-                    'reference': result[2]['reference'],
-                    'V1_L': result[2]['V1_R'],
-                    'V2_L': result[2]['V2_R'],
-                    'V3_L': result[2]['V3_R'],
-                    'V1_R': result[2]['V1_L'],
-                    'V2_R': result[2]['V2_L'],
-                    'V3_R': result[2]['V3_L'],
-                    'R0_L': b2_parameters['R0'],
-                    'R0_R': b1_parameters['R0']
-                }
-                ii, jj, kk, ll = result[0]
-                return (
-                    'equivalent', (ll, kk, jj, ii), 'end_bond-torsion_3',
-                    parameters
-                )
-            else:
-                parameters = dict(**result[2])
-                parameters.update(values)
-                return (
-                    'equivalent', result[0], 'end_bond-torsion_3', parameters
-                )
+        if 'equivalence' in self.ff:
+            ieq = self.ff['equivalence'][i]['torsion']
+            jeq = self.ff['equivalence'][j]['torsion']
+            keq = self.ff['equivalence'][k]['torsion']
+            leq = self.ff['equivalence'][l]['torsion']
+            result = self._torsion_parameters_helper(
+                ieq, jeq, keq, leq, self.ff['end_bond-torsion_3']
+            )
+            if result is not None:
+                if result[1]:
+                    parameters = {
+                        'reference': result[2]['reference'],
+                        'V1_L': result[2]['V1_R'],
+                        'V2_L': result[2]['V2_R'],
+                        'V3_L': result[2]['V3_R'],
+                        'V1_R': result[2]['V1_L'],
+                        'V2_R': result[2]['V2_L'],
+                        'V3_R': result[2]['V3_L'],
+                        'R0_L': b2_parameters['R0'],
+                        'R0_R': b1_parameters['R0']
+                    }
+                    ii, jj, kk, ll = result[0]
+                    return (
+                        'equivalent', (ll, kk, jj, ii), 'end_bond-torsion_3',
+                        parameters
+                    )
+                else:
+                    parameters = dict(**result[2])
+                    parameters.update(values)
+                    return (
+                        'equivalent', result[0], 'end_bond-torsion_3',
+                        parameters
+                    )
 
         if zero:
             parameters = {
@@ -2323,7 +2376,7 @@ class Forcefield(object):
                 'R0_R': '1.5'
             }
             return (
-                'equivalent', ('*', '*', '*', '*'), 'end_bond-torsion_3',
+                'zeroed', ('*', '*', '*', '*'), 'end_bond-torsion_3',
                 parameters
             )
         else:
@@ -2332,7 +2385,14 @@ class Forcefield(object):
                 '{}-{}-{}-{}'.format(i, j, k, l)
             )
 
-    def middle_bond_torsion_3_parameters(self, i, j, k, l, zero=False):
+    def middle_bond_torsion_3_parameters(
+        self,
+        i,
+        j,
+        k,
+        l,  # noqa: E741
+        zero=False
+    ):
         """Return the middle bond - torsion_3 parameters given four atom types
 
         Handle equivalences
@@ -2351,16 +2411,19 @@ class Forcefield(object):
             return ('explicit', result[0], 'middle_bond-torsion_3', values)
 
         # try equivalences
-        ieq = self.ff['equivalence'][i]['torsion']
-        jeq = self.ff['equivalence'][j]['torsion']
-        keq = self.ff['equivalence'][k]['torsion']
-        leq = self.ff['equivalence'][l]['torsion']
-        result = self._torsion_parameters_helper(
-            ieq, jeq, keq, leq, self.ff['middle_bond-torsion_3']
-        )
-        if result is not None:
-            values.update(result[2])
-            return ('equivalent', result[0], 'middle_bond-torsion_3', values)
+        if 'equivalence' in self.ff:
+            ieq = self.ff['equivalence'][i]['torsion']
+            jeq = self.ff['equivalence'][j]['torsion']
+            keq = self.ff['equivalence'][k]['torsion']
+            leq = self.ff['equivalence'][l]['torsion']
+            result = self._torsion_parameters_helper(
+                ieq, jeq, keq, leq, self.ff['middle_bond-torsion_3']
+            )
+            if result is not None:
+                values.update(result[2])
+                return (
+                    'equivalent', result[0], 'middle_bond-torsion_3', values
+                )
 
         if zero:
             return (
@@ -2377,7 +2440,7 @@ class Forcefield(object):
                 '{}-{}-{}-{}'.format(i, j, k, l)
             )
 
-    def angle_torsion_3_parameters(self, i, j, k, l, zero=False):
+    def angle_torsion_3_parameters(self, i, j, k, l, zero=False):  # noqa: E741
         """Return the angle - torsion_3 parameters given four atom types
 
         Handle equivalences
@@ -2419,35 +2482,38 @@ class Forcefield(object):
                 return ('explicit', result[0], 'angle-torsion_3', parameters)
 
         # try equivalences
-        ieq = self.ff['equivalence'][i]['torsion']
-        jeq = self.ff['equivalence'][j]['torsion']
-        keq = self.ff['equivalence'][k]['torsion']
-        leq = self.ff['equivalence'][l]['torsion']
-        result = self._torsion_parameters_helper(
-            ieq, jeq, keq, leq, self.ff['angle-torsion_3']
-        )
-        if result is not None:
-            if result[1]:
-                parameters = {
-                    'reference': result[2]['reference'],
-                    'V1_L': result[2]['V1_R'],
-                    'V2_L': result[2]['V2_R'],
-                    'V3_L': result[2]['V3_R'],
-                    'V1_R': result[2]['V1_L'],
-                    'V2_R': result[2]['V2_L'],
-                    'V3_R': result[2]['V3_L'],
-                    'Theta0_L': a2_parameters['Theta0'],
-                    'Theta0_R': a1_parameters['Theta0']
-                }
-                ii, jj, kk, ll = result[0]
-                return (
-                    'equivalent', (ll, kk, jj, ii), 'angle-torsion_3',
-                    parameters
-                )
-            else:
-                parameters = dict(**result[2])
-                parameters.update(values)
-                return ('equivalent', result[0], 'angle-torsion_3', parameters)
+        if 'equivalence' in self.ff:
+            ieq = self.ff['equivalence'][i]['torsion']
+            jeq = self.ff['equivalence'][j]['torsion']
+            keq = self.ff['equivalence'][k]['torsion']
+            leq = self.ff['equivalence'][l]['torsion']
+            result = self._torsion_parameters_helper(
+                ieq, jeq, keq, leq, self.ff['angle-torsion_3']
+            )
+            if result is not None:
+                if result[1]:
+                    parameters = {
+                        'reference': result[2]['reference'],
+                        'V1_L': result[2]['V1_R'],
+                        'V2_L': result[2]['V2_R'],
+                        'V3_L': result[2]['V3_R'],
+                        'V1_R': result[2]['V1_L'],
+                        'V2_R': result[2]['V2_L'],
+                        'V3_R': result[2]['V3_L'],
+                        'Theta0_L': a2_parameters['Theta0'],
+                        'Theta0_R': a1_parameters['Theta0']
+                    }
+                    ii, jj, kk, ll = result[0]
+                    return (
+                        'equivalent', (ll, kk, jj, ii), 'angle-torsion_3',
+                        parameters
+                    )
+                else:
+                    parameters = dict(**result[2])
+                    parameters.update(values)
+                    return (
+                        'equivalent', result[0], 'angle-torsion_3', parameters
+                    )
 
         if zero:
             parameters = {
@@ -2469,7 +2535,14 @@ class Forcefield(object):
                 '{}-{}-{}-{}'.format(i, j, k, l)
             )
 
-    def angle_angle_torsion_1_parameters(self, i, j, k, l, zero=False):
+    def angle_angle_torsion_1_parameters(
+        self,
+        i,
+        j,
+        k,
+        l,  # noqa: E741
+        zero=False
+    ):
         """Return the angle - angle - torsion_1 parameters given four atom types
 
         Handle equivalences
@@ -2493,16 +2566,19 @@ class Forcefield(object):
             return ('explicit', result[0], 'angle-angle-torsion_1', values)
 
         # try equivalences
-        ieq = self.ff['equivalence'][i]['torsion']
-        jeq = self.ff['equivalence'][j]['torsion']
-        keq = self.ff['equivalence'][k]['torsion']
-        leq = self.ff['equivalence'][l]['torsion']
-        result = self._torsion_parameters_helper(
-            ieq, jeq, keq, leq, self.ff['angle-angle-torsion_1']
-        )
-        if result is not None:
-            values.update(result[2])
-            return ('equivalent', result[0], 'angle-angle-torsion_1', values)
+        if 'equivalence' in self.ff:
+            ieq = self.ff['equivalence'][i]['torsion']
+            jeq = self.ff['equivalence'][j]['torsion']
+            keq = self.ff['equivalence'][k]['torsion']
+            leq = self.ff['equivalence'][l]['torsion']
+            result = self._torsion_parameters_helper(
+                ieq, jeq, keq, leq, self.ff['angle-angle-torsion_1']
+            )
+            if result is not None:
+                values.update(result[2])
+                return (
+                    'equivalent', result[0], 'angle-angle-torsion_1', values
+                )
 
         if zero:
             parameters = {'Theta0_L': '109.0', 'Theta0_R': '109.0', 'K': '0.0'}
@@ -2596,7 +2672,7 @@ class Forcefield(object):
             for i in bonds_from_atom[j]:
                 if i == k:
                     continue
-                for l in bonds_from_atom[k]:
+                for l in bonds_from_atom[k]:  # noqa: E741
                     if l == j:  # noqa: E741
                         continue
                     torsions.append((i, j, k, l))
@@ -2645,7 +2721,7 @@ class Forcefield(object):
                 for j in bonds_from_atom[i]:
                     jtype = types[j]
                     parameters = self.bond_increments(itype, jtype)[3]
-                    q += float(parameters['Iij'])
+                    q += float(parameters['deltaij'])
                 charges.append(q)
                 total_q += q
             if abs(total_q) > 0.0001:
