@@ -698,14 +698,15 @@ class Forcefield(object):
 
         if logger.isEnabledFor(logging.DEBUG):
             section = 'charges'
-            print()
-            print('section = ' + section)
-            try:
-                print(json.dumps(self.data[section], indent=4))
-            except:  # noqa: E722
-                pprint.pprint(self.data[section])
-            print(80 * '-')
-            print()
+            if section in self.data:
+                print()
+                print('section = ' + section)
+                try:
+                    print(json.dumps(self.data[section], indent=4))
+                except:  # noqa: E722
+                    pprint.pprint(self.data[section])
+                    print(80 * '-')
+                print()
 
     def _read_biosym_ff(self, fd):
         """
@@ -2603,6 +2604,7 @@ class Forcefield(object):
         The <style> keyword changes the form somewhat, as needed
         for e.g. LAMMPS
         """
+        logger.debug('Creating the eex')
 
         eex = {}
 
@@ -2618,6 +2620,7 @@ class Forcefield(object):
         self.setup_topology(structure, style)
 
         self.eex_atoms(eex, structure)
+        logger.debug(f'    forcefield terms: {self.ff["terms"]}')
         for term in self.ff['terms']:
             function_name = 'eex_' + term.replace('-', '_')
             function_name = function_name.replace(' ', '_')
@@ -2765,6 +2768,7 @@ class Forcefield(object):
 
     def eex_pair(self, eex, structure):
         """Create the pair (non-bond) portion of the energy expression"""
+        logger.debug('In eex_pair')
         types = self.topology['types']
 
         for pair_type in ('nonbond(12-6)', 'nonbond(9-6)'):
@@ -2772,7 +2776,7 @@ class Forcefield(object):
                 found = True
                 break
         if not found:
-            raise RuntimeError('Error findinf pair_type in eex_pair')
+            raise RuntimeError('Error finding pair_type in eex_pair')
 
         result = eex['nonbonds'] = []
         parameters = eex['nonbond parameters'] = []
