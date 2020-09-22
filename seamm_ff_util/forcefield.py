@@ -2621,9 +2621,9 @@ class Forcefield(object):
         eex = {}
 
         if configuration is None:
-            configuration = system.configuration
+            configuration = system.current_configuration
 
-        sys_atoms = self['atom']
+        sys_atoms = system['atom']
 
         # We will need the elements for fix shake, 1-based.
         eex['elements'] = ['']
@@ -2632,7 +2632,7 @@ class Forcefield(object):
         # The periodicity & cell parameters
         periodicity = eex['periodicity'] = system.periodicity
         if periodicity == 3:
-            eex['cell'] = system['cell'].cell.parameters
+            eex['cell'] = system['cell'].cell().parameters
 
         self.setup_topology(system, configuration, style)
 
@@ -2672,25 +2672,22 @@ class Forcefield(object):
         self.topology = {}
 
         if configuration is None:
-            configuration = system.configuration
+            configuration = system.current_configuration
 
-        sys_atoms = self['atom']
-        sys_bonds = self['bond']
+        sys_atoms = system['atom']
+        sys_bonds = system['bond']
 
         n_atoms = sys_atoms.n_atoms(configuration)
+        self.topology['n_atoms'] = n_atoms
 
         # Need the transformation from atom ids to indices
         atom_ids = sys_atoms.atom_ids(configuration)
-        to_index = {j: i for i, j in enumerate(atom_ids)}
+        to_index = {j: i + 1 for i, j in enumerate(atom_ids)}
 
         # extend types with a blank so can use 1-based indexing
         types = self.topology['types'] = ['']
-        types.extend(
-            sys_atoms.get_atom_types(
-                configuration=configuration,
-                forcefield=self.current_forcefield
-            )
-        )
+        key = f'atom_types_{self.current_forcefield}'
+        types.extend(sys_atoms.get_column(key, configuration=configuration))
 
         # bonds
         bonds = self.topology['bonds'] = [
@@ -2700,7 +2697,7 @@ class Forcefield(object):
 
         # atoms bonded to each atom i
         self.topology['bonds_from_atom'] = system.bonded_neighbors(
-            configuration=configuration, as_indices=True
+            configuration=configuration, as_indices=True, first_index=1
         )
         bonds_from_atom = self.topology['bonds_from_atom']
 
