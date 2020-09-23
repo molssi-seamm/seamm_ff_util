@@ -2,6 +2,7 @@ name: test
 
 channels:
   - rdkit
+  - conda-forge
 
 dependencies:
     # Base depends
@@ -19,8 +20,7 @@ dependencies:
 
   # Pip-only installs
   - pip:
-    - pprint
-    - seamm_util>=0.9
+    - seamm_util>=2020.9.23
 
       # Testing
     - codecov

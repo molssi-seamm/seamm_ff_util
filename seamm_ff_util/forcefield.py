@@ -2598,28 +2598,45 @@ class Forcefield(object):
         """
         return self.ff['templates']
 
-    def energy_expression(self, structure, style=''):
+    def energy_expression(self, system, configuration=None, style=''):
         """Create the energy expression for the given structure
 
-        The <style> keyword changes the form somewhat, as needed
-        for e.g. LAMMPS
+        Parameters
+        ----------
+        system : _System
+            The system being used
+        configuration : int = None
+            Which configuration. Defaults to the current_configuration.
+        style : str = ''
+            The style of energy expression. Currently only 'LAMMPS' is
+            supported.
+
+        Returns
+        -------
+        eex : {str: []}
+            The energy expression as a dictionary of terms
         """
         logger.debug('Creating the eex')
 
         eex = {}
 
+        if configuration is None:
+            configuration = system.current_configuration
+
+        sys_atoms = system['atom']
+
         # We will need the elements for fix shake, 1-based.
         eex['elements'] = ['']
-        eex['elements'].extend(structure['atoms']['elements'])
+        eex['elements'].extend(sys_atoms.symbols(configuration))
 
         # The periodicity & cell parameters
-        periodicity = eex['periodicity'] = structure['periodicity']
+        periodicity = eex['periodicity'] = system.periodicity
         if periodicity == 3:
-            eex['cell'] = structure['cell']
+            eex['cell'] = system['cell'].cell().parameters
 
-        self.setup_topology(structure, style)
+        self.setup_topology(system, configuration, style)
 
-        self.eex_atoms(eex, structure)
+        self.eex_atoms(eex, system, configuration)
         logger.debug(f'    forcefield terms: {self.ff["terms"]}')
         for term in self.ff['terms']:
             function_name = 'eex_' + term.replace('-', '_')
@@ -2629,37 +2646,60 @@ class Forcefield(object):
             if function is None:
                 print('Function {} does not exist yet'.format(function_name))
             else:
-                function(eex, structure)
+                function(eex, system, configuration)
 
         return eex
 
-    def setup_topology(self, structure, style=''):
-        """Create the list of bonds, angle, torsion, etc. for the system"""
+    def setup_topology(self, system, configuration=None, style=''):
+        """Create the list of bonds, angle, torsion, etc. for the system
+
+        This topology information is held in self.topology.
+
+        Parameters
+        ----------
+        system : _System
+            The system being used
+        configuration : int = None
+            Which configuration. Defaults to the current_configuration.
+        style : str = ''
+            The style of energy expression. Currently only 'LAMMPS' is
+            supported.
+
+        Returns
+        -------
+        None
+        """
         self.topology = {}
-        n_atoms = self.topology['n_atoms'] = \
-            len(structure['atoms']['elements'])
+
+        if configuration is None:
+            configuration = system.current_configuration
+
+        sys_atoms = system['atom']
+        sys_bonds = system['bond']
+
+        n_atoms = sys_atoms.n_atoms(configuration)
+        self.topology['n_atoms'] = n_atoms
+
+        # Need the transformation from atom ids to indices
+        atom_ids = sys_atoms.atom_ids(configuration)
+        to_index = {j: i + 1 for i, j in enumerate(atom_ids)}
 
         # extend types with a blank so can use 1-based indexing
         types = self.topology['types'] = ['']
-        types.extend(structure['atoms']['atom_types'][self.current_forcefield])
+        key = f'atom_types_{self.current_forcefield}'
+        types.extend(sys_atoms.get_column(key, configuration=configuration))
 
         # bonds
-        bonds = self.topology['bonds'] = []
-        for i, j, order in structure['bonds']:
-            if i < j:
-                bonds.append((i, j))
-            else:
-                bonds.append((j, i))
+        bonds = self.topology['bonds'] = [
+            (to_index[row['i']], to_index[row['j']])
+            for row in sys_bonds.bonds(configuration=configuration)
+        ]
 
         # atoms bonded to each atom i
-        bonds_from_atom = self.topology['bonds_from_atom'] = {}
-        for i in range(1, n_atoms + 1):
-            bonds_from_atom[i] = []
-        for i, j in bonds:
-            bonds_from_atom[i].append(j)
-            bonds_from_atom[j].append(i)
-        for i in range(1, n_atoms + 1):
-            bonds_from_atom[i].sort()
+        self.topology['bonds_from_atom'] = system.bonded_neighbors(
+            configuration=configuration, as_indices=True, first_index=1
+        )
+        bonds_from_atom = self.topology['bonds_from_atom']
 
         # angles
         angles = self.topology['angles'] = []
@@ -2695,11 +2735,11 @@ class Forcefield(object):
                     oops.append((i, m, k, l))
                     oops.append((j, m, k, l))
 
-    def eex_charges(self, eex, structure):
+    def eex_charges(self, eex, system, configuration=None):
         """Do nothing routine since charges are handled by the increments."""
         pass
 
-    def eex_increment(self, eex, structure):
+    def eex_increment(self, eex, system, configuration=None):
         """Get the charges for the structure
 
         If they do not exists on the structure, they are created
@@ -2708,9 +2748,10 @@ class Forcefield(object):
         logger.debug('entering eex_increment')
 
         ff_name = self.current_forcefield
-        atoms = structure['atoms']
-        if 'charges' in atoms and ff_name in atoms['charges']:
-            eex['charges'] = atoms['charges'][ff_name]
+        atoms = system['atom']
+        key = f'charges_{ff_name}'
+        if key in atoms:
+            eex['charges'] = [*atoms[key]]
         else:
             charges = eex['charges'] = []
             n_atoms = self.topology['n_atoms']
@@ -2737,17 +2778,19 @@ class Forcefield(object):
                 logger.debug(
                     'Charges from increments:\n' + pprint.pformat(charges)
                 )
-            if 'charges' not in atoms:
-                atoms['charges'] = {}
-            atoms['charges'][ff_name] = charges
+            if key not in atoms:
+                atoms.add_attribute(key, coltype='float')
+            charge_column = atoms.get_column(key, configuration)
+            charge_column[0:] = charges
 
         logger.debug('leaving eex_increment')
 
-    def eex_atoms(self, eex, structure):
+    def eex_atoms(self, eex, system, configuration=None):
         """List the atoms into the energy expression"""
-        atoms = structure['atoms']
-        coordinates = atoms['coordinates']
-        types = atoms['atom_types'][self.current_forcefield]
+        atoms = system['atom']
+        coordinates = atoms.coordinates(configuration=configuration)
+        key = f'atom_types_{self.current_forcefield}'
+        types = atoms.get_column(key, configuration=configuration)
 
         result = eex['atoms'] = []
         atom_types = eex['atom types'] = []
@@ -2766,7 +2809,7 @@ class Forcefield(object):
         eex['n_atoms'] = len(result)
         eex['n_atom_types'] = len(atom_types)
 
-    def eex_pair(self, eex, structure):
+    def eex_pair(self, eex, system, configuration=None):
         """Create the pair (non-bond) portion of the energy expression"""
         logger.debug('In eex_pair')
         types = self.topology['types']
@@ -2798,7 +2841,7 @@ class Forcefield(object):
         eex['n_nonbonds'] = len(result)
         eex['n_nonbond_types'] = len(parameters)
 
-    def eex_bond(self, eex, structure):
+    def eex_bond(self, eex, system, configuration=None):
         """Create the bond portion of the energy expression"""
         types = self.topology['types']
         bonds = self.topology['bonds']
@@ -2824,7 +2867,7 @@ class Forcefield(object):
         eex['n_bonds'] = len(result)
         eex['n_bond_types'] = len(parameters)
 
-    def eex_angle(self, eex, structure):
+    def eex_angle(self, eex, system, configuration=None):
         """Create the angle portion of the energy expression"""
         types = self.topology['types']
         angles = self.topology['angles']
@@ -2850,7 +2893,7 @@ class Forcefield(object):
         eex['n_angles'] = len(result)
         eex['n_angle_types'] = len(parameters)
 
-    def eex_torsion(self, eex, structure):
+    def eex_torsion(self, eex, system, configuration=None):
         """Create the torsion portion of the energy expression"""
         types = self.topology['types']
         torsions = self.topology['torsions']
@@ -2877,7 +2920,7 @@ class Forcefield(object):
         eex['n_torsions'] = len(result)
         eex['n_torsion_types'] = len(parameters)
 
-    def eex_out_of_plane(self, eex, structure):
+    def eex_out_of_plane(self, eex, system, configuration=None):
         """Create the out-of-plane portion of the energy expression"""
         types = self.topology['types']
         oops = self.topology['oops']
@@ -2905,7 +2948,7 @@ class Forcefield(object):
         eex['n_oops'] = len(result)
         eex['n_oop_types'] = len(parameters)
 
-    def eex_bond_bond(self, eex, structure):
+    def eex_bond_bond(self, eex, system, configuration=None):
         """Create the bond-bond portion of the energy expression"""
         types = self.topology['types']
         angles = self.topology['angles']
@@ -2932,7 +2975,7 @@ class Forcefield(object):
         eex['n_bond-bond'] = len(result)
         eex['n_bond-bond_types'] = len(parameters)
 
-    def eex_bond_angle(self, eex, structure):
+    def eex_bond_angle(self, eex, system, configuration=None):
         """Create the bond-angle portion of the energy expression"""
         types = self.topology['types']
         angles = self.topology['angles']
@@ -2959,7 +3002,7 @@ class Forcefield(object):
         eex['n_bond-angle'] = len(result)
         eex['n_bond-angle_types'] = len(parameters)
 
-    def eex_torsion_middle_bond(self, eex, structure):
+    def eex_torsion_middle_bond(self, eex, system, configuration=None):
         """Create the middle_bond-torsion portion of the energy expression"""
         types = self.topology['types']
         torsions = self.topology['torsions']
@@ -2987,7 +3030,7 @@ class Forcefield(object):
         eex['n_middle_bond-torsion_3'] = len(result)
         eex['n_middle_bond-torsion_3_types'] = len(parameters)
 
-    def eex_torsion_end_bond(self, eex, structure):
+    def eex_torsion_end_bond(self, eex, system, configuration=None):
         """Create the end_bond-torsion portion of the energy expression"""
         types = self.topology['types']
         torsions = self.topology['torsions']
@@ -3015,7 +3058,7 @@ class Forcefield(object):
         eex['n_end_bond-torsion_3'] = len(result)
         eex['n_end_bond-torsion_3_types'] = len(parameters)
 
-    def eex_torsion_angle(self, eex, structure):
+    def eex_torsion_angle(self, eex, system, configuration=None):
         """Create the angle-torsion portion of the energy expression"""
         types = self.topology['types']
         torsions = self.topology['torsions']
@@ -3043,7 +3086,7 @@ class Forcefield(object):
         eex['n_angle-torsion_3'] = len(result)
         eex['n_angle-torsion_3_types'] = len(parameters)
 
-    def eex_angle_torsion_angle(self, eex, structure):
+    def eex_angle_torsion_angle(self, eex, system, configuration=None):
         """Create the angle-angle-torsion portion of the energy expression"""
         types = self.topology['types']
         torsions = self.topology['torsions']
@@ -3071,7 +3114,7 @@ class Forcefield(object):
         eex['n_angle-angle-torsion_1'] = len(result)
         eex['n_angle-angle-torsion_1_types'] = len(parameters)
 
-    def eex_1_3_bond_bond(self, eex, structure):
+    def eex_1_3_bond_bond(self, eex, system, configuration=None):
         """Create the 1,3 bond-bond portion of the energy expression"""
         types = self.topology['types']
         torsions = self.topology['torsions']
@@ -3099,7 +3142,7 @@ class Forcefield(object):
         eex['n_bond-bond_1_3'] = len(result)
         eex['n_bond-bond_1_3_types'] = len(parameters)
 
-    def eex_angle_angle(self, eex, structure):
+    def eex_angle_angle(self, eex, system, configuration=None):
         """Create the angle-angle portion of the energy expression
 
         j is the vertex atom of the angles. For the angle-angle parameters

@@ -40,19 +40,19 @@ class FFAssigner(object):
 
         # temporarily handle explicit hydrogens
 
-        pat3 = re.compile('H3\]')  # noqa: W605
-        pat2 = re.compile('H2\]')  # noqa: W605
-        pat1 = re.compile('(?P<c1>[^[])H\]')  # noqa: W605
+        pat3 = re.compile(r'H3\]')
+        pat2 = re.compile(r'H2\]')
+        pat1 = re.compile(r'(?P<c1>[^[])H\]')
 
         smiles = pat3.sub(']([H])([H])([H])', smiles)
         smiles = pat2.sub(']([H])([H])', smiles)
-        smiles = pat1.sub('\g<c1>]([H])', smiles)  # noqa: W605
+        smiles = pat1.sub(r'\g<c1>]([H])', smiles)
 
         h_subst = None
         for el in ('Rb', 'Cs', 'Fr', 'At'):
             if el not in smiles:
                 h_subst = el
-                pat4 = re.compile('\[H\]')  # noqa: W605
+                pat4 = re.compile(r'\[H\]')
                 smiles = pat4.sub('[{}]'.format(el), smiles)
                 logger.debug("Subst SMILES = '{}'".format(smiles))
                 break
