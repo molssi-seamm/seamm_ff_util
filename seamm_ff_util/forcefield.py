@@ -2788,7 +2788,9 @@ class Forcefield(object):
     def eex_atoms(self, eex, system, configuration=None):
         """List the atoms into the energy expression"""
         atoms = system['atom']
-        coordinates = atoms.coordinates(configuration=configuration)
+        coordinates = atoms.coordinates(
+            configuration=configuration, fractionals=False
+        )
         key = f'atom_types_{self.current_forcefield}'
         types = atoms.get_column(key, configuration=configuration)
 
