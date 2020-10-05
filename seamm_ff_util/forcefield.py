@@ -2753,35 +2753,7 @@ class Forcefield(object):
         if key in atoms:
             eex['charges'] = [*atoms[key]]
         else:
-            charges = eex['charges'] = []
-            n_atoms = self.topology['n_atoms']
-            types = self.topology['types']
-            bonds_from_atom = self.topology['bonds_from_atom']
-            total_q = 0.0
-            for i in range(1, n_atoms + 1):
-                itype = types[i]
-                parameters = self.charges(itype)[3]
-                q = float(parameters['Q'])
-                for j in bonds_from_atom[i]:
-                    jtype = types[j]
-                    parameters = self.bond_increments(itype, jtype)[3]
-                    q += float(parameters['deltaij'])
-                charges.append(q)
-                total_q += q
-            if abs(total_q) > 0.0001:
-                logger.warning('Total charge is not zero: {}'.format(total_q))
-                logger.info(
-                    'Charges from increments and charges:\n' +
-                    pprint.pformat(charges)
-                )
-            else:
-                logger.debug(
-                    'Charges from increments:\n' + pprint.pformat(charges)
-                )
-            if key not in atoms:
-                atoms.add_attribute(key, coltype='float')
-            charge_column = atoms.get_column(key, configuration)
-            charge_column[0:] = charges
+            raise RuntimeError('No charges on system!')
 
         logger.debug('leaving eex_increment')
 
