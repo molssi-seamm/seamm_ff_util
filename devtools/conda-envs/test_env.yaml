@@ -9,19 +9,19 @@ dependencies:
   - python
   - pip
   - pillow
+
+  # SEAMM dependencies
   - rdkit
 
-    # Testing
-  - coverage
+  # Testing
+  - codecov
   - flake8
   - pytest
   - pytest-cov
-  - pytest-runner
 
   # Pip-only installs
   - pip:
-    - seamm_util>=2020.9.23
+    - seamm_util>=2020.12.3
 
-      # Testing
-    - codecov
+    # Testing
     - yapf
