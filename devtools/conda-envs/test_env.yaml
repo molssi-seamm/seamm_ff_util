@@ -21,7 +21,7 @@ dependencies:
 
   # Pip-only installs
   - pip:
-    - seamm_util>=2020.12.3
+    - seamm_util>=2020.12.2
 
     # Testing
     - yapf
