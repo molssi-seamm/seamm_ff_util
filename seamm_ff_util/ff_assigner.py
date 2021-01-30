@@ -12,6 +12,7 @@ import re
 import tkinter as tk
 
 logger = logging.getLogger(__name__)
+# logger.setLevel('DEBUG')
 
 
 class FFAssigner(object):
