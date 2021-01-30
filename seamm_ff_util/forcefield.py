@@ -4,6 +4,7 @@
 
 """Main class for handling forcefields"""
 
+from copy import deepcopy
 from enum import Enum
 import json
 import logging
@@ -15,6 +16,7 @@ import seamm_util
 from seamm_util import Q_
 
 logger = logging.getLogger(__name__)
+# logger.setLevel('DEBUG')
 
 
 class NonbondForms(Enum):
@@ -36,7 +38,7 @@ metadata = {
             ],
             'topology':
                 {
-                    'type': 'charges',
+                    'type': 'atomic charge',
                     'n_atoms': 1,
                     'symmetry': 'none',
                     'fill': 0,
@@ -52,7 +54,7 @@ metadata = {
             ],
             'topology':
                 {
-                    'type': 'increment',
+                    'type': 'bond charge increment',
                     'n_atoms': 2,
                     'symmetry': 'like_bond',
                     'fill': 0,
@@ -441,11 +443,13 @@ class Forcefield(object):
         forcefields, to assign the forcefield to a molecule, as well
         as to get parameters for bonds, angles, etc.
 
-        Args:
-            filename ('str', optional): An optional filename for the forcefield
-            fftype ('str', optional): An optional type for the
-                forcefield. If not given and a forcefield is read, the
-                code will try to divine the type of forcefield.
+        Parameters
+        ----------
+        filename : 'str'
+            An optional filename for the forcefield
+        fftype : 'str'
+            An optional type for the forcefield. If not given and a forcefield
+            is read, the code will try to divine the type of forcefield.
         """
         # the extensions and types that can be handled
         self._ff_extensions = {
@@ -464,7 +468,20 @@ class Forcefield(object):
 
         self.fftype = fftype
         self.filename = filename
-        self.current_forcefield = None
+        self._current_forcefield = None
+
+    @property
+    def current_forcefield(self):
+        """The forcefield currently set up for use."""
+        return self._current_forcefield
+
+    @current_forcefield.setter
+    def current_forcefield(self, value):
+        if value is None:
+            self.ff = {}
+        elif value != self._current_forcefield:
+            self.initialize_biosym_forcefield(forcefield=value)
+        self._current_forcefield = value
 
     @property
     def filename(self):
@@ -522,6 +539,23 @@ class Forcefield(object):
     def forcefields(self):
         """The list of current forcefields. The first is the default one"""
         return self.data['forcefields']
+
+    @property
+    def terms(self):
+        """The terms in the current forcefield.
+
+        Returns a dictionary whose keys are the terms in the forcefield
+        and values are lists of the functional forms for the term.
+
+        Returns
+        -------
+        dict(str, [str])
+        """
+        if self.current_forcefield is None:
+            raise RuntimeError(
+                'The forcefield must be set to access its terms'
+            )
+        return self.ff['terms']
 
     @staticmethod
     def rmin_to_sigma(rmin):
@@ -667,8 +701,8 @@ class Forcefield(object):
         # self._fftype = None  # leave the type ????
         self._filename = None
         self.data = {}
-        self.ff = {}
         self.data['forcefields'] = []
+        self.current_forcefield = None
 
     def _read(self):
         """Read the forcefield from the file self.filename
@@ -1435,7 +1469,11 @@ class Forcefield(object):
 
         if forcefield is None:
             forcefield = self.forcefields[0]
-        self.current_forcefield = forcefield
+        elif forcefield not in self.forcefields:
+            raise ValueError(
+                f"The current forcefield file does not contain '{forcefield}'"
+            )
+        self._current_forcefield = forcefield
 
         if version is None:
             V = None
@@ -1482,9 +1520,22 @@ class Forcefield(object):
         if logger.isEnabledFor(logging.DEBUG):
             section = 'bond_increments'
             try:
-                print(json.dumps(self.ff[section], indent=4))
-            except:  # noqa: E722
-                pprint.pprint(self.ff[section])
+                logger.debug(json.dumps(self.ff[section], indent=4))
+            except Exception:  # noqa: E722
+                logger.debug(pprint.pformat(self.ff[section]))
+
+        # if True:
+        #     try:
+        #         print('\n\nself.data:')
+        #         print(json.dumps(self.data, indent=4))
+        #     except Exception:  # noqa: E722
+        #         pprint.pprint(self.data)
+
+        #     try:
+        #         print('\n\nself.ff:')
+        #         print(json.dumps(self.ff, indent=4))
+        #     except Exception:  # noqa: E722
+        #         pprint.pprint(self.ff)
 
     def _get_parameters(self, functional_form, Version):
         """Select the correct version parameters from the sections for
@@ -2598,15 +2649,13 @@ class Forcefield(object):
         """
         return self.ff['templates']
 
-    def energy_expression(self, system, configuration=None, style=''):
+    def energy_expression(self, configuration, style=''):
         """Create the energy expression for the given structure
 
         Parameters
         ----------
-        system : _System
-            The system being used
-        configuration : int = None
-            Which configuration. Defaults to the current_configuration.
+        configuration : _Configuration
+            Which configuration of the system.
         style : str = ''
             The style of energy expression. Currently only 'LAMMPS' is
             supported.
@@ -2620,23 +2669,23 @@ class Forcefield(object):
 
         eex = {}
 
-        if configuration is None:
-            configuration = system.current_configuration
+        # The terms in the forcefield
+        eex['terms'] = deepcopy(self.ff['terms'])
 
-        sys_atoms = system['atom']
+        sys_atoms = configuration.atoms
 
         # We will need the elements for fix shake, 1-based.
         eex['elements'] = ['']
-        eex['elements'].extend(sys_atoms.symbols(configuration))
+        eex['elements'].extend(sys_atoms.symbols)
 
         # The periodicity & cell parameters
-        periodicity = eex['periodicity'] = system.periodicity
+        periodicity = eex['periodicity'] = configuration.periodicity
         if periodicity == 3:
-            eex['cell'] = system['cell'].cell().parameters
+            eex['cell'] = configuration.cell.parameters
 
-        self.setup_topology(system, configuration, style)
+        self.setup_topology(configuration, style)
 
-        self.eex_atoms(eex, system, configuration)
+        self.eex_atoms(eex, configuration)
         logger.debug(f'    forcefield terms: {self.ff["terms"]}')
         for term in self.ff['terms']:
             function_name = 'eex_' + term.replace('-', '_')
@@ -2646,19 +2695,17 @@ class Forcefield(object):
             if function is None:
                 print('Function {} does not exist yet'.format(function_name))
             else:
-                function(eex, system, configuration)
+                function(eex, configuration)
 
         return eex
 
-    def setup_topology(self, system, configuration=None, style=''):
-        """Create the list of bonds, angle, torsion, etc. for the system
+    def setup_topology(self, configuration, style=''):
+        """Create the list of bonds, angle, torsion, etc. for the configuration
 
         This topology information is held in self.topology.
 
         Parameters
         ----------
-        system : _System
-            The system being used
         configuration : int = None
             Which configuration. Defaults to the current_configuration.
         style : str = ''
@@ -2671,33 +2718,30 @@ class Forcefield(object):
         """
         self.topology = {}
 
-        if configuration is None:
-            configuration = system.current_configuration
+        sys_atoms = configuration.atoms
+        sys_bonds = configuration.bonds
 
-        sys_atoms = system['atom']
-        sys_bonds = system['bond']
-
-        n_atoms = sys_atoms.n_atoms(configuration)
+        n_atoms = sys_atoms.n_atoms
         self.topology['n_atoms'] = n_atoms
 
         # Need the transformation from atom ids to indices
-        atom_ids = sys_atoms.atom_ids(configuration)
+        atom_ids = sys_atoms.ids
         to_index = {j: i + 1 for i, j in enumerate(atom_ids)}
 
         # extend types with a blank so can use 1-based indexing
         types = self.topology['types'] = ['']
         key = f'atom_types_{self.current_forcefield}'
-        types.extend(sys_atoms.get_column(key, configuration=configuration))
+        types.extend(sys_atoms.get_column(key))
 
         # bonds
         bonds = self.topology['bonds'] = [
             (to_index[row['i']], to_index[row['j']])
-            for row in sys_bonds.bonds(configuration=configuration)
+            for row in sys_bonds.bonds()
         ]
 
         # atoms bonded to each atom i
-        self.topology['bonds_from_atom'] = system.bonded_neighbors(
-            configuration=configuration, as_indices=True, first_index=1
+        self.topology['bonds_from_atom'] = configuration.bonded_neighbors(
+            as_indices=True, first_index=1
         )
         bonds_from_atom = self.topology['bonds_from_atom']
 
@@ -2735,11 +2779,11 @@ class Forcefield(object):
                     oops.append((i, m, k, l))
                     oops.append((j, m, k, l))
 
-    def eex_charges(self, eex, system, configuration=None):
+    def eex_charge(self, eex, configuration):
         """Do nothing routine since charges are handled by the increments."""
         pass
 
-    def eex_increment(self, eex, system, configuration=None):
+    def eex_bond_charge_increment(self, eex, configuration):
         """Get the charges for the structure
 
         If they do not exists on the structure, they are created
@@ -2748,7 +2792,7 @@ class Forcefield(object):
         logger.debug('entering eex_increment')
 
         ff_name = self.current_forcefield
-        atoms = system['atom']
+        atoms = configuration.atoms
         key = f'charges_{ff_name}'
         if key in atoms:
             eex['charges'] = [*atoms[key]]
@@ -2757,14 +2801,12 @@ class Forcefield(object):
 
         logger.debug('leaving eex_increment')
 
-    def eex_atoms(self, eex, system, configuration=None):
+    def eex_atoms(self, eex, configuration):
         """List the atoms into the energy expression"""
-        atoms = system['atom']
-        coordinates = atoms.coordinates(
-            configuration=configuration, fractionals=False
-        )
+        atoms = configuration.atoms
+        coordinates = atoms.get_coordinates(fractionals=False)
         key = f'atom_types_{self.current_forcefield}'
-        types = atoms.get_column(key, configuration=configuration)
+        types = atoms.get_column(key)
 
         result = eex['atoms'] = []
         atom_types = eex['atom types'] = []
@@ -2783,7 +2825,7 @@ class Forcefield(object):
         eex['n_atoms'] = len(result)
         eex['n_atom_types'] = len(atom_types)
 
-    def eex_pair(self, eex, system, configuration=None):
+    def eex_pair(self, eex, configuration):
         """Create the pair (non-bond) portion of the energy expression"""
         logger.debug('In eex_pair')
         types = self.topology['types']
@@ -2815,7 +2857,7 @@ class Forcefield(object):
         eex['n_nonbonds'] = len(result)
         eex['n_nonbond_types'] = len(parameters)
 
-    def eex_bond(self, eex, system, configuration=None):
+    def eex_bond(self, eex, configuration):
         """Create the bond portion of the energy expression"""
         types = self.topology['types']
         bonds = self.topology['bonds']
@@ -2841,7 +2883,7 @@ class Forcefield(object):
         eex['n_bonds'] = len(result)
         eex['n_bond_types'] = len(parameters)
 
-    def eex_angle(self, eex, system, configuration=None):
+    def eex_angle(self, eex, configuration):
         """Create the angle portion of the energy expression"""
         types = self.topology['types']
         angles = self.topology['angles']
@@ -2867,7 +2909,7 @@ class Forcefield(object):
         eex['n_angles'] = len(result)
         eex['n_angle_types'] = len(parameters)
 
-    def eex_torsion(self, eex, system, configuration=None):
+    def eex_torsion(self, eex, configuration):
         """Create the torsion portion of the energy expression"""
         types = self.topology['types']
         torsions = self.topology['torsions']
@@ -2894,7 +2936,7 @@ class Forcefield(object):
         eex['n_torsions'] = len(result)
         eex['n_torsion_types'] = len(parameters)
 
-    def eex_out_of_plane(self, eex, system, configuration=None):
+    def eex_out_of_plane(self, eex, configuration):
         """Create the out-of-plane portion of the energy expression"""
         types = self.topology['types']
         oops = self.topology['oops']
@@ -2922,7 +2964,7 @@ class Forcefield(object):
         eex['n_oops'] = len(result)
         eex['n_oop_types'] = len(parameters)
 
-    def eex_bond_bond(self, eex, system, configuration=None):
+    def eex_bond_bond(self, eex, configuration):
         """Create the bond-bond portion of the energy expression"""
         types = self.topology['types']
         angles = self.topology['angles']
@@ -2949,7 +2991,7 @@ class Forcefield(object):
         eex['n_bond-bond'] = len(result)
         eex['n_bond-bond_types'] = len(parameters)
 
-    def eex_bond_angle(self, eex, system, configuration=None):
+    def eex_bond_angle(self, eex, configuration):
         """Create the bond-angle portion of the energy expression"""
         types = self.topology['types']
         angles = self.topology['angles']
@@ -2976,7 +3018,7 @@ class Forcefield(object):
         eex['n_bond-angle'] = len(result)
         eex['n_bond-angle_types'] = len(parameters)
 
-    def eex_torsion_middle_bond(self, eex, system, configuration=None):
+    def eex_torsion_middle_bond(self, eex, configuration):
         """Create the middle_bond-torsion portion of the energy expression"""
         types = self.topology['types']
         torsions = self.topology['torsions']
@@ -3004,7 +3046,7 @@ class Forcefield(object):
         eex['n_middle_bond-torsion_3'] = len(result)
         eex['n_middle_bond-torsion_3_types'] = len(parameters)
 
-    def eex_torsion_end_bond(self, eex, system, configuration=None):
+    def eex_torsion_end_bond(self, eex, configuration):
         """Create the end_bond-torsion portion of the energy expression"""
         types = self.topology['types']
         torsions = self.topology['torsions']
@@ -3032,7 +3074,7 @@ class Forcefield(object):
         eex['n_end_bond-torsion_3'] = len(result)
         eex['n_end_bond-torsion_3_types'] = len(parameters)
 
-    def eex_torsion_angle(self, eex, system, configuration=None):
+    def eex_torsion_angle(self, eex, configuration):
         """Create the angle-torsion portion of the energy expression"""
         types = self.topology['types']
         torsions = self.topology['torsions']
@@ -3060,7 +3102,7 @@ class Forcefield(object):
         eex['n_angle-torsion_3'] = len(result)
         eex['n_angle-torsion_3_types'] = len(parameters)
 
-    def eex_angle_torsion_angle(self, eex, system, configuration=None):
+    def eex_angle_torsion_angle(self, eex, configuration):
         """Create the angle-angle-torsion portion of the energy expression"""
         types = self.topology['types']
         torsions = self.topology['torsions']
@@ -3088,7 +3130,7 @@ class Forcefield(object):
         eex['n_angle-angle-torsion_1'] = len(result)
         eex['n_angle-angle-torsion_1_types'] = len(parameters)
 
-    def eex_1_3_bond_bond(self, eex, system, configuration=None):
+    def eex_1_3_bond_bond(self, eex, configuration):
         """Create the 1,3 bond-bond portion of the energy expression"""
         types = self.topology['types']
         torsions = self.topology['torsions']
@@ -3116,7 +3158,7 @@ class Forcefield(object):
         eex['n_bond-bond_1_3'] = len(result)
         eex['n_bond-bond_1_3_types'] = len(parameters)
 
-    def eex_angle_angle(self, eex, system, configuration=None):
+    def eex_angle_angle(self, eex, configuration):
         """Create the angle-angle portion of the energy expression
 
         j is the vertex atom of the angles. For the angle-angle parameters
