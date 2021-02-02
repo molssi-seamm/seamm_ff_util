@@ -737,7 +737,8 @@ class Forcefield(object):
                 print('section = ' + section)
                 try:
                     print(json.dumps(self.data[section], indent=4))
-                except:  # noqa: E722
+                except Exception as e:
+                    print(f'Exception in json.dumps: {str(e)}')
                     pprint.pprint(self.data[section])
                     print(80 * '-')
                 print()
@@ -1521,7 +1522,8 @@ class Forcefield(object):
             section = 'bond_increments'
             try:
                 logger.debug(json.dumps(self.ff[section], indent=4))
-            except Exception:  # noqa: E722
+            except Exception as e:
+                print(f'Exception in json.dumps: {str(e)}')
                 logger.debug(pprint.pformat(self.ff[section]))
 
         # if True:
