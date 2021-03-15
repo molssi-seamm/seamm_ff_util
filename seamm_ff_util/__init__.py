@@ -11,6 +11,7 @@ from seamm_ff_util.ff_assigner import FFAssigner  # noqa: F401
 
 # Handle versioneer
 from ._version import get_versions
+
 versions = get_versions()
 __version__ = versions['version']
 __git_revision__ = versions['full-revisionid']
