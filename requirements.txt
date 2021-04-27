@@ -1,3 +1,3 @@
 packaging==20.3
-Pillow==7.2.0
+Pillow==8.2.0
 seamm-util==2020.12.2
