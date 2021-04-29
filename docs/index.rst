@@ -1,5 +1,9 @@
-Welcome to the documentation for the SEAMM Forcefield Utilities!
-================================================================
+Welcome to the SEAMM forcefield utilities documentation!
+========================================================
+
+This is documentation for developers! There is nothing here for users, since this is
+part of the underlying framework of SEAMM. Anything a users sees is documented either in
+the main SEAMM documentation or in the plug-in documentation.
 
 Contents:
 
@@ -20,3 +24,22 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+--------
+   
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+
+   Main SEAMM documentation <https://molssi-seamm.github.io>
+
+Documentation Versions
+======================
+
+.. raw:: html
+
+   <iframe
+   src="https://molssi-seamm.github.io/seamm_ff_util/dev/versions.html"
+   title="Documentation Versions"  style="border:none;">
+   </iframe>
+  
