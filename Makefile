@@ -1,3 +1,4 @@
+MODULE := seamm_ff_util
 .PHONY: clean clean-test clean-pyc clean-build docs help
 .DEFAULT_GOAL := help
 define BROWSER_PYSCRIPT
@@ -48,15 +49,15 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	find . -name '.pytype' -exec rm -fr {} +
 
-lint: ## check style with isort, yapf and flake8
-	flake8 seamm_ff_util tests
-	yapf --diff --recursive  seamm_ff_util tests
+lint: ## check style with black and flake8
+	black --check --diff $(MODULE) tests
+	flake8 $(MODULE) tests
 
 format: ## reformat with with yapf and isort
-	yapf --recursive --in-place seamm_ff_util tests
+	black $(MODULE) tests
 
 typing: ## check typing
-	pytype seamm_ff_util
+	pytype $(MODULE)
 
 test: ## run tests quickly with the default Python
 	pytest
@@ -65,18 +66,20 @@ test-all: ## run tests on every Python version with tox
 	tox
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source seamm_ff_util -m pytest
+	coverage run --source $(MODULE) -m pytest
 	coverage report -m
 	coverage html
 	$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/seamm_ff_util.rst
+	rm -f docs/$(MODULE).rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ seamm_ff_util
+	sphinx-apidoc -o docs/ $(MODULE)
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html
+	rm -f docs/$(MODULE).rst
+	rm -f docs/modules.rst
 
 servedocs: docs ## compile the docs watching for changes
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
@@ -94,5 +97,5 @@ install: uninstall ## install the package to the active Python's site-packages
 	python setup.py install
 
 uninstall: clean ## uninstall the package
-	pip uninstall --yes seamm_ff_util
+	pip uninstall --yes $(MODULE)
 

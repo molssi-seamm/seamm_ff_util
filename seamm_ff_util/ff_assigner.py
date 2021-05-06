@@ -16,7 +16,6 @@ logger = logging.getLogger(__name__)
 
 
 class FFAssigner(object):
-
     def __init__(self, forcefield, have_tk=False):
         """Handle the assignment of the forcefield to the structure
 
@@ -30,31 +29,28 @@ class FFAssigner(object):
         self.have_tk = have_tk
 
     def assign(self, smiles=None, add_hydrogens=True):
-        """Assign the atom types to the structure using SMARTS templates
-        """
+        """Assign the atom types to the structure using SMARTS templates"""
         if smiles is None:
-            raise RuntimeError(
-                "Cannot assign the forcefield without a structure!"
-            )
+            raise RuntimeError("Cannot assign the forcefield without a structure!")
 
         logger.debug("SMILES = '{}'".format(smiles))
 
         # temporarily handle explicit hydrogens
 
-        pat3 = re.compile(r'H3\]')
-        pat2 = re.compile(r'H2\]')
-        pat1 = re.compile(r'(?P<c1>[^[])H\]')
+        pat3 = re.compile(r"H3\]")
+        pat2 = re.compile(r"H2\]")
+        pat1 = re.compile(r"(?P<c1>[^[])H\]")
 
-        smiles = pat3.sub(']([H])([H])([H])', smiles)
-        smiles = pat2.sub(']([H])([H])', smiles)
-        smiles = pat1.sub(r'\g<c1>]([H])', smiles)
+        smiles = pat3.sub("]([H])([H])([H])", smiles)
+        smiles = pat2.sub("]([H])([H])", smiles)
+        smiles = pat1.sub(r"\g<c1>]([H])", smiles)
 
         h_subst = None
-        for el in ('Rb', 'Cs', 'Fr', 'At'):
+        for el in ("Rb", "Cs", "Fr", "At"):
             if el not in smiles:
                 h_subst = el
-                pat4 = re.compile(r'\[H\]')
-                smiles = pat4.sub('[{}]'.format(el), smiles)
+                pat4 = re.compile(r"\[H\]")
+                smiles = pat4.sub("[{}]".format(el), smiles)
                 logger.debug("Subst SMILES = '{}'".format(smiles))
                 break
 
@@ -72,19 +68,17 @@ class FFAssigner(object):
             molecule = rdkit.Chem.AddHs(molecule)
             n_atoms = molecule.GetNumAtoms()
             logger.debug(
-                "'{}' has {} atoms with hydrogens added".format(
-                    smiles, n_atoms
-                )
+                "'{}' has {} atoms with hydrogens added".format(smiles, n_atoms)
             )
         else:
             n_atoms = molecule.GetNumAtoms()
             logger.debug("'{}' has {} atoms".format(smiles, n_atoms))
 
-        atom_types = ['?'] * n_atoms
+        atom_types = ["?"] * n_atoms
         templates = self.forcefield.get_templates()
         for atom_type in templates:
             template = templates[atom_type]
-            for smarts in template['smarts']:
+            for smarts in template["smarts"]:
                 pattern = rdkit.Chem.MolFromSmarts(smarts)
 
                 ind_map = {}
@@ -95,47 +89,47 @@ class FFAssigner(object):
                 map_list = [ind_map[x] for x in sorted(ind_map)]
 
                 matches = molecule.GetSubstructMatches(pattern)
-                logger.debug(atom_type + ': ')
+                logger.debug(atom_type + ": ")
                 if len(matches) > 0:
                     for match in matches:
                         atom_ids = [match[x] for x in map_list]
                         for x in atom_ids:
                             atom_types[x] = atom_type
                         tmp = [str(x) for x in atom_ids]
-                        logger.debug('\t' + ', '.join(tmp))
+                        logger.debug("\t" + ", ".join(tmp))
 
         i = 0
         untyped = []
         for atom, atom_type in zip(molecule.GetAtoms(), atom_types):
-            if atom_type == '?':
+            if atom_type == "?":
                 untyped.append(i)
             logger.debug("{}: {}".format(atom.GetSymbol(), atom_type))
             i += 1
 
         if len(untyped) > 0:
             logger.warning(
-                'The forcefield does not have atom types for'
-                ' the molecule!. See missing_atom_types.png'
-                ' for more detail.'
+                "The forcefield does not have atom types for"
+                " the molecule!. See missing_atom_types.png"
+                " for more detail."
             )
             rdkit.Chem.AllChem.Compute2DCoords(molecule)
             img = rdkit.Chem.Draw.MolToImage(
                 molecule,
                 size=(1000, 1000),
                 highlightAtoms=untyped,
-                highlightColor=(0, 1, 0)
+                highlightColor=(0, 1, 0),
             )
-            img.save('missing_atom_types.png')
+            img.save("missing_atom_types.png")
 
             if self.have_tk:
                 root = tk.Tk()
-                root.title('Atom types')
+                root.title("Atom types")
                 tkPI = ImageTk.PhotoImage(img)
                 tkLabel = tk.Label(root, image=tkPI)
                 tkLabel.place(x=0, y=0, width=img.size[0], height=img.size[1])
-                root.geometry('%dx%d' % (img.size))
+                root.geometry("%dx%d" % (img.size))
                 root.mainloop()
         else:
-            logger.info('The molecule was successfully atom-typed')
+            logger.info("The molecule was successfully atom-typed")
 
         return atom_types
