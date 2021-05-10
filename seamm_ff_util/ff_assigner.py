@@ -3,20 +3,18 @@
 """Main class for handling forcefields"""
 
 import logging
-from PIL import ImageTk
 import rdkit
 import rdkit.Chem
 import rdkit.Chem.Draw
 import rdkit.Chem.AllChem
 import re
-import tkinter as tk
 
 logger = logging.getLogger(__name__)
 # logger.setLevel('DEBUG')
 
 
 class FFAssigner(object):
-    def __init__(self, forcefield, have_tk=False):
+    def __init__(self, forcefield):
         """Handle the assignment of the forcefield to the structure
 
         This class is closely related to the Forcefield class, but
@@ -26,7 +24,6 @@ class FFAssigner(object):
         """
 
         self.forcefield = forcefield
-        self.have_tk = have_tk
 
     def assign(self, smiles=None, add_hydrogens=True):
         """Assign the atom types to the structure using SMARTS templates"""
@@ -120,15 +117,6 @@ class FFAssigner(object):
                 highlightColor=(0, 1, 0),
             )
             img.save("missing_atom_types.png")
-
-            if self.have_tk:
-                root = tk.Tk()
-                root.title("Atom types")
-                tkPI = ImageTk.PhotoImage(img)
-                tkLabel = tk.Label(root, image=tkPI)
-                tkLabel.place(x=0, y=0, width=img.size[0], height=img.size[1])
-                root.geometry("%dx%d" % (img.size))
-                root.mainloop()
         else:
             logger.info("The molecule was successfully atom-typed")
 
