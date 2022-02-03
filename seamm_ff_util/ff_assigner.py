@@ -7,10 +7,9 @@ import rdkit
 import rdkit.Chem
 import rdkit.Chem.Draw
 import rdkit.Chem.AllChem
-import re
 
 logger = logging.getLogger(__name__)
-# logger.setLevel('DEBUG')
+# logger.setLevel("DEBUG")
 
 
 class FFAssigner(object):
@@ -25,51 +24,11 @@ class FFAssigner(object):
 
         self.forcefield = forcefield
 
-    def assign(self, smiles=None, add_hydrogens=True):
+    def assign(self, configuration):
         """Assign the atom types to the structure using SMARTS templates"""
-        if smiles is None:
-            raise RuntimeError("Cannot assign the forcefield without a structure!")
+        molecule = configuration.to_RDKMol()
 
-        logger.debug("SMILES = '{}'".format(smiles))
-
-        # temporarily handle explicit hydrogens
-
-        pat3 = re.compile(r"H3\]")
-        pat2 = re.compile(r"H2\]")
-        pat1 = re.compile(r"(?P<c1>[^[])H\]")
-
-        smiles = pat3.sub("]([H])([H])([H])", smiles)
-        smiles = pat2.sub("]([H])([H])", smiles)
-        smiles = pat1.sub(r"\g<c1>]([H])", smiles)
-
-        h_subst = None
-        for el in ("Rb", "Cs", "Fr", "At"):
-            if el not in smiles:
-                h_subst = el
-                pat4 = re.compile(r"\[H\]")
-                smiles = pat4.sub("[{}]".format(el), smiles)
-                logger.debug("Subst SMILES = '{}'".format(smiles))
-                break
-
-        molecule = rdkit.Chem.MolFromSmiles(smiles)
-        if molecule is None:
-            print("There was problem with the SMILES '{}'".format(smiles))
-            return
-
-        if h_subst is not None:
-            for atom in molecule.GetAtoms():
-                if atom.GetSymbol() == h_subst:
-                    atom.SetAtomicNum(1)
-
-        if add_hydrogens:
-            molecule = rdkit.Chem.AddHs(molecule)
-            n_atoms = molecule.GetNumAtoms()
-            logger.debug(
-                "'{}' has {} atoms with hydrogens added".format(smiles, n_atoms)
-            )
-        else:
-            n_atoms = molecule.GetNumAtoms()
-            logger.debug("'{}' has {} atoms".format(smiles, n_atoms))
+        n_atoms = configuration.n_atoms
 
         atom_types = ["?"] * n_atoms
         templates = self.forcefield.get_templates()

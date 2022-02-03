@@ -4,14 +4,16 @@
 """Tests for `seamm_ff_util.ff_assigner` package."""
 
 
-def test_methane(pcff_assigner):
+def test_methane(pcff_assigner, configuration):
     """Test of atom-type assignment for methane"""
-    assert pcff_assigner.assign("C") == ["c", "hc", "hc", "hc", "hc"]
+    configuration.from_smiles("C")
+    assert pcff_assigner.assign(configuration) == ["c", "hc", "hc", "hc", "hc"]
 
 
-def test_ethane(pcff_assigner):
+def test_ethane(pcff_assigner, configuration):
     """Test of atom-type assignment for ethane"""
-    assert pcff_assigner.assign("CC") == [
+    configuration.from_smiles("CC")
+    assert pcff_assigner.assign(configuration) == [
         "c3",
         "c3",
         "hc",
@@ -23,9 +25,10 @@ def test_ethane(pcff_assigner):
     ]
 
 
-def test_propane(pcff_assigner):
+def test_propane(pcff_assigner, configuration):
     """Test of atom-type assignment for propane"""
-    assert pcff_assigner.assign("CCC") == [
+    configuration.from_smiles("CCC")
+    assert pcff_assigner.assign(configuration) == [
         "c3",
         "c2",
         "c3",
@@ -40,9 +43,10 @@ def test_propane(pcff_assigner):
     ]
 
 
-def test_isobutane(pcff_assigner):
+def test_isobutane(pcff_assigner, configuration):
     """Test of atom-type assignment for isobutane"""
-    assert pcff_assigner.assign("CC(C)C") == [
+    configuration.from_smiles("CC(C)C")
+    assert pcff_assigner.assign(configuration) == [
         "c3",
         "c1",
         "c3",
@@ -60,9 +64,10 @@ def test_isobutane(pcff_assigner):
     ]
 
 
-def test_neopentane(pcff_assigner):
+def test_neopentane(pcff_assigner, configuration):
     """Test of atom-type assignment for neopentane"""
-    assert pcff_assigner.assign("CC(C)(C)C") == [
+    configuration.from_smiles("CC(C)(C)C")
+    assert pcff_assigner.assign(configuration) == [
         "c3",
         "c",
         "c3",
