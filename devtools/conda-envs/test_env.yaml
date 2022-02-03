@@ -10,7 +10,7 @@ dependencies:
   - pillow
 
   # SEAMM dependencies
-  - rdkit
+  - molsystem
 
   # Testing
   - black
@@ -24,7 +24,6 @@ dependencies:
 
   # Pip-only installs
   - pip:
-    - seamm_util>=2020.12.2
 
     # Documentation
     - rinohtype
