@@ -7,10 +7,10 @@ dependencies:
     # Base depends
   - python
   - pip
-  - pillow
 
   # SEAMM dependencies
   - molsystem
+  - seamm-util
 
   # Testing
   - black
