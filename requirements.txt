@@ -1,3 +1,4 @@
-packaging==20.9
-Pillow==8.3.2
-seamm-util==2021.5.6
+molsystem
+packaging
+Pillow
+seamm-util
