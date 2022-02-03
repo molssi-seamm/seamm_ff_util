@@ -1,3 +1,0 @@
-packaging
-pillow
-seamm_util>=2020.12.2

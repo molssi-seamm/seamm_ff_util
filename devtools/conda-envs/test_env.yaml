@@ -7,10 +7,11 @@ dependencies:
     # Base depends
   - python
   - pip
-  - pillow
 
   # SEAMM dependencies
-  - rdkit
+  - molsystem
+  - packaging
+  - seamm-util
 
   # Testing
   - black
@@ -24,7 +25,6 @@ dependencies:
 
   # Pip-only installs
   - pip:
-    - seamm_util>=2020.12.2
 
     # Documentation
     - rinohtype
