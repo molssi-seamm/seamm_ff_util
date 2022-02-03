@@ -612,13 +612,13 @@ class Forcefield(object):
                 A = Q_(1.0, in1_units)
                 B = Q_(1.0, in2_units)
                 factor1 = (A / B) ** (1 / 6).to(out1_units).magnitude
-                factor2 = (B ** 2 / (4 * A)).to(out2_units).magnitude
+                factor2 = (B**2 / (4 * A)).to(out2_units).magnitude
             elif in_form == NonbondForms.AR_BR:
                 transform = Forcefield.ar_br_to_sigma_eps
                 A = Q_(1.0, in1_units) ** 12
                 B = Q_(1.0, in2_units) ** 6
                 sigma = (A / B) ** (1 / 6)
-                eps = B ** 2 / A
+                eps = B**2 / A
                 factor1 = sigma.to(out1_units).magnitude
                 factor2 = eps.to(out2_units).magnitude
             else:
@@ -670,7 +670,7 @@ class Forcefield(object):
             return 0.0, 0.0
         else:
             sigma = (A / B) ** (1 / 6)
-            eps = B ** 2 / (4 * A)
+            eps = B**2 / (4 * A)
             return sigma * factor1, eps * factor2
 
     @staticmethod
@@ -681,10 +681,10 @@ class Forcefield(object):
         if A == 0 and B == 0:
             return 0.0, 0.0
         else:
-            A = A ** 12
-            B = B ** 6
+            A = A**12
+            B = B**6
             sigma = (A / B) ** (1 / 6)
-            eps = B ** 2 / (4 * A)
+            eps = B**2 / (4 * A)
             return sigma * factor1, eps * factor2
 
     def clear(self):
