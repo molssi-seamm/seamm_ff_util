@@ -16,7 +16,7 @@ import seamm_util
 from seamm_util import Q_
 
 logger = logging.getLogger(__name__)
-# logger.setLevel('DEBUG')
+# logger.setLevel("DEBUG")
 
 
 class NonbondForms(Enum):
@@ -1527,19 +1527,6 @@ class Forcefield(object):
             except Exception as e:
                 print(f"Exception in json.dumps: {str(e)}")
                 logger.debug(pprint.pformat(self.ff[section]))
-
-        # if True:
-        #     try:
-        #         print('\n\nself.data:')
-        #         print(json.dumps(self.data, indent=4))
-        #     except Exception:  # noqa: E722
-        #         pprint.pprint(self.data)
-
-        #     try:
-        #         print('\n\nself.ff:')
-        #         print(json.dumps(self.ff, indent=4))
-        #     except Exception:  # noqa: E722
-        #         pprint.pprint(self.ff)
 
     def _get_parameters(self, functional_form, Version):
         """Select the correct version parameters from the sections for
