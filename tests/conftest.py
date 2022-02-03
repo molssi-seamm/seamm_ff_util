@@ -24,13 +24,14 @@ def pcff_assigner(pcff):
     pcff_assigner = FFAssigner(pcff)
     return pcff_assigner
 
+
 @pytest.fixture()
 def configuration():
     """Create a system db with no systems."""
     db = SystemDB(filename="file:seamm_db?mode=memory&cache=shared")
     system = db.create_system(name="default")
     configuration = system.create_configuration(name="default")
-    
+
     yield configuration
 
     db.close()
