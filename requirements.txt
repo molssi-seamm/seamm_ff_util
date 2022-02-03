@@ -1,4 +1,3 @@
 molsystem
 packaging
-Pillow
 seamm-util

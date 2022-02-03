@@ -10,6 +10,7 @@ dependencies:
 
   # SEAMM dependencies
   - molsystem
+  - packaging
   - seamm-util
 
   # Testing
