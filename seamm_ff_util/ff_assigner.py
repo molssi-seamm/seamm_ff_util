@@ -44,7 +44,7 @@ class FFAssigner(object):
                         ind_map[map_num - 1] = atom.GetIdx()
                 map_list = [ind_map[x] for x in sorted(ind_map)]
 
-                matches = molecule.GetSubstructMatches(pattern)
+                matches = molecule.GetSubstructMatches(pattern, maxMatches=6 * n_atoms)
                 logger.debug(atom_type + ": ")
                 if len(matches) > 0:
                     for match in matches:
