@@ -10,7 +10,7 @@ import json
 import logging
 import os.path
 import packaging.version
-import pprint
+import pprint  # noqa: F401
 
 import seamm_util
 from seamm_util import Q_
@@ -182,12 +182,54 @@ metadata = {
                     'flip': 0
                 }
         },
+    'torsion_opls':
+        {
+            'equation':
+                [
+                    (
+                        '  1/2 * V1 * [1 + cos(Phi)]'
+                        '+ 1/2 * V2 * [1 - cos(Phi)]'
+                        '+ 1/2 * V3 * [1 + cos(Phi)]'
+                        '+ 1/2 * V4 * [1 - cos(Phi)]'
+                    )
+                ],
+            'constants':
+                [
+                    ('V1', 'kcal/mol'),
+                    ('V2', 'kcal/mol'),
+                    ('V3', 'kcal/mol'),
+                    ('V4', 'kcal/mol'),
+                ],
+            'topology':
+                {
+                    'type': 'torsion',
+                    'n_atoms': 4,
+                    'symmetry': 'like_torsion',
+                    'fill': 0,
+                    'flip': 0
+                }
+        },
     'wilson_out_of_plane':
         {
             'equation': ['K*(Chi - Chi0)^2'],
             'constants': [
                 ('K', 'kcal/mol/radian^2'),
                 ('Chi0', 'degree'),
+            ],
+            'topology':
+                {
+                    'type': 'out-of-plane',
+                    'n_atoms': 4,
+                    'symmetry': 'like_oop',
+                    'fill': 0,
+                    'flip': 0
+                }
+        },
+    'oop_opls':
+        {
+            'equation': ['1/2 * V2 * [1 - cos(Phi)]'],
+            'constants': [
+                ('V2', 'kcal/mol'),
             ],
             'topology':
                 {
@@ -723,18 +765,18 @@ class Forcefield(object):
         with seamm_util.Open(self.filename, "r") as fd:
             reader(fd)
 
-        if logger.isEnabledFor(logging.DEBUG):
-            section = "charges"
-            if section in self.data:
-                print()
-                print("section = " + section)
-                try:
-                    print(json.dumps(self.data[section], indent=4))
-                except Exception as e:
-                    print(f"Exception in json.dumps: {str(e)}")
-                    pprint.pprint(self.data[section])
-                    print(80 * "-")
-                print()
+        # if logger.isEnabledFor(logging.DEBUG):
+        #     section = "charges"
+        #     if section in self.data:
+        #         print()
+        #         print("section = " + section)
+        #         try:
+        #             print(json.dumps(self.data[section], indent=4))
+        #         except Exception as e:
+        #             print(f"Exception in json.dumps: {str(e)}")
+        #             pprint.pprint(self.data[section])
+        #             print(80 * "-")
+        #         print()
 
     def _read_biosym_ff(self, fd):
         """
@@ -1429,7 +1471,13 @@ class Forcefield(object):
             version, reference = words[0:2]
             symmetry = data["topology"]["symmetry"]
             n_atoms = data["topology"]["n_atoms"]
-            key, flipped = self.make_canonical(symmetry, words[2 : 2 + n_atoms])
+            try:
+                key, flipped = self.make_canonical(symmetry, words[2 : 2 + n_atoms])
+            except Exception:
+                logger.error(f"{line=}")
+                logger.error(f"{symmetry=}")
+                logger.error(f"{n_atoms=}")
+                raise
 
             if key not in parameters:
                 parameters[key] = {}
@@ -1520,13 +1568,13 @@ class Forcefield(object):
         for fform in self.ff["functional_forms"]:
             self._get_parameters(fform, V)
 
-        if logger.isEnabledFor(logging.DEBUG):
-            section = "bond_increments"
-            try:
-                logger.debug(json.dumps(self.ff[section], indent=4))
-            except Exception as e:
-                print(f"Exception in json.dumps: {str(e)}")
-                logger.debug(pprint.pformat(self.ff[section]))
+        # if logger.isEnabledFor(logging.DEBUG):
+        #     section = "nonbond(12-6)"
+        #     try:
+        #         logger.debug(json.dumps(self.ff[section], indent=4))
+        #     except Exception as e:
+        #         print(f"Exception in json.dumps: {str(e)}")
+        #         logger.debug(pprint.pformat(self.ff[section]))
 
     def _get_parameters(self, functional_form, Version):
         """Select the correct version parameters from the sections for
@@ -2633,6 +2681,10 @@ class Forcefield(object):
                     oops.append((i, m, j, l))
                     oops.append((i, m, k, l))
                     oops.append((j, m, k, l))
+
+    def eex_atomic_charge(self, eex, configuration):
+        """Handle charges."""
+        self.eex_bond_charge_increment(eex, configuration)
 
     def eex_charge(self, eex, configuration):
         """Do nothing routine since charges are handled by the increments."""
