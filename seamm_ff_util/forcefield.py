@@ -313,12 +313,13 @@ metadata = {
                 [
                     'E = A*exp(r/rho) - C/r**6'
                 ],
-            'constants': [
-                ('A', 'kcal/mol'),
-                ('rho', 'Å'),
-                ('C', 'kcal/mol*Å**6'),
-                ('cutoff', 'Å'),
-            ],
+            'constants':
+                [
+                    ('A', 'kcal/mol'),
+                    ('rho', 'Å'),
+                    ('C', 'kcal/mol*Å**6'),
+                    ('cutoff', 'Å'),
+                ],
             'topology':
                 {
                     'type': 'pair',
@@ -1640,7 +1641,6 @@ class Forcefield(object):
             modifiers[section] = self.data[functional_form][section]["modifiers"]
 
             for item in data:
-
                 # Don't we need some versioning function in the sort?
                 versions = sorted(data[item].keys(), reverse=True)
 

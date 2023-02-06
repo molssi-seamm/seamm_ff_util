@@ -12,21 +12,23 @@ To install the SEAMM Forcefield Utilities, run this command in your terminal:
 
 .. code-block:: console
 
+   $ conda install -c conda-forge seamm-ff-util
+
+This is the preferred method. If you wish, you can also install using `pip`_:
+
+.. code-block:: console
+
     $ pip install seamm_ff_util
 
-This is the preferred method to install the SEAMM Forcefield Utilities, as it will always install the most recent stable release. 
-
-If you don't have `pip`_ installed, this `Python installation guide`_ can guide
-you through the process.
+However, there may be issues with dependencies. It is safer to use Conda.
 
 .. _pip: https://pip.pypa.io
-.. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
-
 
 From sources
 ------------
 
-The sources for Forcefield can be downloaded from the `Github repo`_.
+The sources for the seamm_ff_util can be downloaded
+from the `Github repo`_.
 
 You can either clone the public repository:
 
