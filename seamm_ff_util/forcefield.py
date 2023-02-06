@@ -15,6 +15,8 @@ import pprint  # noqa: F401
 import seamm_util
 from seamm_util import Q_
 
+from .ff_assigner import FFAssigner
+
 logger = logging.getLogger(__name__)
 # logger.setLevel("DEBUG")
 
@@ -137,6 +139,22 @@ metadata = {
                     'flip': 0
                 }
         },
+    'simple_fourier_angle':
+        {
+            'equation': ['K*[1-cos(n*Theta)]'],
+            'constants': [
+                ('K', 'kcal/mol'),
+                ('n', ''),
+            ],
+            'topology':
+                {
+                    'type': 'angle',
+                    'n_atoms': 3,
+                    'symmetry': 'like_angle',
+                    'fill': 0,
+                    'flip': 0
+                }
+        },
     'torsion_1':
         {
             'equation': ['KPhi * [1 + cos(n*Phi - Phi0)]'],
@@ -225,7 +243,7 @@ metadata = {
                     'flip': 0
                 }
         },
-    'oop_opls':
+    'improper_opls':
         {
             'equation': ['1/2 * V2 * [1 - cos(Phi)]'],
             'constants': [
@@ -235,7 +253,7 @@ metadata = {
                 {
                     'type': 'out-of-plane',
                     'n_atoms': 4,
-                    'symmetry': 'like_oop',
+                    'symmetry': 'like_improper',
                     'fill': 0,
                     'flip': 0
                 }
@@ -285,6 +303,28 @@ metadata = {
                     'subtype': 'LJ 12-6',
                     'n_atoms': 1,
                     'symmetry': 'none',
+                    'fill': 0,
+                    'flip': 0
+                }
+        },
+    'buckingham':
+        {
+            'equation':
+                [
+                    'E = A*exp(r/rho) - C/r**6'
+                ],
+            'constants': [
+                ('A', 'kcal/mol'),
+                ('rho', 'Å'),
+                ('C', 'kcal/mol*Å**6'),
+                ('cutoff', 'Å'),
+            ],
+            'topology':
+                {
+                    'type': 'pair',
+                    'subtype': 'LJ exp-6',
+                    'n_atoms': 2,
+                    'symmetry': 'like_bond',
                     'fill': 0,
                     'flip': 0
                 }
@@ -1282,6 +1322,12 @@ class Forcefield(object):
                     i, j, k, l = l, k, j, i  # noqa: E741
                     flipped = True
                 return ((i, j, k, l), flipped)
+            elif symmetry == "like_improper":
+                # k is central atom
+                # order canonically, i<j<l; i=j<l or i<j=l
+                i, j, l = sorted((i, j, l))  # noqa: E741
+                flipped = [i, j, k, l] != atom_types
+                return ((i, j, k, l), flipped)
             elif symmetry == "like_oop":
                 # j is central atom
                 # order canonically, i<k<l; i=k<l or i<k=l
@@ -1964,8 +2010,11 @@ class Forcefield(object):
                     return ("automatic", result[0], form, result[1])
 
         if zero:
-            parameters = {"K": 0.0, "Chi0": 0.0}
-            return ("zeroed", ("*", "*", "*", "*"), "wilson_out_of_plane", parameters)
+            if form == "wilson_out_of_plane":
+                parameters = {"K": 0.0, "Chi0": 0.0}
+            elif form == "improper_opls":
+                parameters = {"V2": 0.0}
+            return ("zeroed", ("*", "*", "*", "*"), form, parameters)
         else:
             raise RuntimeError(
                 "No out-of-plane parameters for {}-{}-{}-{}".format(i, j, k, l)
@@ -1978,33 +2027,63 @@ class Forcefield(object):
         with numerical precedences
         """
 
-        # parameter directly available
-        key, flipped = self.make_canonical("like_oop", (i, j, k, l))
-        if key in self.ff[form]:
-            return (key, self.ff[form][key])
+        if "improper" in form:
+            # for impropers the central atom is 3rd
+            # parameter directly available
+            key, flipped = self.make_canonical("like_improper", (i, k, j, l))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
 
-        # try wildcards
-        key, flipped = self.make_canonical("like_oop", ("*", j, k, l))
-        if key in self.ff[form]:
-            return (key, self.ff[form][key])
-        key, flipped = self.make_canonical("like_oop", (i, j, "*", l))
-        if key in self.ff[form]:
-            return (key, self.ff[form][key])
-        key, flipped = self.make_canonical("like_oop", (i, j, k, "*"))
-        if key in self.ff[form]:
-            return (key, self.ff[form][key])
-        key, flipped = self.make_canonical("like_oop", ("*", j, "*", l))
-        if key in self.ff[form]:
-            return (key, self.ff[form][key])
-        key, flipped = self.make_canonical("like_oop", ("*", j, k, "*"))
-        if key in self.ff[form]:
-            return (key, self.ff[form][key])
-        key, flipped = self.make_canonical("like_oop", (i, j, "*", "*"))
-        if key in self.ff[form]:
-            return (key, self.ff[form][key])
-        key, flipped = self.make_canonical("like_oop", ("*", j, "*", "*"))
-        if key in self.ff[form]:
-            return (key, self.ff[form][key])
+            # try wildcards
+            key, flipped = self.make_canonical("like_improper", ("*", k, j, l))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+            key, flipped = self.make_canonical("like_improper", (i, "*", j, l))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+            key, flipped = self.make_canonical("like_improper", (i, k, j, "*"))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+            key, flipped = self.make_canonical("like_improper", ("*", "*", k, l))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+            key, flipped = self.make_canonical("like_improper", ("*", k, j, "*"))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+            key, flipped = self.make_canonical("like_improper", (i, "*", j, "*"))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+            key, flipped = self.make_canonical("like_improper", ("*", "*", j, "*"))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+        else:
+            # parameter directly available
+            key, flipped = self.make_canonical("like_oop", (i, j, k, l))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+
+            # try wildcards
+            key, flipped = self.make_canonical("like_oop", ("*", j, k, l))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+            key, flipped = self.make_canonical("like_oop", (i, j, "*", l))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+            key, flipped = self.make_canonical("like_oop", (i, j, k, "*"))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+            key, flipped = self.make_canonical("like_oop", ("*", j, "*", l))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+            key, flipped = self.make_canonical("like_oop", ("*", j, k, "*"))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+            key, flipped = self.make_canonical("like_oop", (i, j, "*", "*"))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
+            key, flipped = self.make_canonical("like_oop", ("*", j, "*", "*"))
+            if key in self.ff[form]:
+                return (key, self.ff[form][key])
 
         return None
 
@@ -2048,6 +2127,50 @@ class Forcefield(object):
             raise RuntimeError("No nonbond parameters for {}".format(i))
         else:
             raise RuntimeError("No nonbond parameters for {}-{}".format(i, j))
+
+    def buckingham_parameters(self, i, j=None, form="buckingham(exp-6)", noerror=True):
+        """Return the nondbond parameters given one or two atoms types i and j
+
+        Handle equivalences
+        """
+
+        # parameter directly available
+        if j is None:
+            key = (i,)
+        else:
+            key, flipped = self.make_canonical("like_bond", (i, j))
+        if key in self.ff[form]:
+            return ("explicit", key, form, self.ff[form][key])
+
+        # try equivalences
+        if "equivalence" in self.ff:
+            ieq = self.ff["equivalence"][i]["nonbond"]
+            if j is None:
+                key = (ieq,)
+            else:
+                jeq = self.ff["equivalence"][j]["nonbond"]
+                key, flipped = self.make_canonical("like_bond", (ieq, jeq))
+            if key in self.ff[form]:
+                return ("equivalent", key, form, self.ff[form][key])
+
+        # try automatic equivalences
+        if "auto_equivalence" in self.ff:
+            iauto = self.ff["auto_equivalence"][i]["nonbond"]
+            if j is None:
+                key = (iauto,)
+            else:
+                jauto = self.ff["auto_equivalence"][j]["nonbond"]
+                key, flipped = self.make_canonical("like_bond", (iauto, jauto))
+            if key in self.ff[form]:
+                return ("automatic", key, form, self.ff[form][key])
+
+        if noerror:
+            return None
+
+        if j is None:
+            raise RuntimeError("No buckingham parameters for {}".format(i))
+        else:
+            raise RuntimeError("No buckingham parameters for {}-{}".format(i, j))
 
     def bond_bond_parameters(self, i, j, k, zero=False):
         """Return the bond-bond parameters given three atoms types
@@ -2673,7 +2796,7 @@ class Forcefield(object):
             if len(bonds_from_atom[m]) == 3:
                 i, j, k = bonds_from_atom[m]
                 oops.append((i, m, j, k))
-        if style == "LAMMPS":
+        if style == "LAMMPS-class2":
             for m in range(1, n_atoms + 1):
                 if len(bonds_from_atom[m]) == 4:
                     i, j, k, l = bonds_from_atom[m]  # noqa: E741
@@ -2870,6 +2993,7 @@ class Forcefield(object):
             parameters_type, real_types, form, parameter_values = self.oop_parameters(
                 types[i], types[j], types[k], types[l], zero=True
             )
+
             new_value = (
                 form,
                 parameter_values,
@@ -3187,3 +3311,97 @@ class Forcefield(object):
             result.append((i, j, k, l, index))
         eex["n_angle-angle"] = len(result)
         eex["n_angle-angle_types"] = len(parameters)
+
+    def assign_forcefield(self, configuration):
+        """Assign the forcefield to the structure, i.e. find the atom types
+        and charges.
+
+        Parameters
+        ----------
+        configuration : Configuration
+            The configuration to assign.
+
+        Returns
+        -------
+        None
+        """
+
+        ffname = self.current_forcefield
+
+        total_charge = configuration.charge
+
+        # Atom types
+        logger.debug("Atom typing, getting the SMILES for the system")
+
+        ff_assigner = FFAssigner(self)
+        atom_types = ff_assigner.assign(configuration)
+        logger.info("Atom types: " + ", ".join(atom_types))
+        key = f"atom_types_{ffname}"
+        if key not in configuration.atoms:
+            configuration.atoms.add_attribute(key, coltype="str")
+        configuration.atoms[key] = atom_types
+
+        # Now get the charges if forcefield has them.
+        terms = self.terms
+        if "bond charge increment" in terms:
+            logger.debug("Getting the charges for the system")
+            neighbors = configuration.bonded_neighbors(as_indices=True)
+
+            logger.debug(f"{atom_types=}")
+            logger.debug(f"{neighbors=}")
+
+            charges = []
+            total_q = 0.0
+            for i in range(configuration.n_atoms):
+                itype = atom_types[i]
+                parameters = self.charges(itype)[3]
+                q = float(parameters["Q"])
+                for j in neighbors[i]:
+                    jtype = atom_types[j]
+                    parameters = self.bond_increments(itype, jtype)[3]
+                    q += float(parameters["deltaij"])
+                charges.append(q)
+                total_q += q
+            if abs(total_q - total_charge) > 0.001:
+                delta = (total_q - total_charge) / len(charges)
+                charges = [q - delta for q in charges]
+                logger.warning(
+                    f"The total charge from the forcefield, {total_q:3f}, does not "
+                    f"match the formal charge, {total_charge}."
+                    f"\nAdjusted each atom's charge by {-delta:.3f} to compensate."
+                )
+            logger.debug("Charges from increments:\n" + pprint.pformat(charges))
+
+            key = f"charges_{ffname}"
+            if key not in configuration.atoms:
+                configuration.atoms.add_attribute(key, coltype="float")
+            charge_column = configuration.atoms.get_column(key)
+            charge_column[0:] = charges
+            logger.debug(f"Set column '{key}' to the charges")
+        elif "atomic charge" in terms:
+            logger.debug("Getting the charges for the system")
+
+            charges = []
+            total_q = 0.0
+            for i in range(configuration.n_atoms):
+                itype = atom_types[i]
+                parameters = self.charges(itype)[3]
+                q = float(parameters["Q"])
+                charges.append(q)
+                total_q += q
+            if abs(total_q - total_charge) > 0.001:
+                delta = (total_q - total_charge) / len(charges)
+                charges = [q - delta for q in charges]
+                logger.warning(
+                    f"The total charge from the forcefield, {total_q:3f}, does not "
+                    f"match the formal charge, {total_charge}."
+                    f"\nAdjusted each atom's charge by {-delta:.3f} to compensate."
+                )
+            logger.debug("Charges from charges:\n" + pprint.pformat(charges))
+
+            key = f"charges_{ffname}"
+            if key not in configuration.atoms:
+                configuration.atoms.add_attribute(key, coltype="float")
+            charge_column = configuration.atoms.get_column(key)
+            charge_column[0:] = charges
+            logger.debug(f"Set column '{key}' to the charges")
