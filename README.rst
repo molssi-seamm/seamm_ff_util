@@ -10,17 +10,13 @@ SEAMM Forcefield Utilities
    :target: https://codecov.io/gh/molssi-seamm/seamm_ff_util
    :alt: Code Coverage
 
-.. image:: https://img.shields.io/lgtm/grade/python/g/molssi-seamm/seamm_ff_util.svg?logo=lgtm&logoWidth=18
-   :target: https://lgtm.com/projects/g/molssi-seamm/seamm_ff_util/context:python
+.. image:: https://github.com/molssi-seamm/seamm_ff_util/workflows/CodeQL/badge.svg
+   :target: https://github.com/molssi-seamm/seamm_ff_util/security/code-scanning
    :alt: Code Quality
 
-.. image:: https://readthedocs.org/projects/seamm-ff-util/badge/?version=latest
-   :target: https://seamm-ff-util.readthedocs.io/en/latest/?badge=latest
+.. image:: https://github.com/molssi-seamm/seamm_ff_util/workflows/Release/badge.svg
+   :target: https://molssi-seamm.github.io/seamm_ff_util/index.html
    :alt: Documentation Status
-
-.. image:: https://pyup.io/repos/github/molssi-seamm/seamm_ff_util/shield.svg
-   :target: https://pyup.io/repos/github/molssi-seamm/seamm_ff_util/
-   :alt: Updates for Dependencies
 
 .. image:: https://img.shields.io/pypi/v/seamm_ff_util.svg
    :target: https://pypi.python.org/pypi/seamm_ff_util
