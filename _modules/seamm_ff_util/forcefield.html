@@ -1,12 +1,39 @@
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>seamm_ff_util.forcefield &mdash; SEAMM Forcefield Utilities 2022.5.29+3.g4d3b0d9 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>seamm_ff_util.forcefield &#8212; SEAMM Forcefield Utilities 2023.2.6 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -15,83 +42,387 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-PQXXTJ2');</script>
 <!-- End Google Tag Manager -->
 
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/js/theme.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/seamm_ff_util/forcefield';</script>
 
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
-</head>
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
 
-<body class="wy-body-for-nav">
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQXXTJ2"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
- 
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> SEAMM Forcefield Utilities
-          </a>
-              <div class="version">
-                2022.5.29+3.g4d3b0d9
-              </div>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">SEAMM Forcefield Utilities</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">seamm_ff_util</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="https://molssi-seamm.github.io">Main SEAMM documentation</a></li>
-</ul>
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
 
-        </div>
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../_static/SEAMM logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../_static/SEAMM Inverted 288x181.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+    <p class="title logo__title">SEAMM Forcefield Utilities</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../getting_started/index.html">
+                        Getting Started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../user_guide/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../developer_guide/index.html">
+                        Developer Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api/index.html">
+                        API Documentation
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../authors.html">
+                        Credits
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../history.html">
+                        History
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://molssi-seamm.github.io">
+                    SEAMM Documentation
+                  </a>
+                </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://molssi.org">
+                    MolSSI
+                  </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
       </div>
-    </nav>
+      
+    </div>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">SEAMM Forcefield Utilities</a>
-      </nav>
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/molssi-seamm/seamm_ff_util" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/MolSSI_NSF" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-twitter"></i></span>
+            <label class="sr-only">Twitter</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">seamm_ff_util.forcefield</li>
-      <li class="wy-breadcrumbs-aside">
-      </li>
-  </ul>
-  <hr/>
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../getting_started/index.html">
+                        Getting Started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../user_guide/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../developer_guide/index.html">
+                        Developer Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api/index.html">
+                        API Documentation
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../authors.html">
+                        Credits
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../history.html">
+                        History
+                      </a>
+                    </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://molssi-seamm.github.io">
+                    SEAMM Documentation
+                  </a>
+                </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://molssi.org">
+                    MolSSI
+                  </a>
+                </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/molssi-seamm/seamm_ff_util" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/MolSSI_NSF" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-twitter"></i></span>
+            <label class="sr-only">Twitter</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
   <h1>Source code for seamm_ff_util.forcefield</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 
@@ -116,7 +447,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span class="c1"># logger.setLevel(&quot;DEBUG&quot;)</span>
 
 
-<div class="viewcode-block" id="NonbondForms"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.NonbondForms">[docs]</a><span class="k">class</span> <span class="nc">NonbondForms</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="NonbondForms"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.NonbondForms">[docs]</a><span class="k">class</span> <span class="nc">NonbondForms</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
     <span class="n">SIGMA_EPS</span> <span class="o">=</span> <span class="s2">&quot;sigma-eps&quot;</span>
     <span class="n">RMIN_EPS</span> <span class="o">=</span> <span class="s2">&quot;rmin-eps&quot;</span>
     <span class="n">A_B</span> <span class="o">=</span> <span class="s2">&quot;A-B&quot;</span>
@@ -408,12 +739,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <span class="p">[</span>
                     <span class="s1">&#39;E = A*exp(r/rho) - C/r**6&#39;</span>
                 <span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;rho&#39;</span><span class="p">,</span> <span class="s1">&#39;Å&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol*Å**6&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;cutoff&#39;</span><span class="p">,</span> <span class="s1">&#39;Å&#39;</span><span class="p">),</span>
-            <span class="p">],</span>
+            <span class="s1">&#39;constants&#39;</span><span class="p">:</span>
+                <span class="p">[</span>
+                    <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;rho&#39;</span><span class="p">,</span> <span class="s1">&#39;Å&#39;</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol*Å**6&#39;</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;cutoff&#39;</span><span class="p">,</span> <span class="s1">&#39;Å&#39;</span><span class="p">),</span>
+                <span class="p">],</span>
             <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
                 <span class="p">{</span>
                     <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;pair&#39;</span><span class="p">,</span>
@@ -609,7 +941,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span class="c1"># yapf: enable</span>
 
 
-<div class="viewcode-block" id="Forcefield"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield">[docs]</a><span class="k">class</span> <span class="nc">Forcefield</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield">[docs]</a><span class="k">class</span> <span class="nc">Forcefield</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fftype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read, write, and use a forcefield</span>
@@ -729,17 +1061,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;The forcefield must be set to access its terms&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;terms&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Forcefield.rmin_to_sigma"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.rmin_to_sigma">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Forcefield.rmin_to_sigma"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.rmin_to_sigma">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">rmin_to_sigma</span><span class="p">(</span><span class="n">rmin</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert rmin to sigma for LJ potential.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">rmin</span> <span class="o">/</span> <span class="n">two_raised_to_one_sixth</span></div>
 
-<div class="viewcode-block" id="Forcefield.sigma_to_rmin"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.sigma_to_rmin">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Forcefield.sigma_to_rmin"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.sigma_to_rmin">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">sigma_to_rmin</span><span class="p">(</span><span class="n">sigma</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert sigma to rmin for LJ potential.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">two_raised_to_one_sixth</span></div>
 
-<div class="viewcode-block" id="Forcefield.nonbond_transformation"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.nonbond_transformation">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Forcefield.nonbond_transformation"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.nonbond_transformation">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">nonbond_transformation</span><span class="p">(</span>
         <span class="n">in_form</span><span class="o">=</span><span class="n">NonbondForms</span><span class="o">.</span><span class="n">SIGMA_EPS</span><span class="p">,</span>
         <span class="n">in1_units</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -826,19 +1158,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <span class="k">return</span> <span class="k">lambda</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">:</span> <span class="n">transform</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">factor2</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.no_transform"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.no_transform">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Forcefield.no_transform"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.no_transform">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">no_transform</span><span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">,</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">factor2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;No transformation of nonbond parameters, just units.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">in1</span> <span class="o">*</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">in2</span> <span class="o">*</span> <span class="n">factor2</span></div>
 
-<div class="viewcode-block" id="Forcefield.rmin_eps_to_sigma_eps"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.rmin_eps_to_sigma_eps">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Forcefield.rmin_eps_to_sigma_eps"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.rmin_eps_to_sigma_eps">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">rmin_eps_to_sigma_eps</span><span class="p">(</span><span class="n">rmin</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">factor2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform nonbond parameters from rmin-eps to sigma-eps</span>
 <span class="sd">        and apply the unit conversion factors</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Forcefield</span><span class="o">.</span><span class="n">rmin_to_sigma</span><span class="p">(</span><span class="n">rmin</span><span class="p">)</span> <span class="o">*</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">eps</span> <span class="o">*</span> <span class="n">factor2</span></div>
 
-<div class="viewcode-block" id="Forcefield.a_b_to_sigma_eps"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.a_b_to_sigma_eps">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Forcefield.a_b_to_sigma_eps"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.a_b_to_sigma_eps">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">a_b_to_sigma_eps</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">factor2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform nonbond parameters from A-B to sigma-eps</span>
 <span class="sd">        and apply the unit conversion factors</span>
@@ -850,7 +1182,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="n">eps</span> <span class="o">=</span> <span class="n">B</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">A</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">eps</span> <span class="o">*</span> <span class="n">factor2</span></div>
 
-<div class="viewcode-block" id="Forcefield.ar_br_to_sigma_eps"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.ar_br_to_sigma_eps">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Forcefield.ar_br_to_sigma_eps"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.ar_br_to_sigma_eps">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">ar_br_to_sigma_eps</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">factor2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform nonbond parameters from A/r-B/r to sigma-eps</span>
 <span class="sd">        and apply the unit conversion factors</span>
@@ -864,7 +1196,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="n">eps</span> <span class="o">=</span> <span class="n">B</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">A</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">eps</span> <span class="o">*</span> <span class="n">factor2</span></div>
 
-<div class="viewcode-block" id="Forcefield.clear"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.clear"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reset the object to its initial, empty, state</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1380,7 +1712,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_lines</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Forcefield.make_canonical"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.make_canonical">[docs]</a>    <span class="k">def</span> <span class="nf">make_canonical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symmetry</span><span class="p">,</span> <span class="n">atom_types</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.make_canonical"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.make_canonical">[docs]</a>    <span class="k">def</span> <span class="nf">make_canonical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symmetry</span><span class="p">,</span> <span class="n">atom_types</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Using the symmetry, order the atom_types canonically</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1651,7 +1983,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_lines</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Forcefield.initialize_biosym_forcefield"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.initialize_biosym_forcefield">[docs]</a>    <span class="k">def</span> <span class="nf">initialize_biosym_forcefield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forcefield</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.initialize_biosym_forcefield"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.initialize_biosym_forcefield">[docs]</a>    <span class="k">def</span> <span class="nf">initialize_biosym_forcefield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forcefield</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the given version of the Biosym-style forcefield</span>
 
@@ -1735,7 +2067,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="n">modifiers</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">functional_form</span><span class="p">][</span><span class="n">section</span><span class="p">][</span><span class="s2">&quot;modifiers&quot;</span><span class="p">]</span>
 
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-
                 <span class="c1"># Don&#39;t we need some versioning function in the sort?</span>
                 <span class="n">versions</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -1750,14 +2081,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">newdata</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Forcefield.mass"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.mass">[docs]</a>    <span class="k">def</span> <span class="nf">mass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.mass"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.mass">[docs]</a>    <span class="k">def</span> <span class="nf">mass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the atomic mass for an atom type i&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;atom_types&quot;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;atom_types&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
 
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;no atom type data for </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Forcefield.charges"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.charges">[docs]</a>    <span class="k">def</span> <span class="nf">charges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.charges"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.charges">[docs]</a>    <span class="k">def</span> <span class="nf">charges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the charge given an atom type i</span>
 
 <span class="sd">        Handle equivalences.</span>
@@ -1784,7 +2115,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Q&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
         <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,),</span> <span class="s2">&quot;charges&quot;</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.bond_increments"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_increments">[docs]</a>    <span class="k">def</span> <span class="nf">bond_increments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.bond_increments"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_increments">[docs]</a>    <span class="k">def</span> <span class="nf">bond_increments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the bond increments given two atoms types i and j</span>
 
 <span class="sd">        Handle automatic equivalences.</span>
@@ -1819,7 +2150,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No bond increments for </span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Forcefield.bond_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">bond_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.bond_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">bond_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the bond parameters given two atoms types i and j</span>
 
 <span class="sd">        Handle equivalences and automatic equivalences.</span>
@@ -1853,7 +2184,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No bond parameters for </span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Forcefield.angle_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.angle_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">angle_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.angle_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.angle_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">angle_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the angle parameters given three atom types</span>
 
 <span class="sd">        Handle equivalences and automatic equivalences.</span>
@@ -1944,7 +2275,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No angle parameters for </span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Forcefield.torsion_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.torsion_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">torsion_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+<div class="viewcode-block" id="Forcefield.torsion_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.torsion_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">torsion_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the torsion parameters given four atoms types</span>
 
 <span class="sd">        Handles equivalences and automatic equivalences and wildcards,</span>
@@ -2068,7 +2399,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <span class="k">return</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Forcefield.oop_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.oop_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">oop_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+<div class="viewcode-block" id="Forcefield.oop_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.oop_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">oop_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the oop parameters given four atoms types</span>
 
 <span class="sd">        Handles equivalences and automatic equivalences and wildcards,</span>
@@ -2182,7 +2513,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <span class="k">return</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Forcefield.nonbond_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.nonbond_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">nonbond_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;nonbond(12-6)&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.nonbond_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.nonbond_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">nonbond_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;nonbond(12-6)&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the nondbond parameters given one or two atoms types i and j</span>
 
 <span class="sd">        Handle equivalences</span>
@@ -2223,7 +2554,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No nonbond parameters for </span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Forcefield.buckingham_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.buckingham_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">buckingham_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;buckingham(exp-6)&quot;</span><span class="p">,</span> <span class="n">noerror</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.buckingham_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.buckingham_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">buckingham_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;buckingham(exp-6)&quot;</span><span class="p">,</span> <span class="n">noerror</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the nondbond parameters given one or two atoms types i and j</span>
 
 <span class="sd">        Handle equivalences</span>
@@ -2267,7 +2598,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No buckingham parameters for </span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Forcefield.bond_bond_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_bond_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">bond_bond_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.bond_bond_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_bond_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">bond_bond_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the bond-bond parameters given three atoms types</span>
 
 <span class="sd">        Handle equivalences, and if zero=True, return zero valued</span>
@@ -2330,7 +2661,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <span class="k">return</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Forcefield.bond_bond_1_3_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_bond_1_3_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">bond_bond_1_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+<div class="viewcode-block" id="Forcefield.bond_bond_1_3_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_bond_1_3_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">bond_bond_1_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the bond-bond_1_3 parameters given four atoms types</span>
 
 <span class="sd">        Handles equivalences wildcards</span>
@@ -2371,7 +2702,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <span class="s2">&quot;No bond-bond_1_3 parameters for &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.bond_angle_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_angle_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">bond_angle_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.bond_angle_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_angle_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">bond_angle_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the bond-angle parameters given three atoms types</span>
 
 <span class="sd">        Handle equivalences, and if zero=True, return zero valued</span>
@@ -2434,7 +2765,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No bond-angle parameters for </span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Forcefield.angle_angle_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.angle_angle_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">angle_angle_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+<div class="viewcode-block" id="Forcefield.angle_angle_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.angle_angle_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">angle_angle_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the angle_angle parameters given four atoms types</span>
 
 <span class="sd">        Handles equivalences and wildcards</span>
@@ -2509,7 +2840,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <span class="k">return</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Forcefield.end_bond_torsion_3_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.end_bond_torsion_3_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">end_bond_torsion_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+<div class="viewcode-block" id="Forcefield.end_bond_torsion_3_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.end_bond_torsion_3_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">end_bond_torsion_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the end bond - torsion_3 parameters given four atom types</span>
 
 <span class="sd">        Handle equivalences</span>
@@ -2595,7 +2926,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.middle_bond_torsion_3_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.middle_bond_torsion_3_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">middle_bond_torsion_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+<div class="viewcode-block" id="Forcefield.middle_bond_torsion_3_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.middle_bond_torsion_3_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">middle_bond_torsion_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the middle bond - torsion_3 parameters given four atom types</span>
 
 <span class="sd">        Handle equivalences</span>
@@ -2638,7 +2969,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.angle_torsion_3_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.angle_torsion_3_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">angle_torsion_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+<div class="viewcode-block" id="Forcefield.angle_torsion_3_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.angle_torsion_3_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">angle_torsion_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the angle - torsion_3 parameters given four atom types</span>
 
 <span class="sd">        Handle equivalences</span>
@@ -2724,7 +3055,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <span class="s2">&quot;No angle-torsion_3 parameters for &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.angle_angle_torsion_1_parameters"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.angle_angle_torsion_1_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">angle_angle_torsion_1_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+<div class="viewcode-block" id="Forcefield.angle_angle_torsion_1_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.angle_angle_torsion_1_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">angle_angle_torsion_1_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the angle - angle - torsion_1 parameters given four atom types</span>
 
 <span class="sd">        Handle equivalences</span>
@@ -2767,11 +3098,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.get_templates"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.get_templates">[docs]</a>    <span class="k">def</span> <span class="nf">get_templates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.get_templates"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.get_templates">[docs]</a>    <span class="k">def</span> <span class="nf">get_templates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the templates dict&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;templates&quot;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Forcefield.energy_expression"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.energy_expression">[docs]</a>    <span class="k">def</span> <span class="nf">energy_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.energy_expression"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.energy_expression">[docs]</a>    <span class="k">def</span> <span class="nf">energy_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the energy expression for the given structure</span>
 
 <span class="sd">        Parameters</span>
@@ -2821,7 +3152,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <span class="k">return</span> <span class="n">eex</span></div>
 
-<div class="viewcode-block" id="Forcefield.setup_topology"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.setup_topology">[docs]</a>    <span class="k">def</span> <span class="nf">setup_topology</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.setup_topology"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.setup_topology">[docs]</a>    <span class="k">def</span> <span class="nf">setup_topology</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the list of bonds, angle, torsion, etc. for the configuration</span>
 
 <span class="sd">        This topology information is held in self.topology.</span>
@@ -2900,15 +3231,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <span class="n">oops</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">))</span>
                     <span class="n">oops</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">j</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_atomic_charge"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_atomic_charge">[docs]</a>    <span class="k">def</span> <span class="nf">eex_atomic_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_atomic_charge"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_atomic_charge">[docs]</a>    <span class="k">def</span> <span class="nf">eex_atomic_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle charges.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eex_bond_charge_increment</span><span class="p">(</span><span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_charge"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_charge">[docs]</a>    <span class="k">def</span> <span class="nf">eex_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_charge"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_charge">[docs]</a>    <span class="k">def</span> <span class="nf">eex_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Do nothing routine since charges are handled by the increments.&quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_bond_charge_increment"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_bond_charge_increment">[docs]</a>    <span class="k">def</span> <span class="nf">eex_bond_charge_increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_bond_charge_increment"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_bond_charge_increment">[docs]</a>    <span class="k">def</span> <span class="nf">eex_bond_charge_increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the charges for the structure</span>
 
 <span class="sd">        If they do not exists on the structure, they are created</span>
@@ -2926,7 +3257,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;leaving eex_increment&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_atoms"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_atoms">[docs]</a>    <span class="k">def</span> <span class="nf">eex_atoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_atoms"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_atoms">[docs]</a>    <span class="k">def</span> <span class="nf">eex_atoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List the atoms into the energy expression&quot;&quot;&quot;</span>
         <span class="n">atoms</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">atoms</span>
         <span class="n">coordinates</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">(</span><span class="n">fractionals</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -2950,7 +3281,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_atoms&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_atom_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">atom_types</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_pair"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_pair">[docs]</a>    <span class="k">def</span> <span class="nf">eex_pair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_pair"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_pair">[docs]</a>    <span class="k">def</span> <span class="nf">eex_pair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the pair (non-bond) portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;In eex_pair&quot;</span><span class="p">)</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
@@ -2984,7 +3315,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_nonbonds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_nonbond_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_bond"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_bond">[docs]</a>    <span class="k">def</span> <span class="nf">eex_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_bond"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_bond">[docs]</a>    <span class="k">def</span> <span class="nf">eex_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the bond portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">bonds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;bonds&quot;</span><span class="p">]</span>
@@ -3014,7 +3345,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bonds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_angle"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_angle">[docs]</a>    <span class="k">def</span> <span class="nf">eex_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_angle"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_angle">[docs]</a>    <span class="k">def</span> <span class="nf">eex_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the angle portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">angles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;angles&quot;</span><span class="p">]</span>
@@ -3044,7 +3375,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_torsion"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_torsion">[docs]</a>    <span class="k">def</span> <span class="nf">eex_torsion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_torsion"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_torsion">[docs]</a>    <span class="k">def</span> <span class="nf">eex_torsion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the torsion portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
@@ -3077,7 +3408,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_torsions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_torsion_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_out_of_plane"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_out_of_plane">[docs]</a>    <span class="k">def</span> <span class="nf">eex_out_of_plane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_out_of_plane"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_out_of_plane">[docs]</a>    <span class="k">def</span> <span class="nf">eex_out_of_plane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the out-of-plane portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">oops</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;oops&quot;</span><span class="p">]</span>
@@ -3108,7 +3439,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_oops&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_oop_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_bond_bond"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_bond_bond">[docs]</a>    <span class="k">def</span> <span class="nf">eex_bond_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_bond_bond"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_bond_bond">[docs]</a>    <span class="k">def</span> <span class="nf">eex_bond_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the bond-bond portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">angles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;angles&quot;</span><span class="p">]</span>
@@ -3141,7 +3472,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond-bond&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond-bond_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_bond_angle"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_bond_angle">[docs]</a>    <span class="k">def</span> <span class="nf">eex_bond_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_bond_angle"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_bond_angle">[docs]</a>    <span class="k">def</span> <span class="nf">eex_bond_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the bond-angle portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">angles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;angles&quot;</span><span class="p">]</span>
@@ -3174,7 +3505,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond-angle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond-angle_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_torsion_middle_bond"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_torsion_middle_bond">[docs]</a>    <span class="k">def</span> <span class="nf">eex_torsion_middle_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_torsion_middle_bond"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_torsion_middle_bond">[docs]</a>    <span class="k">def</span> <span class="nf">eex_torsion_middle_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the middle_bond-torsion portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
@@ -3209,7 +3540,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_middle_bond-torsion_3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_middle_bond-torsion_3_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_torsion_end_bond"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_torsion_end_bond">[docs]</a>    <span class="k">def</span> <span class="nf">eex_torsion_end_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_torsion_end_bond"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_torsion_end_bond">[docs]</a>    <span class="k">def</span> <span class="nf">eex_torsion_end_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the end_bond-torsion portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
@@ -3244,7 +3575,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_end_bond-torsion_3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_end_bond-torsion_3_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_torsion_angle"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_torsion_angle">[docs]</a>    <span class="k">def</span> <span class="nf">eex_torsion_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_torsion_angle"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_torsion_angle">[docs]</a>    <span class="k">def</span> <span class="nf">eex_torsion_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the angle-torsion portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
@@ -3279,7 +3610,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle-torsion_3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle-torsion_3_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_angle_torsion_angle"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_angle_torsion_angle">[docs]</a>    <span class="k">def</span> <span class="nf">eex_angle_torsion_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_angle_torsion_angle"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_angle_torsion_angle">[docs]</a>    <span class="k">def</span> <span class="nf">eex_angle_torsion_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the angle-angle-torsion portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
@@ -3314,7 +3645,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle-angle-torsion_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle-angle-torsion_1_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_1_3_bond_bond"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_1_3_bond_bond">[docs]</a>    <span class="k">def</span> <span class="nf">eex_1_3_bond_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_1_3_bond_bond"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_1_3_bond_bond">[docs]</a>    <span class="k">def</span> <span class="nf">eex_1_3_bond_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the 1,3 bond-bond portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
@@ -3349,7 +3680,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond-bond_1_3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond-bond_1_3_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.eex_angle_angle"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_angle_angle">[docs]</a>    <span class="k">def</span> <span class="nf">eex_angle_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.eex_angle_angle"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_angle_angle">[docs]</a>    <span class="k">def</span> <span class="nf">eex_angle_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the angle-angle portion of the energy expression</span>
 
 <span class="sd">        j is the vertex atom of the angles. For the angle-angle parameters</span>
@@ -3407,7 +3738,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle-angle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle-angle_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Forcefield.assign_forcefield"><a class="viewcode-back" href="../../seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.assign_forcefield">[docs]</a>    <span class="k">def</span> <span class="nf">assign_forcefield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="Forcefield.assign_forcefield"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.assign_forcefield">[docs]</a>    <span class="k">def</span> <span class="nf">assign_forcefield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Assign the forcefield to the structure, i.e. find the atom types</span>
 <span class="sd">        and charges.</span>
 
@@ -3502,48 +3833,88 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Set column &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39; to the charges&quot;</span><span class="p">)</span></div></div>
 </pre></div>
 
-           </div>
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
           </div>
-          <footer>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+</div>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p></p>
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
   </div>
 
   
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
 
-<p>
-<div class="row">
-  <div class="column_left">
-    <a href="https://molssi.org/" target="_blank" title="Go to MolSSI in a new tab">
-      <img src="/_images/MolSSI.jpg" alt="The MolSSI" style="border:0;">
-    </a>
-  </div>
-  <div class="column">
-    &copy; Copyright 2019-2021, the Molecular Sciences Software Institute,
-    which receives funding from the National Science Foundation under awards OAC-1547580
-    and CHE-2136142.
-  </div>
-  <div class="column_right">
-    <a href="https://nsf.gov/" target="_blank" title="Go to the NSF in a new tab">
-      <img src="/_images/NSF_4-Color_bitmap_Logo.png" alt="The NSF" style="border:0;">
-    </a>
-  </div>
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+  
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+<div class="row h-10">
+    <div class="col-2">
+        <a href="https://molssi.org/" target="_blank" title="Go to MolSSI in a new tab">
+            <img src="../../_static/molssi_main_logo.png" class="logo__image only-light footer_logo" alt="Logo image">
+            <img src="../../_static/molssi_main_logo_inverted_white.png" class="logo__image only-dark footer_logo" alt="Logo image">
+        </a>
+    </div>
+    <div class="col-8">
+        <p> &copy; Copyright 2017-2023 <a href="https://molssi.org/">The Molecular Sciences Software Institute</a></p>
+        <p>Funded by the National Science Foundation 
+          <a href="https://nsf.gov/awardsearch/showAward?AWD_ID=1547580">OAC-1547580</a> and 
+          <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2136142">CHE-2136142.</a></p>
+ 
+        
+
+    </div>
+    <div class="col-2">
+        <a href="https://nsf.gov/" target="_blank" title="Go to the NSF in a new tab">
+            <img src="../../_static/nsf.png" class="footer_logo" alt="The NSF">
+          </a>
+    </div>
 </div>
-
-
-</footer>
-        </div>
-      </div>
-    </section>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+  
+</div>
+  </footer>
+  </body>
 </html>
