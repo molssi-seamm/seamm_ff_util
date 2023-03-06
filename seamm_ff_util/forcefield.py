@@ -2852,8 +2852,15 @@ class Forcefield(object):
             x, y, z = xyz
             result.append((x, y, z, index))
 
-        eex["n_atoms"] = len(result)
+        eex["n_atoms"] = n_atoms = len(result)
         eex["n_atom_types"] = len(atom_types)
+
+        # molecule for each atom
+        molecule = eex["molecule"] = [1] * n_atoms
+        molecules = configuration.find_molecules(as_indices=True)
+        for molecule_id, atoms in enumerate(molecules):
+            for atom in atoms:
+                molecule[atom] = molecule_id
 
     def eex_pair(self, eex, configuration):
         """Create the pair (non-bond) portion of the energy expression"""
