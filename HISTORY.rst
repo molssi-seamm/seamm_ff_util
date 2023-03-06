@@ -2,6 +2,9 @@
 History
 =======
 
+2023.3.5 -- Added molecule numbers for LAMMPS input
+   * Added the molecule number for each atom for when using LAMMPS
+     
 2023.2.6 -- Added handling of OPLS-AA forcefield
    * Added handling of the OPLS-AA forcefield
    * Moved documentation to new MolSSI theme and diátaxis layout
