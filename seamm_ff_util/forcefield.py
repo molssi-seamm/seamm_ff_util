@@ -2867,7 +2867,8 @@ class Forcefield(object):
         logger.debug("In eex_pair")
         types = self.topology["types"]
 
-        for pair_type in ("nonbond(12-6)", "nonbond(9-6)"):
+        found = False
+        for pair_type in ("nonbond(12-6)", "nonbond(9-6)", "buckingham"):
             if pair_type in self.ff["functional_forms"]:
                 found = True
                 break
