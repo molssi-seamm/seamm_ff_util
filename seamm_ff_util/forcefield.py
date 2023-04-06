@@ -16,6 +16,7 @@ import seamm_util
 from seamm_util import Q_
 
 from .ff_assigner import FFAssigner
+from .metadata import metadata
 
 logger = logging.getLogger(__name__)
 # logger.setLevel("DEBUG")
@@ -29,490 +30,6 @@ class NonbondForms(Enum):
 
 
 two_raised_to_one_sixth = 2 ** (1 / 6)
-
-# yapf: disable
-metadata = {
-    'charges':
-        {
-            'equation': ['I'],
-            'constants': [
-                ('Q', 'e'),
-            ],
-            'topology':
-                {
-                    'type': 'atomic charge',
-                    'n_atoms': 1,
-                    'symmetry': 'none',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'bond_increments':
-        {
-            'equation': ['delta'],
-            'constants': [
-                ('deltaij', 'e'),
-                ('deltaji', 'e'),
-            ],
-            'topology':
-                {
-                    'type': 'bond charge increment',
-                    'n_atoms': 2,
-                    'symmetry': 'like_bond',
-                    'fill': 0,
-                    'flip': 1
-                }
-        },
-    'quadratic_bond':
-        {
-            'equation': ['K2*(R-R0)^2'],
-            'constants': [
-                ('R0', 'angstrom'),
-                ('K2', 'kcal/mol/angstrom^2'),
-            ],
-            'topology':
-                {
-                    'type': 'bond',
-                    'n_atoms': 2,
-                    'symmetry': 'like_bond',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'quartic_bond':
-        {
-            'equation': ['K2*(R-R0)^2 + K3*(R-R0)^3 + K4*(R-R0)^4'],
-            'constants':
-                [
-                    ('R0', 'angstrom'),
-                    ('K2', 'kcal/mol/angstrom^2'),
-                    ('K3', 'kcal/mol/angstrom^3'),
-                    ('K4', 'kcal/mol/angstrom^4'),
-                ],
-            'topology':
-                {
-                    'type': 'bond',
-                    'n_atoms': 2,
-                    'symmetry': 'like_bond',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'quadratic_angle':
-        {
-            'equation': ['K2*(Theta-Theta0)^2'],
-            'constants': [
-                ('Theta0', 'degree'),
-                ('K2', 'kcal/mol/radian^2'),
-            ],
-            'topology':
-                {
-                    'type': 'angle',
-                    'n_atoms': 3,
-                    'symmetry': 'like_angle',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'quartic_angle':
-        {
-            'equation':
-                [
-                    (
-                        'K2*(Theta-Theta0)^2 + K3*(Theta-Theta0)^3'
-                        '+ K4*(Theta-Theta0)^4'
-                    )
-                ],
-            'constants':
-                [
-                    ('Theta0', 'degree'),
-                    ('K2', 'kcal/mol/radian^2'),
-                    ('K3', 'kcal/mol/radian^3'),
-                    ('K4', 'kcal/mol/radian^4'),
-                ],
-            'topology':
-                {
-                    'type': 'angle',
-                    'n_atoms': 3,
-                    'symmetry': 'like_angle',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'simple_fourier_angle':
-        {
-            'equation': ['K*[1-cos(n*Theta)]'],
-            'constants': [
-                ('K', 'kcal/mol'),
-                ('n', ''),
-            ],
-            'topology':
-                {
-                    'type': 'angle',
-                    'n_atoms': 3,
-                    'symmetry': 'like_angle',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'torsion_1':
-        {
-            'equation': ['KPhi * [1 + cos(n*Phi - Phi0)]'],
-            'constants': [
-                ('KPhi', 'kcal/mol'),
-                ('n', ''),
-                ('Phi0', 'degree'),
-            ],
-            'topology':
-                {
-                    'type': 'torsion',
-                    'n_atoms': 4,
-                    'symmetry': 'like_torsion',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'torsion_3':
-        {
-            'equation':
-                [
-                    (
-                        'V1 * [1 + cos(Phi - Phi0_1)]'
-                        ' + V2 * [1 + cos(2*Phi - Phi0_2)]'
-                        ' + V3 * [1 + cos(3*Phi - Phi0_3)]'
-                    )
-                ],
-            'constants':
-                [
-                    ('V1', 'kcal/mol'),
-                    ('Phi0_1', 'degree'),
-                    ('V2', 'kcal/mol'),
-                    ('Phi0_2', 'degree'),
-                    ('V3', 'kcal/mol'),
-                    ('Phi0_3', 'degree'),
-                ],
-            'topology':
-                {
-                    'type': 'torsion',
-                    'n_atoms': 4,
-                    'symmetry': 'like_torsion',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'torsion_opls':
-        {
-            'equation':
-                [
-                    (
-                        '  1/2 * V1 * [1 + cos(Phi)]'
-                        '+ 1/2 * V2 * [1 - cos(Phi)]'
-                        '+ 1/2 * V3 * [1 + cos(Phi)]'
-                        '+ 1/2 * V4 * [1 - cos(Phi)]'
-                    )
-                ],
-            'constants':
-                [
-                    ('V1', 'kcal/mol'),
-                    ('V2', 'kcal/mol'),
-                    ('V3', 'kcal/mol'),
-                    ('V4', 'kcal/mol'),
-                ],
-            'topology':
-                {
-                    'type': 'torsion',
-                    'n_atoms': 4,
-                    'symmetry': 'like_torsion',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'wilson_out_of_plane':
-        {
-            'equation': ['K*(Chi - Chi0)^2'],
-            'constants': [
-                ('K', 'kcal/mol/radian^2'),
-                ('Chi0', 'degree'),
-            ],
-            'topology':
-                {
-                    'type': 'out-of-plane',
-                    'n_atoms': 4,
-                    'symmetry': 'like_oop',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'improper_opls':
-        {
-            'equation': ['1/2 * V2 * [1 - cos(Phi)]'],
-            'constants': [
-                ('V2', 'kcal/mol'),
-            ],
-            'topology':
-                {
-                    'type': 'out-of-plane',
-                    'n_atoms': 4,
-                    'symmetry': 'like_improper',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'nonbond(9-6)':
-        {
-            'equation':
-                [
-                    'eps(ij) [2(r(ij)*/r(ij))**9 - 3(r(ij)*/r(ij))**6]',
-                    'r(ij) = [(r(i)**6 + r(j)**6))/2]**(1/6)',
-                    (
-                        'eps(ij) = 2 * sqrt(eps(i) * eps(j)) * '
-                        'r(i)^3 * r(j)^3/[r(i)^6 + r(j)^6]'
-                    )
-                ],
-            'constants': [('rmin', 'angstrom'), ('eps', 'kcal/mol')],
-            'topology':
-                {
-                    'form': 'rmin-eps',
-                    'type': 'pair',
-                    'subtype': 'LJ 6-9',
-                    'n_atoms': 1,
-                    'symmetry': 'none',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'nonbond(12-6)':
-        {
-            'equation':
-                [
-                    'E = 4 * eps * [(sigma/r)**12 - (sigma/r)**6]',
-                    'E = eps * [(rmin/r)**12 - (rmin/r)**6]',
-                    'E = A/r**12 - B/r**6',
-                    'rmin = 2**1/6 * sigma ',
-                    'sigma = rmin / 2**1/6',
-                    'A = 4 * eps * sigma**12',
-                    'B = 4 * eps * sigma**6',
-                    'sigma = (A/B)**1/6',
-                    'eps = B**2/(4*A)'
-                ],
-            'constants': [('sigma', 'angstrom'), ('eps', 'kcal/mol')],
-            'topology':
-                {
-                    'form': 'sigma-eps',
-                    'type': 'pair',
-                    'subtype': 'LJ 12-6',
-                    'n_atoms': 1,
-                    'symmetry': 'none',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'buckingham':
-        {
-            'equation':
-                [
-                    'E = A*exp(r/rho) - C/r**6'
-                ],
-            'constants':
-                [
-                    ('A', 'kcal/mol'),
-                    ('rho', 'Å'),
-                    ('C', 'kcal/mol*Å**6'),
-                    ('cutoff', 'Å'),
-                ],
-            'topology':
-                {
-                    'type': 'pair',
-                    'subtype': 'LJ exp-6',
-                    'n_atoms': 2,
-                    'symmetry': 'like_bond',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'bond-bond':
-        {
-            'equation': ["K*(R-R0)*(R'-R0')"],
-            'constants': [('K', 'kcal/mol/angstrom^2')],
-            'topology':
-                {
-                    'type': 'bond-bond',
-                    'n_atoms': 3,
-                    'symmetry': 'like_angle',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'bond-bond_1_3':
-        {
-            'equation': ["K*(R-R0)*(R'-R0')"],
-            'constants': [('K', 'kcal/mol/angstrom^2')],
-            'topology':
-                {
-                    'type': '1,3 bond-bond',
-                    'n_atoms': 4,
-                    'symmetry': 'like_torsion',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'bond-angle':
-        {
-            'equation': ["K*(R-R0)*(Theta-Theta0)"],
-            'constants':
-                [
-                    ('K12', 'kcal/mol/angstrom/radian'),
-                    ('K23', 'kcal/mol/angstrom/radian'),
-                ],
-            'topology':
-                {
-                    'type': 'bond-angle',
-                    'n_atoms': 3,
-                    'symmetry': 'like_angle',
-                    'fill': 1,
-                    'flip': 1
-                }
-        },
-    'angle-angle':
-        {
-            'equation': ["K*(Theta-Theta0)*(Theta'-Theta0')"],
-            'constants': [('K', 'kcal/mol/angstrom/radian')],
-            'topology':
-                {
-                    'type': 'angle-angle',
-                    'n_atoms': 4,
-                    'symmetry': 'like_angle-angle',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'end_bond-torsion_3':
-        {
-            'equation':
-                [
-                    (
-                        '(R_L - R0_L) * (V1_L * [1 + cos(Phi - Phi0_1)]'
-                        ' + V2_L * [1 + cos(2*Phi - Phi0_2)]'
-                        ' + V3_L * [1 + cos(3*Phi - Phi0_3)])'
-                    ),
-                    (
-                        '(R_R - R0_R) * (V1_R * [1 + cos(Phi - Phi0_1)]'
-                        ' + V2_R * [1 + cos(2*Phi - Phi0_2)]'
-                        ' + V3_R * [1 + cos(3*Phi - Phi0_3)])'
-                    )
-                ],
-            'constants':
-                [
-                    ('V1_L', 'kcal/mol'),
-                    ('V2_L', 'kcal/mol'),
-                    ('V3_L', 'kcal/mol'),
-                    ('V1_R', 'kcal/mol'),
-                    ('V2_R', 'kcal/mol'),
-                    ('V3_R', 'kcal/mol'),
-                ],
-            'topology':
-                {
-                    'type': 'torsion-end bond',
-                    'n_atoms': 4,
-                    'symmetry': 'like_torsion',
-                    'fill': 3,
-                    'flip': 3
-                }
-        },
-    'middle_bond-torsion_3':
-        {
-            'equation':
-                [
-                    (
-                        '(R_M - R0_M) * (V1 * [1 + cos(Phi - Phi0_1)]'
-                        ' + V2 * [1 + cos(2*Phi - Phi0_2)]'
-                        ' + V3 * [1 + cos(3*Phi - Phi0_3)])'
-                    )
-                ],
-            'constants':
-                [
-                    ('V1', 'kcal/mol'),
-                    ('V2', 'kcal/mol'),
-                    ('V3', 'kcal/mol'),
-                ],
-            'topology':
-                {
-                    'type': 'torsion-middle bond',
-                    'n_atoms': 4,
-                    'symmetry': 'like_torsion',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'angle-torsion_3':
-        {
-            'equation':
-                [
-                    (
-                        '(Theta_L - Theta0_L)'
-                        '* (V1_L * [1 + cos(Phi - Phi0_1)]'
-                        ' + V2_L * [1 + cos(2*Phi - Phi0_2)]'
-                        ' + V3_L * [1 + cos(3*Phi - Phi0_3)])'
-                    ),
-                    (
-                        '(Theta_R - Theta0_R)'
-                        ' * (V1_R * [1 + cos(Phi - Phi0_1)]'
-                        ' + V2_R * [1 + cos(2*Phi - Phi0_2)]'
-                        ' + V3_R * [1 + cos(3*Phi - Phi0_3)])'
-                    )
-                ],
-            'constants':
-                [
-                    ('V1_L', 'kcal/mol'),
-                    ('V2_L', 'kcal/mol'),
-                    ('V3_L', 'kcal/mol'),
-                    ('V1_R', 'kcal/mol'),
-                    ('V2_R', 'kcal/mol'),
-                    ('V3_R', 'kcal/mol'),
-                ],
-            'topology':
-                {
-                    'type': 'torsion-angle',
-                    'n_atoms': 4,
-                    'symmetry': 'like_torsion',
-                    'fill': 3,
-                    'flip': 3
-                }
-        },
-    'angle-angle-torsion_1':
-        {
-            'equation':
-                [
-                    (
-                        'K * (Theta_L - Theta0_L) * (Theta_R - Theta0_R) * '
-                        '(Phi - Phi0_1)'
-                    )
-                ],
-            'constants': [('K', 'kcal/mol/degree^2/degree')],
-            'topology':
-                {
-                    'type': 'angle-torsion-angle',
-                    'n_atoms': 4,
-                    'symmetry': 'like_torsion',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-    'torsion-torsion_1':
-        {
-            'equation': ['K * cos(Phi_L) * cos(Phi_R)'],
-            'constants': [('K', 'kcal/mol')],
-            'topology':
-                {
-                    'type': 'torsion-torsion',
-                    'n_atoms': 5,
-                    'symmetry': 'like_torsion-torsion',
-                    'fill': 0,
-                    'flip': 0
-                }
-        },
-}
-# yapf: enable
 
 
 class Forcefield(object):
@@ -651,7 +168,7 @@ class Forcefield(object):
         in1_units=None,
         in2_units=None,
         out_form=NonbondForms.SIGMA_EPS,
-        out1_units="angstrom",
+        out1_units="Å",
         out2_units="kcal/mol",
     ):
         """Return the transform method and unit conversions for the nonbonds.
@@ -1372,7 +889,7 @@ class Forcefield(object):
 
             @type eps-rmin
             @units eps kcal/mol
-            @units rmin angstrom
+            @units rmin Å
             @combination geometric
 
             !   Ver    Ref    I           Rmin        Epsilon
@@ -1406,7 +923,7 @@ class Forcefield(object):
         topology = data["topology"]
 
         out1, out2 = data["constants"]
-        out1_units = out1[1]  # angstrom, nm
+        out1_units = out1[1]  # Å, nm
         out2_units = out2[1]  # kcal/mol, kJ/mol
         parameter_1 = out1[0]
         parameter_2 = out2[0]
@@ -1415,7 +932,7 @@ class Forcefield(object):
 
         # Default for parameters read in
         in_form = out_form
-        in1_units = "angstrom"
+        in1_units = "Å"
         in2_units = "kcal/mol"
 
         # And see if there are modifiers
@@ -1511,6 +1028,29 @@ class Forcefield(object):
         # Copy in the metadata about this functional form
         data.update(metadata[section])
 
+        units = {i: {"default": j, "input": j} for i, j in data["constants"]}
+
+        # And see if there are modifiers
+        for item in data["modifiers"]:
+            modifier = item.split()
+            what = modifier[0]
+            if what == "units":
+                which = modifier[1]
+                if which in units:
+                    units[which]["input"] = modifier[2]
+                else:
+                    raise ValueError(
+                        f"Unrecognized parameter '{which}' in section "
+                        f"'{section} {label}'"
+                    )
+
+        factors = []
+        for param, tmp in units.items():
+            if tmp["default"] == tmp["input"]:
+                factors.append(1)
+            else:
+                factors.append(Q_(tmp["input"]).m_as(tmp["default"]))
+
         parameters = data["parameters"] = {}
 
         for line in data["lines"]:
@@ -1551,8 +1091,11 @@ class Forcefield(object):
                     first = values[0:n]
                     values = values[n : 2 * n]
                     values.extend(first)
-            for constant, value in zip(data["constants"], values):
-                params[constant[0]] = value
+            for constant, value, factor in zip(data["constants"], values, factors):
+                if factor == 1:
+                    params[constant[0]] = value
+                else:
+                    params[constant[0]] = float(value) * factor
 
         if not self.keep_lines:
             del data["lines"]
@@ -2123,54 +1666,26 @@ class Forcefield(object):
             if key in self.ff[form]:
                 return ("automatic", key, form, self.ff[form][key])
 
+        # try wildcards
+        if j is None:
+            key = ("*",)
+            if key in self.ff[form]:
+                return ("wildcard", key, form, self.ff[form][key])
+        else:
+            key = (i, "*")
+            if key in self.ff[form]:
+                return ("wildcard", key, form, self.ff[form][key])
+            key = ("*", j)
+            if key in self.ff[form]:
+                return ("wildcard", key, form, self.ff[form][key])
+            key = ("*", "*")
+            if key in self.ff[form]:
+                return ("wildcard", key, form, self.ff[form][key])
+
         if j is None:
             raise RuntimeError("No nonbond parameters for {}".format(i))
         else:
             raise RuntimeError("No nonbond parameters for {}-{}".format(i, j))
-
-    def buckingham_parameters(self, i, j=None, form="buckingham(exp-6)", noerror=True):
-        """Return the nondbond parameters given one or two atoms types i and j
-
-        Handle equivalences
-        """
-
-        # parameter directly available
-        if j is None:
-            key = (i,)
-        else:
-            key, flipped = self.make_canonical("like_bond", (i, j))
-        if key in self.ff[form]:
-            return ("explicit", key, form, self.ff[form][key])
-
-        # try equivalences
-        if "equivalence" in self.ff:
-            ieq = self.ff["equivalence"][i]["nonbond"]
-            if j is None:
-                key = (ieq,)
-            else:
-                jeq = self.ff["equivalence"][j]["nonbond"]
-                key, flipped = self.make_canonical("like_bond", (ieq, jeq))
-            if key in self.ff[form]:
-                return ("equivalent", key, form, self.ff[form][key])
-
-        # try automatic equivalences
-        if "auto_equivalence" in self.ff:
-            iauto = self.ff["auto_equivalence"][i]["nonbond"]
-            if j is None:
-                key = (iauto,)
-            else:
-                jauto = self.ff["auto_equivalence"][j]["nonbond"]
-                key, flipped = self.make_canonical("like_bond", (iauto, jauto))
-            if key in self.ff[form]:
-                return ("automatic", key, form, self.ff[form][key])
-
-        if noerror:
-            return None
-
-        if j is None:
-            raise RuntimeError("No buckingham parameters for {}".format(i))
-        else:
-            raise RuntimeError("No buckingham parameters for {}-{}".format(i, j))
 
     def bond_bond_parameters(self, i, j, k, zero=False):
         """Return the bond-bond parameters given three atoms types
@@ -2867,7 +2382,8 @@ class Forcefield(object):
         logger.debug("In eex_pair")
         types = self.topology["types"]
 
-        for pair_type in ("nonbond(12-6)", "nonbond(9-6)"):
+        found = False
+        for pair_type in ("nonbond(12-6)", "nonbond(9-6)", "buckingham"):
             if pair_type in self.ff["functional_forms"]:
                 found = True
                 break
@@ -2876,23 +2392,56 @@ class Forcefield(object):
 
         result = eex["nonbonds"] = []
         parameters = eex["nonbond parameters"] = []
-        for itype in types[1:]:
-            (
-                parameters_type,
-                real_types,
-                form,
-                parameter_values,
-            ) = self.nonbond_parameters(itype, form=pair_type)
-            new_value = (form, parameter_values, (itype,), parameters_type, real_types)
-            index = None
-            for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if new_value == value:
-                    index = count
-                    break
-            if index is None:
-                parameters.append(new_value)
-                index = len(parameters)
-            result.append(index)
+        if pair_type == "buckingham":
+            types = eex["atom types"]
+            for i, itype in enumerate(types):
+                for jtype in types[0 : i + 1]:
+                    (
+                        parameters_type,
+                        real_types,
+                        form,
+                        parameter_values,
+                    ) = self.nonbond_parameters(itype, jtype, form=pair_type)
+                    new_value = (
+                        form,
+                        parameter_values,
+                        (itype, jtype),
+                        parameters_type,
+                        real_types,
+                    )
+                    index = None
+                    for value, count in zip(parameters, range(1, len(parameters) + 1)):
+                        if new_value == value:
+                            index = count
+                            break
+                    if index is None:
+                        parameters.append(new_value)
+                        index = len(parameters)
+                    result.append(index)
+        else:
+            for itype in types[1:]:
+                (
+                    parameters_type,
+                    real_types,
+                    form,
+                    parameter_values,
+                ) = self.nonbond_parameters(itype, form=pair_type)
+                new_value = (
+                    form,
+                    parameter_values,
+                    (itype,),
+                    parameters_type,
+                    real_types,
+                )
+                index = None
+                for value, count in zip(parameters, range(1, len(parameters) + 1)):
+                    if new_value == value:
+                        index = count
+                        break
+                if index is None:
+                    parameters.append(new_value)
+                    index = len(parameters)
+                result.append(index)
         eex["n_nonbonds"] = len(result)
         eex["n_nonbond_types"] = len(parameters)
 

@@ -2,6 +2,9 @@
 History
 =======
 
+2023.4.6 -- Added support for Buckingham potentials
+   * Also improved unit handling across all terms in forcefields.
+     
 2023.3.5 -- Added molecule numbers for LAMMPS input
    * Added the molecule number for each atom for when using LAMMPS
      
