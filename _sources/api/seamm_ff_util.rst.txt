@@ -20,6 +20,14 @@ seamm\_ff\_util.forcefield module
    :undoc-members:
    :show-inheritance:
 
+seamm\_ff\_util.metadata module
+-------------------------------
+
+.. automodule:: seamm_ff_util.metadata
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

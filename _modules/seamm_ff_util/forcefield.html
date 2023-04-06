@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>seamm_ff_util.forcefield &#8212; SEAMM Forcefield Utilities 2023.4.5 documentation</title>
+    <title>seamm_ff_util.forcefield &#8212; SEAMM Forcefield Utilities 2023.4.6 documentation</title>
   
   
   
@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -34,8 +34,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -497,6 +497,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">seamm_util</span> <span class="kn">import</span> <span class="n">Q_</span>
 
 <span class="kn">from</span> <span class="nn">.ff_assigner</span> <span class="kn">import</span> <span class="n">FFAssigner</span>
+<span class="kn">from</span> <span class="nn">.metadata</span> <span class="kn">import</span> <span class="n">metadata</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 <span class="c1"># logger.setLevel(&quot;DEBUG&quot;)</span>
@@ -510,490 +511,6 @@ document.write(`
 
 
 <span class="n">two_raised_to_one_sixth</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">6</span><span class="p">)</span>
-
-<span class="c1"># yapf: disable</span>
-<span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;charges&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">),</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;atomic charge&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;bond_increments&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;delta&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;deltaij&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;deltaji&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">),</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;bond charge increment&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_bond&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">1</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;quadratic_bond&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;K2*(R-R0)^2&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;R0&#39;</span><span class="p">,</span> <span class="s1">&#39;angstrom&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;K2&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/angstrom^2&#39;</span><span class="p">),</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;bond&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_bond&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;quartic_bond&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;K2*(R-R0)^2 + K3*(R-R0)^3 + K4*(R-R0)^4&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span><span class="s1">&#39;R0&#39;</span><span class="p">,</span> <span class="s1">&#39;angstrom&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;K2&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/angstrom^2&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;K3&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/angstrom^3&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;K4&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/angstrom^4&#39;</span><span class="p">),</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;bond&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_bond&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;quadratic_angle&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;K2*(Theta-Theta0)^2&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;Theta0&#39;</span><span class="p">,</span> <span class="s1">&#39;degree&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;K2&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/radian^2&#39;</span><span class="p">),</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;angle&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_angle&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;quartic_angle&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span>
-                        <span class="s1">&#39;K2*(Theta-Theta0)^2 + K3*(Theta-Theta0)^3&#39;</span>
-                        <span class="s1">&#39;+ K4*(Theta-Theta0)^4&#39;</span>
-                    <span class="p">)</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span><span class="s1">&#39;Theta0&#39;</span><span class="p">,</span> <span class="s1">&#39;degree&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;K2&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/radian^2&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;K3&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/radian^3&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;K4&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/radian^4&#39;</span><span class="p">),</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;angle&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_angle&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;simple_fourier_angle&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;K*[1-cos(n*Theta)]&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;angle&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_angle&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;torsion_1&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;KPhi * [1 + cos(n*Phi - Phi0)]&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;KPhi&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;Phi0&#39;</span><span class="p">,</span> <span class="s1">&#39;degree&#39;</span><span class="p">),</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;torsion&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_torsion&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;torsion_3&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span>
-                        <span class="s1">&#39;V1 * [1 + cos(Phi - Phi0_1)]&#39;</span>
-                        <span class="s1">&#39; + V2 * [1 + cos(2*Phi - Phi0_2)]&#39;</span>
-                        <span class="s1">&#39; + V3 * [1 + cos(3*Phi - Phi0_3)]&#39;</span>
-                    <span class="p">)</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span><span class="s1">&#39;V1&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;Phi0_1&#39;</span><span class="p">,</span> <span class="s1">&#39;degree&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V2&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;Phi0_2&#39;</span><span class="p">,</span> <span class="s1">&#39;degree&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V3&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;Phi0_3&#39;</span><span class="p">,</span> <span class="s1">&#39;degree&#39;</span><span class="p">),</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;torsion&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_torsion&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;torsion_opls&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span>
-                        <span class="s1">&#39;  1/2 * V1 * [1 + cos(Phi)]&#39;</span>
-                        <span class="s1">&#39;+ 1/2 * V2 * [1 - cos(Phi)]&#39;</span>
-                        <span class="s1">&#39;+ 1/2 * V3 * [1 + cos(Phi)]&#39;</span>
-                        <span class="s1">&#39;+ 1/2 * V4 * [1 - cos(Phi)]&#39;</span>
-                    <span class="p">)</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span><span class="s1">&#39;V1&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V2&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V3&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V4&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;torsion&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_torsion&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;wilson_out_of_plane&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;K*(Chi - Chi0)^2&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/radian^2&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;Chi0&#39;</span><span class="p">,</span> <span class="s1">&#39;degree&#39;</span><span class="p">),</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;out-of-plane&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_oop&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;improper_opls&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;1/2 * V2 * [1 - cos(Phi)]&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;V2&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;out-of-plane&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_improper&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;nonbond(9-6)&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="s1">&#39;eps(ij) [2(r(ij)*/r(ij))**9 - 3(r(ij)*/r(ij))**6]&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;r(ij) = [(r(i)**6 + r(j)**6))/2]**(1/6)&#39;</span><span class="p">,</span>
-                    <span class="p">(</span>
-                        <span class="s1">&#39;eps(ij) = 2 * sqrt(eps(i) * eps(j)) * &#39;</span>
-                        <span class="s1">&#39;r(i)^3 * r(j)^3/[r(i)^6 + r(j)^6]&#39;</span>
-                    <span class="p">)</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="s1">&#39;rmin&#39;</span><span class="p">,</span> <span class="s1">&#39;angstrom&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;eps&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">)],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="s1">&#39;rmin-eps&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;pair&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;subtype&#39;</span><span class="p">:</span> <span class="s1">&#39;LJ 6-9&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;nonbond(12-6)&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="s1">&#39;E = 4 * eps * [(sigma/r)**12 - (sigma/r)**6]&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;E = eps * [(rmin/r)**12 - (rmin/r)**6]&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;E = A/r**12 - B/r**6&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;rmin = 2**1/6 * sigma &#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;sigma = rmin / 2**1/6&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;A = 4 * eps * sigma**12&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;B = 4 * eps * sigma**6&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;sigma = (A/B)**1/6&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;eps = B**2/(4*A)&#39;</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="s1">&#39;sigma&#39;</span><span class="p">,</span> <span class="s1">&#39;angstrom&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;eps&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">)],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="s1">&#39;sigma-eps&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;pair&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;subtype&#39;</span><span class="p">:</span> <span class="s1">&#39;LJ 12-6&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;buckingham&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="s1">&#39;E = A*exp(r/rho) - C/r**6&#39;</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;rho&#39;</span><span class="p">,</span> <span class="s1">&#39;Å&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol*Å**6&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;cutoff&#39;</span><span class="p">,</span> <span class="s1">&#39;Å&#39;</span><span class="p">),</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;pair&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;subtype&#39;</span><span class="p">:</span> <span class="s1">&#39;LJ exp-6&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_bond&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;bond-bond&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;K*(R-R0)*(R&#39;-R0&#39;)&quot;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/angstrom^2&#39;</span><span class="p">)],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;bond-bond&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_angle&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;bond-bond_1_3&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;K*(R-R0)*(R&#39;-R0&#39;)&quot;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/angstrom^2&#39;</span><span class="p">)],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;1,3 bond-bond&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_torsion&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;bond-angle&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;K*(R-R0)*(Theta-Theta0)&quot;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span><span class="s1">&#39;K12&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/angstrom/radian&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;K23&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/angstrom/radian&#39;</span><span class="p">),</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;bond-angle&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_angle&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">1</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;angle-angle&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;K*(Theta-Theta0)*(Theta&#39;-Theta0&#39;)&quot;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/angstrom/radian&#39;</span><span class="p">)],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;angle-angle&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_angle-angle&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;end_bond-torsion_3&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span>
-                        <span class="s1">&#39;(R_L - R0_L) * (V1_L * [1 + cos(Phi - Phi0_1)]&#39;</span>
-                        <span class="s1">&#39; + V2_L * [1 + cos(2*Phi - Phi0_2)]&#39;</span>
-                        <span class="s1">&#39; + V3_L * [1 + cos(3*Phi - Phi0_3)])&#39;</span>
-                    <span class="p">),</span>
-                    <span class="p">(</span>
-                        <span class="s1">&#39;(R_R - R0_R) * (V1_R * [1 + cos(Phi - Phi0_1)]&#39;</span>
-                        <span class="s1">&#39; + V2_R * [1 + cos(2*Phi - Phi0_2)]&#39;</span>
-                        <span class="s1">&#39; + V3_R * [1 + cos(3*Phi - Phi0_3)])&#39;</span>
-                    <span class="p">)</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span><span class="s1">&#39;V1_L&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V2_L&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V3_L&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V1_R&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V2_R&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V3_R&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;torsion-end bond&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_torsion&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">3</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;middle_bond-torsion_3&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span>
-                        <span class="s1">&#39;(R_M - R0_M) * (V1 * [1 + cos(Phi - Phi0_1)]&#39;</span>
-                        <span class="s1">&#39; + V2 * [1 + cos(2*Phi - Phi0_2)]&#39;</span>
-                        <span class="s1">&#39; + V3 * [1 + cos(3*Phi - Phi0_3)])&#39;</span>
-                    <span class="p">)</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span><span class="s1">&#39;V1&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V2&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V3&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;torsion-middle bond&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_torsion&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;angle-torsion_3&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span>
-                        <span class="s1">&#39;(Theta_L - Theta0_L)&#39;</span>
-                        <span class="s1">&#39;* (V1_L * [1 + cos(Phi - Phi0_1)]&#39;</span>
-                        <span class="s1">&#39; + V2_L * [1 + cos(2*Phi - Phi0_2)]&#39;</span>
-                        <span class="s1">&#39; + V3_L * [1 + cos(3*Phi - Phi0_3)])&#39;</span>
-                    <span class="p">),</span>
-                    <span class="p">(</span>
-                        <span class="s1">&#39;(Theta_R - Theta0_R)&#39;</span>
-                        <span class="s1">&#39; * (V1_R * [1 + cos(Phi - Phi0_1)]&#39;</span>
-                        <span class="s1">&#39; + V2_R * [1 + cos(2*Phi - Phi0_2)]&#39;</span>
-                        <span class="s1">&#39; + V3_R * [1 + cos(3*Phi - Phi0_3)])&#39;</span>
-                    <span class="p">)</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span><span class="s1">&#39;V1_L&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V2_L&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V3_L&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V1_R&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V2_R&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;V3_R&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">),</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;torsion-angle&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_torsion&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">3</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;angle-angle-torsion_1&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span>
-                <span class="p">[</span>
-                    <span class="p">(</span>
-                        <span class="s1">&#39;K * (Theta_L - Theta0_L) * (Theta_R - Theta0_R) * &#39;</span>
-                        <span class="s1">&#39;(Phi - Phi0_1)&#39;</span>
-                    <span class="p">)</span>
-                <span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol/degree^2/degree&#39;</span><span class="p">)],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;angle-torsion-angle&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_torsion&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;torsion-torsion_1&#39;</span><span class="p">:</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;equation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;K * cos(Phi_L) * cos(Phi_R)&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;constants&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal/mol&#39;</span><span class="p">)],</span>
-            <span class="s1">&#39;topology&#39;</span><span class="p">:</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;torsion-torsion&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;n_atoms&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-                    <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;like_torsion-torsion&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                    <span class="s1">&#39;flip&#39;</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">}</span>
-        <span class="p">},</span>
-<span class="p">}</span>
-<span class="c1"># yapf: enable</span>
 
 
 <div class="viewcode-block" id="Forcefield"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield">[docs]</a><span class="k">class</span> <span class="nc">Forcefield</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -1132,7 +649,7 @@ document.write(`
         <span class="n">in1_units</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">in2_units</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">out_form</span><span class="o">=</span><span class="n">NonbondForms</span><span class="o">.</span><span class="n">SIGMA_EPS</span><span class="p">,</span>
-        <span class="n">out1_units</span><span class="o">=</span><span class="s2">&quot;angstrom&quot;</span><span class="p">,</span>
+        <span class="n">out1_units</span><span class="o">=</span><span class="s2">&quot;Å&quot;</span><span class="p">,</span>
         <span class="n">out2_units</span><span class="o">=</span><span class="s2">&quot;kcal/mol&quot;</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the transform method and unit conversions for the nonbonds.</span>
@@ -1853,7 +1370,7 @@ document.write(`
 
 <span class="sd">            @type eps-rmin</span>
 <span class="sd">            @units eps kcal/mol</span>
-<span class="sd">            @units rmin angstrom</span>
+<span class="sd">            @units rmin Å</span>
 <span class="sd">            @combination geometric</span>
 
 <span class="sd">            !   Ver    Ref    I           Rmin        Epsilon</span>
@@ -1887,7 +1404,7 @@ document.write(`
         <span class="n">topology</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;topology&quot;</span><span class="p">]</span>
 
         <span class="n">out1</span><span class="p">,</span> <span class="n">out2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;constants&quot;</span><span class="p">]</span>
-        <span class="n">out1_units</span> <span class="o">=</span> <span class="n">out1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># angstrom, nm</span>
+        <span class="n">out1_units</span> <span class="o">=</span> <span class="n">out1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Å, nm</span>
         <span class="n">out2_units</span> <span class="o">=</span> <span class="n">out2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># kcal/mol, kJ/mol</span>
         <span class="n">parameter_1</span> <span class="o">=</span> <span class="n">out1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">parameter_2</span> <span class="o">=</span> <span class="n">out2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1896,7 +1413,7 @@ document.write(`
 
         <span class="c1"># Default for parameters read in</span>
         <span class="n">in_form</span> <span class="o">=</span> <span class="n">out_form</span>
-        <span class="n">in1_units</span> <span class="o">=</span> <span class="s2">&quot;angstrom&quot;</span>
+        <span class="n">in1_units</span> <span class="o">=</span> <span class="s2">&quot;Å&quot;</span>
         <span class="n">in2_units</span> <span class="o">=</span> <span class="s2">&quot;kcal/mol&quot;</span>
 
         <span class="c1"># And see if there are modifiers</span>
@@ -1992,6 +1509,29 @@ document.write(`
         <span class="c1"># Copy in the metadata about this functional form</span>
         <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="n">section</span><span class="p">])</span>
 
+        <span class="n">units</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="n">j</span><span class="p">,</span> <span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">j</span><span class="p">}</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;constants&quot;</span><span class="p">]}</span>
+
+        <span class="c1"># And see if there are modifiers</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;modifiers&quot;</span><span class="p">]:</span>
+            <span class="n">modifier</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="n">what</span> <span class="o">=</span> <span class="n">modifier</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">what</span> <span class="o">==</span> <span class="s2">&quot;units&quot;</span><span class="p">:</span>
+                <span class="n">which</span> <span class="o">=</span> <span class="n">modifier</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">which</span> <span class="ow">in</span> <span class="n">units</span><span class="p">:</span>
+                    <span class="n">units</span><span class="p">[</span><span class="n">which</span><span class="p">][</span><span class="s2">&quot;input&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modifier</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Unrecognized parameter &#39;</span><span class="si">{</span><span class="n">which</span><span class="si">}</span><span class="s2">&#39; in section &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">section</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+                    <span class="p">)</span>
+
+        <span class="n">factors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">tmp</span> <span class="ow">in</span> <span class="n">units</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;default&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">]:</span>
+                <span class="n">factors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">factors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">m_as</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;default&quot;</span><span class="p">]))</span>
+
         <span class="n">parameters</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]:</span>
@@ -2032,8 +1572,11 @@ document.write(`
                     <span class="n">first</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
                     <span class="n">values</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">n</span> <span class="p">:</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">]</span>
                     <span class="n">values</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">constant</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;constants&quot;</span><span class="p">],</span> <span class="n">values</span><span class="p">):</span>
-                <span class="n">params</span><span class="p">[</span><span class="n">constant</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">for</span> <span class="n">constant</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">factor</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;constants&quot;</span><span class="p">],</span> <span class="n">values</span><span class="p">,</span> <span class="n">factors</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">factor</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">params</span><span class="p">[</span><span class="n">constant</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">params</span><span class="p">[</span><span class="n">constant</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">*</span> <span class="n">factor</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_lines</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span>
@@ -2604,54 +2147,26 @@ document.write(`
             <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">]:</span>
                 <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;automatic&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
 
+        <span class="c1"># try wildcards</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,)</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;wildcard&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;wildcard&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;wildcard&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;wildcard&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+
         <span class="k">if</span> <span class="n">j</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No nonbond parameters for </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No nonbond parameters for </span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span></div>
-
-<div class="viewcode-block" id="Forcefield.buckingham_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.buckingham_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">buckingham_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;buckingham(exp-6)&quot;</span><span class="p">,</span> <span class="n">noerror</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the nondbond parameters given one or two atoms types i and j</span>
-
-<span class="sd">        Handle equivalences</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># parameter directly available</span>
-        <span class="k">if</span> <span class="n">j</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="p">,)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">key</span><span class="p">,</span> <span class="n">flipped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_canonical</span><span class="p">(</span><span class="s2">&quot;like_bond&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;explicit&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
-
-        <span class="c1"># try equivalences</span>
-        <span class="k">if</span> <span class="s2">&quot;equivalence&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">:</span>
-            <span class="n">ieq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;equivalence&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;nonbond&quot;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">j</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">ieq</span><span class="p">,)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">jeq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;equivalence&quot;</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="s2">&quot;nonbond&quot;</span><span class="p">]</span>
-                <span class="n">key</span><span class="p">,</span> <span class="n">flipped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_canonical</span><span class="p">(</span><span class="s2">&quot;like_bond&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">ieq</span><span class="p">,</span> <span class="n">jeq</span><span class="p">))</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">]:</span>
-                <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;equivalent&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
-
-        <span class="c1"># try automatic equivalences</span>
-        <span class="k">if</span> <span class="s2">&quot;auto_equivalence&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">:</span>
-            <span class="n">iauto</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;auto_equivalence&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;nonbond&quot;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">j</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">iauto</span><span class="p">,)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">jauto</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;auto_equivalence&quot;</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="s2">&quot;nonbond&quot;</span><span class="p">]</span>
-                <span class="n">key</span><span class="p">,</span> <span class="n">flipped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_canonical</span><span class="p">(</span><span class="s2">&quot;like_bond&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">iauto</span><span class="p">,</span> <span class="n">jauto</span><span class="p">))</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">]:</span>
-                <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;automatic&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
-
-        <span class="k">if</span> <span class="n">noerror</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="k">if</span> <span class="n">j</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No buckingham parameters for </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No buckingham parameters for </span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Forcefield.bond_bond_parameters"><a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_bond_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">bond_bond_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the bond-bond parameters given three atoms types</span>
@@ -3348,7 +2863,8 @@ document.write(`
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;In eex_pair&quot;</span><span class="p">)</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
 
-        <span class="k">for</span> <span class="n">pair_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;nonbond(12-6)&quot;</span><span class="p">,</span> <span class="s2">&quot;nonbond(9-6)&quot;</span><span class="p">):</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">pair_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;nonbond(12-6)&quot;</span><span class="p">,</span> <span class="s2">&quot;nonbond(9-6)&quot;</span><span class="p">,</span> <span class="s2">&quot;buckingham&quot;</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">pair_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;functional_forms&quot;</span><span class="p">]:</span>
                 <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">break</span>
@@ -3357,23 +2873,56 @@ document.write(`
 
         <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;nonbonds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;nonbond parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">itype</span> <span class="ow">in</span> <span class="n">types</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-            <span class="p">(</span>
-                <span class="n">parameters_type</span><span class="p">,</span>
-                <span class="n">real_types</span><span class="p">,</span>
-                <span class="n">form</span><span class="p">,</span>
-                <span class="n">parameter_values</span><span class="p">,</span>
-            <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonbond_parameters</span><span class="p">(</span><span class="n">itype</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">pair_type</span><span class="p">)</span>
-            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">form</span><span class="p">,</span> <span class="n">parameter_values</span><span class="p">,</span> <span class="p">(</span><span class="n">itype</span><span class="p">,),</span> <span class="n">parameters_type</span><span class="p">,</span> <span class="n">real_types</span><span class="p">)</span>
-            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
-                <span class="k">if</span> <span class="n">new_value</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
-                    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
-                    <span class="k">break</span>
-            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
-                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pair_type</span> <span class="o">==</span> <span class="s2">&quot;buckingham&quot;</span><span class="p">:</span>
+            <span class="n">types</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;atom types&quot;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">itype</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">types</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">jtype</span> <span class="ow">in</span> <span class="n">types</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+                    <span class="p">(</span>
+                        <span class="n">parameters_type</span><span class="p">,</span>
+                        <span class="n">real_types</span><span class="p">,</span>
+                        <span class="n">form</span><span class="p">,</span>
+                        <span class="n">parameter_values</span><span class="p">,</span>
+                    <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonbond_parameters</span><span class="p">(</span><span class="n">itype</span><span class="p">,</span> <span class="n">jtype</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">pair_type</span><span class="p">)</span>
+                    <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">form</span><span class="p">,</span>
+                        <span class="n">parameter_values</span><span class="p">,</span>
+                        <span class="p">(</span><span class="n">itype</span><span class="p">,</span> <span class="n">jtype</span><span class="p">),</span>
+                        <span class="n">parameters_type</span><span class="p">,</span>
+                        <span class="n">real_types</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                        <span class="k">if</span> <span class="n">new_value</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+                            <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                            <span class="k">break</span>
+                    <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                        <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">itype</span> <span class="ow">in</span> <span class="n">types</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="p">(</span>
+                    <span class="n">parameters_type</span><span class="p">,</span>
+                    <span class="n">real_types</span><span class="p">,</span>
+                    <span class="n">form</span><span class="p">,</span>
+                    <span class="n">parameter_values</span><span class="p">,</span>
+                <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonbond_parameters</span><span class="p">(</span><span class="n">itype</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">pair_type</span><span class="p">)</span>
+                <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">form</span><span class="p">,</span>
+                    <span class="n">parameter_values</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">itype</span><span class="p">,),</span>
+                    <span class="n">parameters_type</span><span class="p">,</span>
+                    <span class="n">real_types</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="n">new_value</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+                        <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_nonbonds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_nonbond_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
 
@@ -3900,9 +3449,15 @@ document.write(`
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -3912,7 +3467,7 @@ document.write(`
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner"></div>
+            
           </footer>
         
       </main>
@@ -3920,8 +3475,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -3971,7 +3526,7 @@ document.write(`
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
 </p></div>
       
     </div>

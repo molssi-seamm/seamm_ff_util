@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>seamm_ff_util package &#8212; SEAMM Forcefield Utilities 2023.4.5 documentation</title>
+    <title>seamm_ff_util package &#8212; SEAMM Forcefield Utilities 2023.4.6 documentation</title>
   
   
   
@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -35,8 +35,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -625,13 +625,6 @@ parameters rather than raise an error</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.buckingham_parameters">
-<span class="sig-name descname"><span class="pre">buckingham_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'buckingham(exp-6)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noerror</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.buckingham_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.buckingham_parameters" title="Permalink to this definition">#</a></dt>
-<dd><p>Return the nondbond parameters given one or two atoms types i and j</p>
-<p>Handle equivalences</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.charges">
 <span class="sig-name descname"><span class="pre">charges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.charges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.charges" title="Permalink to this definition">#</a></dt>
 <dd><p>Return the charge given an atom type i</p>
@@ -858,7 +851,7 @@ is not specified then the default is the latest version.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.nonbond_transformation">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nonbond_transformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_form</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NonbondForms.SIGMA_EPS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in1_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in2_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_form</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NonbondForms.SIGMA_EPS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out1_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'angstrom'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out2_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'kcal/mol'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.nonbond_transformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.nonbond_transformation" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nonbond_transformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_form</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NonbondForms.SIGMA_EPS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in1_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in2_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_form</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NonbondForms.SIGMA_EPS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out1_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Å'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out2_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'kcal/mol'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.nonbond_transformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.nonbond_transformation" title="Permalink to this definition">#</a></dt>
 <dd><p>Return the transform method and unit conversions for the nonbonds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -980,6 +973,10 @@ with numerical precedences</p>
 </dd></dl>
 
 </section>
+<section id="module-seamm_ff_util.metadata">
+<span id="seamm-ff-util-metadata-module"></span><h2>seamm_ff_util.metadata module<a class="headerlink" href="#module-seamm_ff_util.metadata" title="Permalink to this heading">#</a></h2>
+<p>Metadata for describing terms in focefields.</p>
+</section>
 <section id="module-seamm_ff_util">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-seamm_ff_util" title="Permalink to this heading">#</a></h2>
 <p>Top-level package for SEAMM_FF_Util.</p>
@@ -992,7 +989,10 @@ with numerical precedences</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="modules.html"
@@ -1012,7 +1012,10 @@ with numerical precedences</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1049,7 +1052,6 @@ with numerical precedences</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.bond_bond_parameters"><code class="docutils literal notranslate"><span class="pre">Forcefield.bond_bond_parameters()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.bond_increments"><code class="docutils literal notranslate"><span class="pre">Forcefield.bond_increments()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.bond_parameters"><code class="docutils literal notranslate"><span class="pre">Forcefield.bond_parameters()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.buckingham_parameters"><code class="docutils literal notranslate"><span class="pre">Forcefield.buckingham_parameters()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.charges"><code class="docutils literal notranslate"><span class="pre">Forcefield.charges()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.clear"><code class="docutils literal notranslate"><span class="pre">Forcefield.clear()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.current_forcefield"><code class="docutils literal notranslate"><span class="pre">Forcefield.current_forcefield</span></code></a></li>
@@ -1101,6 +1103,7 @@ with numerical precedences</p>
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-seamm_ff_util.metadata">seamm_ff_util.metadata module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-seamm_ff_util">Module contents</a></li>
 </ul>
   </nav></div>
@@ -1118,7 +1121,7 @@ with numerical precedences</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner"></div>
+            
           </footer>
         
       </main>
@@ -1126,8 +1129,8 @@ with numerical precedences</p>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1177,7 +1180,7 @@ with numerical precedences</p>
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
 </p></div>
       
     </div>
