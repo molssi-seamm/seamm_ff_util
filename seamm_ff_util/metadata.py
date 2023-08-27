@@ -17,6 +17,21 @@ metadata = {
             "flip": 0,
         },
     },
+    "shell-model": {
+        "equation": ["I"],
+        "constants": [
+            ("Q", "e"),
+            ("Y", "e"),
+            ("k", "kcal/mol/Å^2"),
+        ],
+        "topology": {
+            "type": "shell model",
+            "n_atoms": 1,
+            "symmetry": "none",
+            "fill": 0,
+            "flip": 0,
+        },
+    },
     "bond_increments": {
         "equation": ["delta"],
         "constants": [
@@ -98,6 +113,23 @@ metadata = {
         "constants": [
             ("K", "kcal/mol"),
             ("n", ""),
+        ],
+        "topology": {
+            "type": "angle",
+            "n_atoms": 3,
+            "symmetry": "like_angle",
+            "fill": 0,
+            "flip": 0,
+        },
+    },
+    "tabulated_angle": {
+        "constants": [
+            ("Eqn", "", str),
+            ("K", "kcal/mol", float),
+            ("n", "", int),
+            ("Rb", "Å", float),
+            ("A", "kcal/mol*Å^12", float),
+            ("zero-shift", "degree", float),
         ],
         "topology": {
             "type": "angle",

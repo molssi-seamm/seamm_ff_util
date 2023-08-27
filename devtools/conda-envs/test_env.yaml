@@ -10,8 +10,10 @@ dependencies:
 
   # SEAMM dependencies
   - molsystem
+  - numpy
   - packaging
   - seamm-util
+  - sympy
 
   # Testing
   - black

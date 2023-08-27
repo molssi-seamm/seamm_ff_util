@@ -1028,7 +1028,12 @@ class Forcefield(object):
         # Copy in the metadata about this functional form
         data.update(metadata[section])
 
-        units = {i: {"default": j, "input": j} for i, j in data["constants"]}
+        logger.debug(f"{data['constants']=}")
+
+        units = {t[0]: {"default": t[1], "input": t[1]} for t in data["constants"]}
+
+        # Keep track of the equations in the tabulated forms
+        eqns = {}
 
         # And see if there are modifiers
         for item in data["modifiers"]:
@@ -1043,6 +1048,8 @@ class Forcefield(object):
                         f"Unrecognized parameter '{which}' in section "
                         f"'{section} {label}'"
                     )
+            elif what == "equation":
+                eqns[modifier[1]] = " ".join(modifier[3:])
 
         factors = []
         for param, tmp in units.items():
@@ -1092,10 +1099,19 @@ class Forcefield(object):
                     values = values[n : 2 * n]
                     values.extend(first)
             for constant, value, factor in zip(data["constants"], values, factors):
-                if factor == 1:
-                    params[constant[0]] = value
+                if constant[0] == "Eqn":
+                    if value in eqns:
+                        params[constant[0]] = eqns[value]
+                    else:
+                        raise ValueError(f"Equation '{value}' not found in {section}!")
                 else:
-                    params[constant[0]] = float(value) * factor
+                    if factor == 1:
+                        if len(constant) > 2:
+                            params[constant[0]] = constant[2](value)
+                        else:
+                            params[constant[0]] = value
+                    else:
+                        params[constant[0]] = float(value) * factor
 
         if not self.keep_lines:
             del data["lines"]
@@ -1231,6 +1247,32 @@ class Forcefield(object):
         # return the default of zero
         parameters = {"Q": 0.0}
         return ("default", ("*",), "charges", parameters)
+
+    def shell_model(self, i):
+        """Return the shell model parameters given an atom type i
+
+        Handle equivalences.
+        """
+
+        if "shell-model" in self.ff:
+            # parameter directly available
+            key = (i,)
+            if key in self.ff["shell-model"]:
+                parameters = {}
+                parameters.update(self.ff["shell-model"][key])
+                return ("explicit", key, "shell-model", parameters)
+
+            # try equivalences
+            if "equivalence" in self.ff:
+                ieq = self.ff["equivalence"][i]["nonbond"]
+                key = (ieq,)
+                if key in self.ff["shell-model"]:
+                    parameters = {}
+                    parameters.update(self.ff["shell-model"][key])
+                    return ("equivalent", key, "quadratic_bond", parameters)
+
+        # return the default of None
+        return None
 
     def bond_increments(self, i, j):
         """Return the bond increments given two atoms types i and j
@@ -2336,19 +2378,74 @@ class Forcefield(object):
 
         logger.debug("entering eex_increment")
 
+        terms = self.terms
         ff_name = self.current_forcefield
         atoms = configuration.atoms
-        key = f"charges_{ff_name}"
-        if key in atoms:
-            eex["charges"] = [*atoms[key]]
+        if "atomic charge" in terms and "shell model" in terms:
+            logger.debug("Getting the charges for the system")
+
+            # Atom types
+            key = f"atom_types_{ff_name}"
+            atom_types = atoms.get_column(key)
+
+            total_charge = configuration.charge
+            eex["charges"] = charges = []
+            total_q = 0.0
+            if "shell model" in terms:
+                # Use charges from shell model by preference.
+                shell_q = []
+                for i in range(configuration.n_atoms):
+                    itype = atom_types[i]
+                    tmp = self.shell_model(itype)
+                    if tmp is None:
+                        # Fall back to charges
+                        parameters = self.charges(itype)[3]
+                        q = float(parameters["Q"])
+                        charges.append(q)
+                        total_q += q
+                    else:
+                        parameters = tmp[3]
+                        q = float(parameters["Q"])
+                        y = float(parameters["Y"])
+                        charges.append(q - y)
+                        shell_q.append(y)
+                        total_q += q
+                charges.extend(shell_q)
+            else:
+                for i in range(configuration.n_atoms):
+                    itype = atom_types[i]
+                    parameters = self.charges(itype)[3]
+                    q = float(parameters["Q"])
+                    charges.append(q)
+                    total_q += q
+            if abs(total_q - total_charge) > 0.001:
+                delta = (total_q - total_charge) / len(charges)
+                charges = [q - delta for q in charges]
+                logger.warning(
+                    f"The total charge from the forcefield, {total_q:3f}, does not "
+                    f"match the formal charge, {total_charge}."
+                    f"\nAdjusted each atom's charge by {-delta:.3f} to compensate."
+                )
+            logger.debug("Charges from charges:\n" + pprint.pformat(charges))
         else:
-            raise RuntimeError("No charges on system!")
+            key = f"charges_{ff_name}"
+            if key in atoms:
+                eex["charges"] = [*atoms[key]]
+            else:
+                raise RuntimeError("No charges on system!")
 
         logger.debug("leaving eex_increment")
 
     def eex_atoms(self, eex, configuration):
-        """List the atoms into the energy expression"""
+        """List the atoms into the energy expression.
+
+        Note that if using the shell model, an extra "atom" is added for the shell.
+        At the moment the mass is split 90:10 between core and shell.
+        The shells are appended at the end of the atoms so bonds, etc. work using
+        the atom indices.
+        """
         atoms = configuration.atoms
+        n_atoms = configuration.n_atoms
         coordinates = atoms.get_coordinates(fractionals=False)
         key = f"atom_types_{self.current_forcefield}"
         types = atoms.get_column(key)
@@ -2357,25 +2454,56 @@ class Forcefield(object):
         atom_types = eex["atom types"] = []
         masses = eex["masses"] = []
 
+        shells = []
+        eex["shell_of_atom"] = shell_of_atom = []
+
         for itype, xyz in zip(types, coordinates):
-            if itype in atom_types:
-                index = atom_types.index(itype) + 1
-            else:
-                atom_types.append(itype)
-                index = len(atom_types)
-                masses.append((self.mass(itype), itype))
             x, y, z = xyz
-            result.append((x, y, z, index))
+            if self.shell_model(itype) is None:
+                if itype in atom_types:
+                    index = atom_types.index(itype) + 1
+                else:
+                    atom_types.append(itype)
+                    index = len(atom_types)
+                    masses.append((self.mass(itype), itype))
+                result.append((x, y, z, index))
+                shell_of_atom.append(None)
+            else:
+                if itype in atom_types:
+                    # core
+                    index = atom_types.index("core_" + itype) + 1
+                    result.append((x, y, z, index))
+                    # shell
+                    index = atom_types.index(itype) + 1
+                    shell_of_atom.append(len(shells) + n_atoms)
+                    shells.append((x, y, z, index))
+                else:
+                    # core
+                    atom_types.append("core_" + itype)
+                    index = len(atom_types)
+                    masses.append((0.9 * float(self.mass(itype)), "core_" + itype))
+                    result.append((x, y, z, index))
+                    # shell
+                    atom_types.append(itype)
+                    index = len(atom_types)
+                    masses.append((0.1 * float(self.mass(itype)), "shell_" + itype))
+                    shell_of_atom.append(len(shells) + n_atoms)
+                    shells.append((x, y, z, index))
+
+        if len(shells) > 0:
+            result.extend(shells)
 
         eex["n_atoms"] = n_atoms = len(result)
         eex["n_atom_types"] = len(atom_types)
 
-        # molecule for each atom
+        # molecule for each atom and shell (if any)
         molecule = eex["molecule"] = [1] * n_atoms
         molecules = configuration.find_molecules(as_indices=True)
         for molecule_id, atoms in enumerate(molecules):
             for atom in atoms:
                 molecule[atom] = molecule_id
+                if shell_of_atom[atom] is not None:
+                    molecule[shell_of_atom[atom]] = molecule_id
 
     def eex_pair(self, eex, configuration):
         """Create the pair (non-bond) portion of the energy expression"""
@@ -2395,7 +2523,12 @@ class Forcefield(object):
         if pair_type == "buckingham":
             types = eex["atom types"]
             for i, itype in enumerate(types):
-                for jtype in types[0 : i + 1]:
+                if itype[0:5] == "core_":
+                    itype = "core"
+                for j, jtype in enumerate(types[0 : i + 1]):
+                    if jtype[0:5] == "core_":
+                        jtype = "core"
+                    # print(f"{i}-{j} {itype} - {jtype} ##")
                     (
                         parameters_type,
                         real_types,
@@ -2410,16 +2543,21 @@ class Forcefield(object):
                         real_types,
                     )
                     index = None
+                    # print(f"{itype}-{jtype} --> {new_value}")
                     for value, count in zip(parameters, range(1, len(parameters) + 1)):
+                        # print(f"\t{value}")
                         if new_value == value:
                             index = count
                             break
-                    if index is None:
-                        parameters.append(new_value)
-                        index = len(parameters)
+                    # if index is None:
+                    parameters.append(new_value)
+                    index = len(parameters)
+                    # print(f"Added {new_value} as {index}")
                     result.append(index)
         else:
             for itype in types[1:]:
+                if itype[0:5] == "core_":
+                    itype = "core"
                 (
                     parameters_type,
                     real_types,
@@ -2445,13 +2583,57 @@ class Forcefield(object):
         eex["n_nonbonds"] = len(result)
         eex["n_nonbond_types"] = len(parameters)
 
+    def eex_shell_model(self, eex, configuration):
+        """Create the shell model portion of the energy expression"""
+        types = self.topology["types"]
+
+        if "bonds" not in eex:
+            eex["bonds"] = []
+            eex["bond parameters"] = []
+        result = eex["bonds"]
+        parameters = eex["bond parameters"]
+
+        key = f"atom_types_{self.current_forcefield}"
+        types = configuration.atoms.get_column(key)
+        shell_of_atom = eex["shell_of_atom"]
+        n_atoms = configuration.n_atoms
+
+        for atom_no, shell_no, itype in zip(range(n_atoms), shell_of_atom, types):
+            if shell_no is not None:
+                parameters_type, real_types, form, parameter_values = self.shell_model(
+                    itype
+                )
+                real_type = real_types[0]
+                new_value = (
+                    form,
+                    {"R0": 0.0, "K2": parameter_values["k"]},
+                    ("core_" + itype, itype),
+                    parameters_type,
+                    ("core_" + real_type, real_type),
+                )
+                index = None
+                for value, count in zip(parameters, range(1, len(parameters) + 1)):
+                    if new_value == value:
+                        index = count
+                        break
+                if index is None:
+                    parameters.append(new_value)
+                    index = len(parameters)
+                result.append((atom_no + 1, shell_no + 1, index))
+
+        eex["n_bonds"] = len(result)
+        eex["n_bond_types"] = len(parameters)
+
     def eex_bond(self, eex, configuration):
         """Create the bond portion of the energy expression"""
         types = self.topology["types"]
         bonds = self.topology["bonds"]
 
-        result = eex["bonds"] = []
-        parameters = eex["bond parameters"] = []
+        if "bonds" not in eex:
+            eex["bonds"] = []
+            eex["bond parameters"] = []
+        result = eex["bonds"]
+        parameters = eex["bond parameters"]
         for i, j in bonds:
             parameters_type, real_types, form, parameter_values = self.bond_parameters(
                 types[i], types[j]
@@ -2939,12 +3121,30 @@ class Forcefield(object):
 
             charges = []
             total_q = 0.0
-            for i in range(configuration.n_atoms):
-                itype = atom_types[i]
-                parameters = self.charges(itype)[3]
-                q = float(parameters["Q"])
-                charges.append(q)
-                total_q += q
+            if "shell model" in terms:
+                # Use charges from shell model by preference.
+                for i in range(configuration.n_atoms):
+                    itype = atom_types[i]
+                    tmp = self.shell_model(itype)
+                    if tmp is None:
+                        # Fall back to charges
+                        parameters = self.charges(itype)[3]
+                        q = float(parameters["Q"])
+                        charges.append(q)
+                        total_q += q
+                    else:
+                        parameters = tmp[3]
+                        q = float(parameters["Q"])
+                        y = float(parameters["Y"])
+                        charges.append(q - y)
+                        total_q += q
+            else:
+                for i in range(configuration.n_atoms):
+                    itype = atom_types[i]
+                    parameters = self.charges(itype)[3]
+                    q = float(parameters["Q"])
+                    charges.append(q)
+                    total_q += q
             if abs(total_q - total_charge) > 0.001:
                 delta = (total_q - total_charge) / len(charges)
                 charges = [q - delta for q in charges]
