@@ -28,6 +28,14 @@ seamm\_ff\_util.metadata module
    :undoc-members:
    :show-inheritance:
 
+seamm\_ff\_util.tabulate module
+-------------------------------
+
+.. automodule:: seamm_ff_util.tabulate
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
