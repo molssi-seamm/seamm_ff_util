@@ -8,6 +8,7 @@ __version__ = "0.2.1"
 
 from .forcefield import Forcefield  # noqa: F401
 from .ff_assigner import FFAssigner  # noqa: F401
+from .tabulate import tabulate_angle  # noqa: F401
 
 # Handle versioneer
 from ._version import get_versions
