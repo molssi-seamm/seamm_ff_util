@@ -3,11 +3,13 @@
 
 """Tests for `forcefield` package."""
 
+import json
+
 import seamm_ff_util  # noqa: F401
 
 
 def test_angle_explicit(pcff):
-    """Test of angle parameters, which shuould fine explicit ones"""
+    """Test of angle parameters, which should find explicit ones"""
 
     expected = {
         "K2": "46.0608",
@@ -23,6 +25,9 @@ def test_angle_explicit(pcff):
     ptype, key, form, parameters = pcff.angle_parameters(i, j, k)
     assert ptype == "explicit"
     assert key == ("br", "c", "h")
+    if parameters != expected:
+        print("parameters:")
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected
 
 
