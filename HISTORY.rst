@@ -2,6 +2,8 @@
 History
 =======
 
+2023.8.27 -- Added support for tabulated angle potentials
+
 2023.4.6 -- Added support for Buckingham potentials
    * Also improved unit handling across all terms in forcefields.
      
