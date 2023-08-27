@@ -1,3 +1,5 @@
 molsystem
+numpy
 packaging
 seamm-util
+sympy
