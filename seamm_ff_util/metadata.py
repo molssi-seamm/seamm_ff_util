@@ -182,9 +182,9 @@ metadata = {
         "equation": [
             (
                 "  1/2 * V1 * [1 + cos(Phi)]"
-                "+ 1/2 * V2 * [1 - cos(Phi)]"
-                "+ 1/2 * V3 * [1 + cos(Phi)]"
-                "+ 1/2 * V4 * [1 - cos(Phi)]"
+                "+ 1/2 * V2 * [1 - cos(2*Phi)]"
+                "+ 1/2 * V3 * [1 + cos(3*Phi)]"
+                "+ 1/2 * V4 * [1 - cos(4*Phi)]"
             )
         ],
         "constants": [
@@ -192,6 +192,23 @@ metadata = {
             ("V2", "kcal/mol"),
             ("V3", "kcal/mol"),
             ("V4", "kcal/mol"),
+        ],
+        "topology": {
+            "type": "torsion",
+            "n_atoms": 4,
+            "symmetry": "like_torsion",
+            "fill": 0,
+            "flip": 0,
+        },
+    },
+    "torsion_fourier": {
+        "equation": [
+            "sum i=1,m {Ki *  [1 + cos(ni*Phi - Phi0i)]}",
+        ],
+        "constants": [
+            ("K", "kcal/mol"),
+            ("n", ""),
+            ("Phi0", "degree"),
         ],
         "topology": {
             "type": "torsion",
@@ -219,6 +236,19 @@ metadata = {
         "equation": ["1/2 * V2 * [1 - cos(Phi)]"],
         "constants": [
             ("V2", "kcal/mol"),
+        ],
+        "topology": {
+            "type": "out-of-plane",
+            "n_atoms": 4,
+            "symmetry": "like_improper",
+            "fill": 0,
+            "flip": 0,
+        },
+    },
+    "improper_harmonic": {
+        "equation": ["K2 * (Chi - Chi0)^2"],
+        "constants": [
+            ("K2", "kcal/mol"),
         ],
         "topology": {
             "type": "out-of-plane",
