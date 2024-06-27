@@ -1,7 +1,15 @@
 =======
 History
 =======
-
+2024.6.27 -- Support for local forcefield files
+   * Added support for local forcefields files which can either be used directly
+     or included by existing files.
+   * Added URI handler to support local files
+   * Added support for BibTex references in forcefield files, and automatically adding
+     citations to the Reference Handler.
+   * Add 'fragments' section to forcefields for atom-typing via a fragment or entire
+     molecule. This supports using LigParGen for OPLS-AA forcefields.
+     
 2023.8.27 -- Added support for tabulated angle potentials
 
 2023.4.6 -- Added support for Buckingham potentials
