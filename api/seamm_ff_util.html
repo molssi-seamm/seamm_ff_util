@@ -2,40 +2,41 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>seamm_ff_util package &#8212; SEAMM Forcefield Utilities 2023.8.27 documentation</title>
+    <title>seamm_ff_util package &#8212; SEAMM Forcefield Utilities 2024.6.27 documentation</title>
   
   
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c224919a" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -45,12 +46,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-PQXXTJ2');</script>
 <!-- End Google Tag Manager -->
 
-    <script src="../_static/documentation_options.js?v=aa9cbab0"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/documentation_options.js?v=0654a9ba"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/seamm_ff_util';</script>
 
     <link rel="index" title="Index" href="../genindex.html" />
@@ -66,19 +67,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -100,19 +105,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <label class="sidebar-toggle primary-toggle" for="__primary">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
-  </label>
+  </button>
   
-  <div class="navbar-header-items__start">
+  
+  <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="../index.html">
+  
   
   
   
@@ -122,8 +137,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       
     
     
-    <img src="../_static/SEAMM logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/SEAMM Inverted 288x181.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/SEAMM logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/SEAMM Inverted 288x181.png" class="logo__image only-dark" alt=""/>`);</script>
   
   
     <p class="title logo__title">SEAMM Forcefield Utilities</p>
@@ -132,82 +147,76 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     
   </div>
   
-  
   <div class="col-lg-9 navbar-header-items">
     
     <div class="me-auto navbar-header-items__center">
       
-        <div class="navbar-item"><nav class="navbar-nav">
-  <p class="sidebar-header-items__title"
-     role="heading"
-     aria-level="1"
-     aria-label="Site Navigation">
-    Site Navigation
-  </p>
+        <div class="navbar-item">
+<nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../getting_started/index.html">
-                        Getting Started
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../user_guide/index.html">
-                        User Guide
-                      </a>
-                    </li>
-                
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../developer_guide/index.html">
-                        Developer Guide
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="index.html">
-                        API Documentation
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developer_guide/index.html">
+    Developer Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    API Documentation
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links">
                     More
                 </button>
-                <div class="dropdown-menu">
+                <ul id="pst-nav-more-links" class="dropdown-menu">
                     
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../authors.html">
-                        Credits
-                      </a>
-                    </li>
-                
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../authors.html">
+    Credits
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../history.html">
-                        History
-                      </a>
-                    </li>
-                
 
-                <li class="nav-item">
-                  <a class="nav-link nav-external" href="https://molssi-seamm.github.io">
-                    SEAMM Documentation
-                  </a>
-                </li>
-                
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../history.html">
+    History
+  </a>
+</li>
 
-                <li class="nav-item">
-                  <a class="nav-link nav-external" href="https://molssi.org">
-                    MolSSI
-                  </a>
-                </li>
-                
-                </div>
-            </div>
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://molssi-seamm.github.io">
+    SEAMM Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://molssi.org">
+    MolSSI
+  </a>
+</li>
+
+                </ul>
+            </li>
             
   </ul>
 </nav></div>
@@ -219,28 +228,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       
         <div class="navbar-item navbar-persistent--container">
           
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
         </div>
       
       
         <div class="navbar-item">
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script></div>
       
-        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+        <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
         <li class="nav-item">
           
@@ -251,8 +264,8 @@ document.write(`
           
           
           
-          <a href="https://github.com/molssi-seamm/seamm_ff_util" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/molssi-seamm/seamm_ff_util" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
           
@@ -263,8 +276,8 @@ document.write(`
           
           
           
-          <a href="https://twitter.com/MolSSI_NSF" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter"></i></span>
-            <label class="sr-only">Twitter</label></a>
+          <a href="https://twitter.com/MolSSI_NSF" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
         </li>
 </ul></div>
       
@@ -274,27 +287,33 @@ document.write(`
   
   
     <div class="navbar-persistent--mobile">
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
     </div>
   
 
   
-    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
       <span class="fa-solid fa-outdent"></span>
-    </label>
+    </button>
   
 </div>
 
-    </nav>
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -305,80 +324,70 @@ document.write(`
     
       <div class="sidebar-header-items__center">
         
-          <div class="navbar-item"><nav class="navbar-nav">
-  <p class="sidebar-header-items__title"
-     role="heading"
-     aria-level="1"
-     aria-label="Site Navigation">
-    Site Navigation
-  </p>
+          
+          
+            <div class="navbar-item">
+<nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../getting_started/index.html">
-                        Getting Started
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../user_guide/index.html">
-                        User Guide
-                      </a>
-                    </li>
-                
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../developer_guide/index.html">
-                        Developer Guide
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="index.html">
-                        API Documentation
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../authors.html">
-                        Credits
-                      </a>
-                    </li>
-                
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../history.html">
-                        History
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developer_guide/index.html">
+    Developer Guide
+  </a>
+</li>
 
-                <li class="nav-item">
-                  <a class="nav-link nav-external" href="https://molssi-seamm.github.io">
-                    SEAMM Documentation
-                  </a>
-                </li>
-                
 
-                <li class="nav-item">
-                  <a class="nav-link nav-external" href="https://molssi.org">
-                    MolSSI
-                  </a>
-                </li>
-                
-                </div>
-            </div>
-            
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../authors.html">
+    Credits
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../history.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://molssi-seamm.github.io">
+    SEAMM Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://molssi.org">
+    MolSSI
+  </a>
+</li>
+
   </ul>
 </nav></div>
+          
         
       </div>
     
@@ -387,17 +396,18 @@ document.write(`
       <div class="sidebar-header-items__end">
         
           <div class="navbar-item">
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script></div>
         
-          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+          <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
         <li class="nav-item">
           
@@ -408,8 +418,8 @@ document.write(`
           
           
           
-          <a href="https://github.com/molssi-seamm/seamm_ff_util" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/molssi-seamm/seamm_ff_util" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
           
@@ -420,8 +430,8 @@ document.write(`
           
           
           
-          <a href="https://twitter.com/MolSSI_NSF" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter"></i></span>
-            <label class="sr-only">Twitter</label></a>
+          <a href="https://twitter.com/MolSSI_NSF" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
         </li>
 </ul></div>
         
@@ -430,14 +440,15 @@ document.write(`
   </div>
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">seamm_ff_util</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">seamm_ff_util</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">seamm_ff_util package</a></li>
 </ul>
-</li>
+</details></li>
 </ul>
 </div>
 </nav></div>
@@ -452,13 +463,13 @@ document.write(`
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
@@ -467,8 +478,8 @@ document.write(`
 
 
 
-<nav aria-label="Breadcrumbs">
-  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
     
     <li class="breadcrumb-item breadcrumb-home">
       <a href="../index.html" class="nav-link" aria-label="Home">
@@ -481,7 +492,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="modules.html" class="nav-link">seamm_ff_util</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">seamm_ff_util package</li>
+    <li class="breadcrumb-item active" aria-current="page">seamm_ff_uti...</li>
   </ul>
 </nav>
 </div>
@@ -496,35 +507,52 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="seamm-ff-util-package">
 <h1>seamm_ff_util package<a class="headerlink" href="#seamm-ff-util-package" title="Link to this heading">#</a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
-<section id="seamm-ff-util-ff-assigner-module">
-<h2>seamm_ff_util.ff_assigner module<a class="headerlink" href="#seamm-ff-util-ff-assigner-module" title="Link to this heading">#</a></h2>
-<p id="module-seamm_ff_util.ff_assigner">Main class for handling forcefields</p>
+<section id="module-seamm_ff_util.ff_assigner">
+<span id="seamm-ff-util-ff-assigner-module"></span><h2>seamm_ff_util.ff_assigner module<a class="headerlink" href="#module-seamm_ff_util.ff_assigner" title="Link to this heading">#</a></h2>
+<p>Main class for handling forcefields</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seamm_ff_util.ff_assigner.FFAssigner">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.ff_assigner.</span></span><span class="sig-name descname"><span class="pre">FFAssigner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forcefield</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/ff_assigner.html#FFAssigner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.ff_assigner.FFAssigner" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.ff_assigner.FFAssigner.assign">
-<span class="sig-name descname"><span class="pre">assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/ff_assigner.html#FFAssigner.assign"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.ff_assigner.FFAssigner.assign" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">picture</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/ff_assigner.html#FFAssigner.assign"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.ff_assigner.FFAssigner.assign" title="Link to this definition">#</a></dt>
 <dd><p>Assign the atom types to the structure using SMARTS templates</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.ff_assigner.FFAssigner.draw_atom_types">
+<span class="sig-name descname"><span class="pre">draw_atom_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'atom_types.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highlight_atoms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/ff_assigner.html#FFAssigner.draw_atom_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.ff_assigner.FFAssigner.draw_atom_types" title="Link to this definition">#</a></dt>
+<dd><p>Create a picture of the molecule labeled by atom types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>molecule</strong> (<em>rdkit.molecule</em>) – The molecule as an RDKit molecule.</p></li>
+<li><p><strong>atom_types</strong> (<em>[</em><em>str</em><em>]</em>) – The labels for the atom types</p></li>
+<li><p><strong>legend</strong> (<em>str</em>) – The legend for the picture. Defaults to “Atom types for ff_file:ffname”</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em> or </em><em>pathlib.Path</em>) – The file to write the picture to.</p></li>
+<li><p><strong>highlight_atoms</strong> (<em>[</em><em>int</em><em>]</em>) – The atoms to highlight</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 </section>
-<section id="seamm-ff-util-forcefield-module">
-<h2>seamm_ff_util.forcefield module<a class="headerlink" href="#seamm-ff-util-forcefield-module" title="Link to this heading">#</a></h2>
-<p id="module-seamm_ff_util.forcefield">Main class for handling forcefields</p>
+<section id="module-seamm_ff_util.forcefield">
+<span id="seamm-ff-util-forcefield-module"></span><h2>seamm_ff_util.forcefield module<a class="headerlink" href="#module-seamm_ff_util.forcefield" title="Link to this heading">#</a></h2>
+<p>Main class for handling forcefields</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.forcefield.</span></span><span class="sig-name descname"><span class="pre">Forcefield</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fftype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.forcefield.</span></span><span class="sig-name descname"><span class="pre">Forcefield</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fftype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri_handler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">references</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.a_b_to_sigma_eps">
@@ -625,6 +653,20 @@ parameters rather than raise an error</p>
 <span class="sig-name descname"><span class="pre">charges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.charges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.charges" title="Link to this definition">#</a></dt>
 <dd><p>Return the charge given an atom type i</p>
 <p>Handle equivalences.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.cite_parameter">
+<span class="sig-name descname"><span class="pre">cite_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.cite_parameter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.cite_parameter" title="Link to this definition">#</a></dt>
+<dd><p>Add citations from the reference associated with a parameter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>dict</em>) – The ff data for the parameter</p></li>
+<li><p><strong>level</strong> (<em>int</em><em> (</em><em>optional</em><em>)</em>) – The citation level, defaults to 2.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -804,9 +846,21 @@ default type for new forcefields is the Biosym .frc format.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.files_visited">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">files_visited</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.files_visited" title="Link to this definition">#</a></dt>
+<dd><p>The list of files used in the forcefield</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.forcefields">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">forcefields</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.forcefields" title="Link to this definition">#</a></dt>
 <dd><p>The list of current forcefields. The first is the default one</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.get_fragments">
+<span class="sig-name descname"><span class="pre">get_fragments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.get_fragments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.get_fragments" title="Link to this definition">#</a></dt>
+<dd><p>Return the fragments dict</p>
 </dd></dl>
 
 <dl class="py method">
@@ -890,6 +944,12 @@ is not specified then the default is the latest version.</p>
 with numerical precedences</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.references">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">references</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.references" title="Link to this definition">#</a></dt>
+<dd><p>The reference handler.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.rmin_eps_to_sigma_eps">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rmin_eps_to_sigma_eps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.rmin_eps_to_sigma_eps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.rmin_eps_to_sigma_eps" title="Link to this definition">#</a></dt>
@@ -960,9 +1020,8 @@ with numerical precedences</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.NonbondForms">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.forcefield.</span></span><span class="sig-name descname"><span class="pre">NonbondForms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#NonbondForms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.NonbondForms" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.forcefield.</span></span><span class="sig-name descname"><span class="pre">NonbondForms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#NonbondForms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.NonbondForms" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
-<p>An enumeration.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.NonbondForms.AR_BR">
 <span class="sig-name descname"><span class="pre">AR_BR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'A/r-B/r'</span></em><a class="headerlink" href="#seamm_ff_util.forcefield.NonbondForms.AR_BR" title="Link to this definition">#</a></dt>
@@ -986,13 +1045,13 @@ with numerical precedences</p>
 </dd></dl>
 
 </section>
-<section id="seamm-ff-util-metadata-module">
-<h2>seamm_ff_util.metadata module<a class="headerlink" href="#seamm-ff-util-metadata-module" title="Link to this heading">#</a></h2>
-<p id="module-seamm_ff_util.metadata">Metadata for describing terms in focefields.</p>
+<section id="module-seamm_ff_util.metadata">
+<span id="seamm-ff-util-metadata-module"></span><h2>seamm_ff_util.metadata module<a class="headerlink" href="#module-seamm_ff_util.metadata" title="Link to this heading">#</a></h2>
+<p>Metadata for describing terms in focefields.</p>
 </section>
-<section id="seamm-ff-util-tabulate-module">
-<h2>seamm_ff_util.tabulate module<a class="headerlink" href="#seamm-ff-util-tabulate-module" title="Link to this heading">#</a></h2>
-<p id="module-seamm_ff_util.tabulate">Functions for creating the input for LAMMPS tabulated potentials.</p>
+<section id="module-seamm_ff_util.tabulate">
+<span id="seamm-ff-util-tabulate-module"></span><h2>seamm_ff_util.tabulate module<a class="headerlink" href="#module-seamm_ff_util.tabulate" title="Link to this heading">#</a></h2>
+<p>Functions for creating the input for LAMMPS tabulated potentials.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="seamm_ff_util.tabulate.tabulate_angle">
 <span class="sig-prename descclassname"><span class="pre">seamm_ff_util.tabulate.</span></span><span class="sig-name descname"><span class="pre">tabulate_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">equation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/tabulate.html#tabulate_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.tabulate.tabulate_angle" title="Link to this definition">#</a></dt>
@@ -1013,9 +1072,9 @@ but reset to 0.0 in the returned angles.</p>
 </dd></dl>
 
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
-<p id="module-seamm_ff_util">Top-level package for SEAMM_FF_Util.</p>
+<section id="module-seamm_ff_util">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-seamm_ff_util" title="Link to this heading">#</a></h2>
+<p>Top-level package for SEAMM_FF_Util.</p>
 </section>
 </section>
 
@@ -1024,11 +1083,10 @@ but reset to 0.0 in the returned angles.</p>
               
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer d-print-none">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="modules.html"
@@ -1048,10 +1106,7 @@ but reset to 0.0 in the returned angles.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -1060,21 +1115,25 @@ but reset to 0.0 in the returned angles.</p>
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
   <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm-ff-util-ff-assigner-module">seamm_ff_util.ff_assigner module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-seamm_ff_util.ff_assigner">seamm_ff_util.ff_assigner module</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.ff_assigner.FFAssigner"><code class="docutils literal notranslate"><span class="pre">FFAssigner</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.ff_assigner.FFAssigner.assign"><code class="docutils literal notranslate"><span class="pre">FFAssigner.assign()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.ff_assigner.FFAssigner.draw_atom_types"><code class="docutils literal notranslate"><span class="pre">FFAssigner.draw_atom_types()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm-ff-util-forcefield-module">seamm_ff_util.forcefield module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-seamm_ff_util.forcefield">seamm_ff_util.forcefield module</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield"><code class="docutils literal notranslate"><span class="pre">Forcefield</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.a_b_to_sigma_eps"><code class="docutils literal notranslate"><span class="pre">Forcefield.a_b_to_sigma_eps()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.angle_angle_parameters"><code class="docutils literal notranslate"><span class="pre">Forcefield.angle_angle_parameters()</span></code></a></li>
@@ -1089,6 +1148,7 @@ but reset to 0.0 in the returned angles.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.bond_increments"><code class="docutils literal notranslate"><span class="pre">Forcefield.bond_increments()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.bond_parameters"><code class="docutils literal notranslate"><span class="pre">Forcefield.bond_parameters()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.charges"><code class="docutils literal notranslate"><span class="pre">Forcefield.charges()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.cite_parameter"><code class="docutils literal notranslate"><span class="pre">Forcefield.cite_parameter()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.clear"><code class="docutils literal notranslate"><span class="pre">Forcefield.clear()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.current_forcefield"><code class="docutils literal notranslate"><span class="pre">Forcefield.current_forcefield</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_1_3_bond_bond"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_1_3_bond_bond()</span></code></a></li>
@@ -1113,7 +1173,9 @@ but reset to 0.0 in the returned angles.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.energy_expression"><code class="docutils literal notranslate"><span class="pre">Forcefield.energy_expression()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.fftype"><code class="docutils literal notranslate"><span class="pre">Forcefield.fftype</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.filename"><code class="docutils literal notranslate"><span class="pre">Forcefield.filename</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.files_visited"><code class="docutils literal notranslate"><span class="pre">Forcefield.files_visited</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.forcefields"><code class="docutils literal notranslate"><span class="pre">Forcefield.forcefields</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.get_fragments"><code class="docutils literal notranslate"><span class="pre">Forcefield.get_fragments()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.get_templates"><code class="docutils literal notranslate"><span class="pre">Forcefield.get_templates()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.initialize_biosym_forcefield"><code class="docutils literal notranslate"><span class="pre">Forcefield.initialize_biosym_forcefield()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.make_canonical"><code class="docutils literal notranslate"><span class="pre">Forcefield.make_canonical()</span></code></a></li>
@@ -1123,6 +1185,7 @@ but reset to 0.0 in the returned angles.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.nonbond_parameters"><code class="docutils literal notranslate"><span class="pre">Forcefield.nonbond_parameters()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.nonbond_transformation"><code class="docutils literal notranslate"><span class="pre">Forcefield.nonbond_transformation()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.oop_parameters"><code class="docutils literal notranslate"><span class="pre">Forcefield.oop_parameters()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.references"><code class="docutils literal notranslate"><span class="pre">Forcefield.references</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.rmin_eps_to_sigma_eps"><code class="docutils literal notranslate"><span class="pre">Forcefield.rmin_eps_to_sigma_eps()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.rmin_to_sigma"><code class="docutils literal notranslate"><span class="pre">Forcefield.rmin_to_sigma()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.setup_topology"><code class="docutils literal notranslate"><span class="pre">Forcefield.setup_topology()</span></code></a></li>
@@ -1141,16 +1204,17 @@ but reset to 0.0 in the returned angles.</p>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm-ff-util-metadata-module">seamm_ff_util.metadata module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm-ff-util-tabulate-module">seamm_ff_util.tabulate module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-seamm_ff_util.metadata">seamm_ff_util.metadata module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-seamm_ff_util.tabulate">seamm_ff_util.tabulate module</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.tabulate.tabulate_angle"><code class="docutils literal notranslate"><span class="pre">tabulate_angle()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-seamm_ff_util">Module contents</a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
+
   <div class="tocsection sourcelink">
     <a href="../_sources/api/seamm_ff_util.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
@@ -1171,58 +1235,19 @@ but reset to 0.0 in the returned angles.</p>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
   
-    <div class="footer-items__start">
-      
-        <div class="footer-item">
-  
-
-
-
-  
-  
-  
-  
-  
-  
-  
-
-
-<div class="row h-10">
-    <div class="col-2">
-        <a href="https://molssi.org/" target="_blank" title="Go to MolSSI in a new tab">
-            <img src="../_static/molssi_main_logo.png" class="logo__image only-light footer_logo" alt="Logo image">
-            <img src="../_static/molssi_main_logo_inverted_white.png" class="logo__image only-dark footer_logo" alt="Logo image">
-        </a>
-    </div>
-    <div class="col-8">
-        <p> &copy; Copyright 2017-2023 <a href="https://molssi.org/">The Molecular Sciences Software Institute</a></p>
-        <p>Funded by the National Science Foundation 
-          <a href="https://nsf.gov/awardsearch/showAward?AWD_ID=1547580">OAC-1547580</a> and 
-          <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2136142">CHE-2136142.</a></p>
- 
-        
-
-    </div>
-    <div class="col-2">
-        <a href="https://nsf.gov/" target="_blank" title="Go to the NSF in a new tab">
-            <img src="../_static/nsf.png" class="footer_logo" alt="The NSF">
-          </a>
-    </div>
-</div></div>
-      
-    </div>
   
   
     <div class="footer-items__end">
       
-        <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
 </p></div>
       
     </div>
