@@ -33,7 +33,7 @@ two_raised_to_one_sixth = 2 ** (1 / 6)
 
 
 class Forcefield(object):
-    def __init__(self, filename=None, fftype=None):
+    def __init__(self, filename=None, fftype=None, uri_handler=None, references=None):
         """
         Read, write, and use a forcefield
 
@@ -60,6 +60,10 @@ class Forcefield(object):
 
         self._fftype = None
         self._filename = None
+        self._uri_handler = uri_handler
+        self._files_visited = []
+        self._references = references
+        self._citations = set()
         self.keep_lines = False
         self.data = {}
         self.data["forcefields"] = []
@@ -115,6 +119,11 @@ class Forcefield(object):
                 self._create_file()
 
     @property
+    def files_visited(self):
+        """The list of files used in the forcefield"""
+        return self._files_visited
+
+    @property
     def fftype(self):
         """'str' the type of forcefield to handle
 
@@ -136,6 +145,11 @@ class Forcefield(object):
     def forcefields(self):
         """The list of current forcefields. The first is the default one"""
         return self.data["forcefields"]
+
+    @property
+    def references(self):
+        """The reference handler."""
+        return self._references
 
     @property
     def terms(self):
@@ -293,6 +307,7 @@ class Forcefield(object):
         """
         # self._fftype = None  # leave the type ????
         self._filename = None
+        self._files_visited = []
         self.data = {}
         self.data["forcefields"] = []
         self.current_forcefield = None
@@ -320,21 +335,11 @@ class Forcefield(object):
                     "Don't recognize forcefield by extension '{}'".format(ext)
                 )
 
-        with seamm_util.Open(self.filename, "r") as fd:
+        with seamm_util.Open(
+            self.filename, "r", include="#include", uri_handler=self._uri_handler
+        ) as fd:
             reader(fd)
-
-        # if logger.isEnabledFor(logging.DEBUG):
-        #     section = "charges"
-        #     if section in self.data:
-        #         print()
-        #         print("section = " + section)
-        #         try:
-        #             print(json.dumps(self.data[section], indent=4))
-        #         except Exception as e:
-        #             print(f"Exception in json.dumps: {str(e)}")
-        #             pprint.pprint(self.data[section])
-        #             print(80 * "-")
-        #         print()
+            self._files_visited = fd.visited
 
     def _read_biosym_ff(self, fd):
         """
@@ -459,7 +464,7 @@ class Forcefield(object):
                 result["annotations"].append(line[1:])
                 continue
 
-            if line[0] == "@":
+            if line[0] == "@" and not line.lower().startswith("@bibtex"):
                 # A modifier such as units or form
                 result["modifiers"].append(line[1:])
                 continue
@@ -777,16 +782,58 @@ class Forcefield(object):
         if not self.keep_lines:
             del data["lines"]
 
+    def _parse_biosym_fragments(self, data):
+        """
+        Process the templates, which are simply json
+
+        #fragments library
+
+        {
+            "FCC#N": {
+                "InChIKey": "GNFVFPBRMLIKIM-UHFFFAOYSA-N",
+                "SMILES": "FCC#N",
+                "SMARTS": "FC(C#N)([H])[H]",
+                "atom types": [
+                    "GNFVFPBRMLIKIM_800",
+                    "GNFVFPBRMLIKIM_801",
+                    "GNFVFPBRMLIKIM_802",
+                    "GNFVFPBRMLIKIM_803",
+                    "GNFVFPBRMLIKIM_804",
+                    "GNFVFPBRMLIKIM_805"
+                ],
+                "name": "2-fluoroacetonitrile"
+            },
+            "O=[C]1[O][CH][CH][O]1": {
+        ...
+        """  # nopep8
+        section = data["section"]
+        label = data["label"]
+
+        if section not in self.data:
+            self.data[section] = {}
+        if label in self.data[section]:
+            msg = "'{}' already defined in section '{}'".format(label, section)
+            logger.error(msg)
+            raise RuntimeError(msg)
+        self.data[section][label] = data
+
+        data["parameters"] = json.loads("\n".join(data["lines"]))
+
+        if not self.keep_lines:
+            del data["lines"]
+
     def _parse_biosym_reference(self, data):
         """
-        Process a 'reference' section, which looks like
+        Process a 'reference' section, which looks like::
 
-        #reference 1
-        @Author Biosym Technologies inc
-        @Date 25-December-91
-        cff91 forcefield created
-        December 1991
-
+            #reference 1
+            @Author Biosym Technologies inc
+            @Date 25-December-91
+            cff91 forcefield created
+            December 1991
+            @bibtex @article{doi:10.1021/jp800281e,
+            ...
+            }
         """
         section = data["section"]
         label = data["label"]
@@ -798,7 +845,33 @@ class Forcefield(object):
             logger.error(msg)
             raise RuntimeError(msg)
         self.data[section][label] = data
-        data["reference"] = data["lines"]
+        data["citations"] = {}
+
+        lines = iter(data["lines"])
+        text = []
+        for line in lines:
+            line = line.strip()
+            if line.startswith("@"):
+                lower = line.lower()
+                if lower.startswith("@bibtex"):
+                    alias = line.split("{")[1].rstrip(",")
+                    citation = [line.split(maxsplit=1)[1]]
+                    for line in lines:
+                        if line.strip() == "}":
+                            citation.append("}")
+                            data["citations"][alias] = "\n".join(citation)
+                            break
+                        else:
+                            citation.append(line)
+                else:
+                    key, rest = line.split(maxsplit=1)
+                    key = key[1:].lower()
+                    data[key] = rest
+            else:
+                text.append(line)
+
+        if len(text) > 0:
+            data["text"] = "\n".join(text)
 
         if not self.keep_lines:
             del data["lines"]
@@ -1161,6 +1234,7 @@ class Forcefield(object):
                         + " for functional form '{}'".format(fform)
                         + " of forcefield '{}'".format(forcefield)
                     )
+            self.cite_parameter(fforms[fform][key], level=1)
             self.ff["functional_forms"][fform] = fforms[fform][key]
             if fform in metadata:
                 term = metadata[fform]["topology"]["type"]
@@ -1173,14 +1247,6 @@ class Forcefield(object):
         # processing each
         for fform in self.ff["functional_forms"]:
             self._get_parameters(fform, V)
-
-        # if logger.isEnabledFor(logging.DEBUG):
-        #     section = "nonbond(12-6)"
-        #     try:
-        #         logger.debug(json.dumps(self.ff[section], indent=4))
-        #     except Exception as e:
-        #         print(f"Exception in json.dumps: {str(e)}")
-        #         logger.debug(pprint.pformat(self.ff[section]))
 
     def _get_parameters(self, functional_form, Version):
         """Select the correct version parameters from the sections for
@@ -1195,6 +1261,12 @@ class Forcefield(object):
         modifiers = self.ff["modifiers"][functional_form] = {}
 
         for section in sections:
+            if section.endswith(":optional"):
+                section = section[:-9]
+                if functional_form not in self.data:
+                    continue
+                if section not in self.data[functional_form]:
+                    continue
             data = self.data[functional_form][section]["parameters"]
 
             modifiers[section] = self.data[functional_form][section]["modifiers"]
@@ -1321,6 +1393,7 @@ class Forcefield(object):
         for form in forms:
             key, flipped = self.make_canonical("like_bond", (i, j))
             if key in self.ff[form]:
+                self.cite_parameter(self.ff[form][key])
                 return ("explicit", key, form, self.ff[form][key])
 
         # try equivalences
@@ -1330,6 +1403,7 @@ class Forcefield(object):
             key, flipped = self.make_canonical("like_bond", (ieq, jeq))
             for form in forms:
                 if key in self.ff[form]:
+                    self.cite_parameter(self.ff[form][key])
                     return ("equivalent", key, form, self.ff[form][key])
 
         # try automatic equivalences
@@ -1339,6 +1413,7 @@ class Forcefield(object):
             key, flipped = self.make_canonical("like_bond", (iauto, jauto))
             for form in forms:
                 if key in self.ff[form]:
+                    self.cite_parameter(self.ff[form][key])
                     return ("automatic", key, form, self.ff[form][key])
 
         raise RuntimeError("No bond parameters for {}-{}".format(i, j))
@@ -1349,23 +1424,33 @@ class Forcefield(object):
         Handle equivalences and automatic equivalences.
         """
 
+        msg = [f"Looking for angle parameters for {i}-{j}-{k}"]
+
         forms = self.ff["terms"]["angle"]
 
         for form in forms:
             # parameters directly available
             result = self._angle_parameters_helper(i, j, k, self.ff[form])
             if result is not None:
+                self.cite_parameter(result[2])
                 return ("explicit", result[0], form, result[2])
+
+        msg.append("\tNo explicit parameters found")
 
         # try equivalences
         if "equivalence" in self.ff:
             ieq = self.ff["equivalence"][i]["angle"]
             jeq = self.ff["equivalence"][j]["angle"]
             keq = self.ff["equivalence"][k]["angle"]
+            msg.append(f"\tTrying equivalence {ieq}-{jeq}-{keq}")
             for form in forms:
                 result = self._angle_parameters_helper(ieq, jeq, keq, self.ff[form])
                 if result is not None:
+                    self.cite_parameter(result[2])
                     return ("equivalent", result[0], form, result[2])
+            msg.append("\t...No equivalent parameters found")
+        else:
+            msg.append("\tNo equivalences defined")
 
         # try automatic equivalences
         if "auto_equivalence" in self.ff:
@@ -1373,13 +1458,17 @@ class Forcefield(object):
             jauto = self.ff["auto_equivalence"][j]["angle_center_atom"]
             kauto = self.ff["auto_equivalence"][k]["angle_end_atom"]
             key, flipped = self.make_canonical("like_angle", (iauto, jauto, kauto))
+            msg.append(f"\tTrying automatic equivalence {iauto}-{jauto}-{kauto}")
             for form in forms:
                 if key in self.ff[form]:
+                    self.cite_parameter(result[2])
                     return ("automatic", key, form, self.ff[form][key])
+            msg.append("\t...Not found")
 
             # try wildcards, which may have numerical precidence
             # Find all the single-sided wildcards, realizing that the
             # triplet might be flipped.
+            msg.append("\tTrying wildcards")
             for form in forms:
                 left = []
                 right = []
@@ -1401,6 +1490,7 @@ class Forcefield(object):
                             "like_angle", (left[0], jauto, kauto)
                         )
                         if key in self.ff[form]:
+                            self.cite_parameter(self.ff[form][key])
                             return ("automatic", key, form, self.ff[form][key])
                     else:
                         if left[0] < right[0]:
@@ -1408,31 +1498,40 @@ class Forcefield(object):
                                 "like_angle", (left[0], jauto, kauto)
                             )
                             if key in self.ff[form]:
+                                self.cite_parameter(self.ff[form][key])
                                 return ("automatic", key, form, self.ff[form][key])
                         else:
                             key, flipped = self.make_canonical(
                                 "like_angle", (iauto, jauto, right[0])
                             )
                             if key in self.ff[form]:
+                                self.cite_parameter(self.ff[form][key])
                                 return ("automatic", key, form, self.ff[form][key])
                 elif len(right) > 0:
                     key, flipped = self.make_canonical(
                         "like_angle", (iauto, jauto, right[0])
                     )
                     if key in self.ff[form]:
+                        self.cite_parameter(self.ff[form][key])
                         return ("automatic", key, form, self.ff[form][key])
 
                 key, flipped = self.make_canonical("like_angle", ("*", jauto, kauto))
                 if key in self.ff[form]:
+                    self.cite_parameter(self.ff[form][key])
                     return ("automatic", key, form, self.ff[form][key])
                 key, flipped = self.make_canonical("like_angle", (iauto, jauto, "*"))
                 if key in self.ff[form]:
+                    self.cite_parameter(self.ff[form][key])
                     return ("automatic", key, form, self.ff[form][key])
                 key, flipped = self.make_canonical("like_angle", ("*", jauto, "*"))
                 if key in self.ff[form]:
+                    self.cite_parameter(self.ff[form][key])
                     return ("automatic", key, form, self.ff[form][key])
+            msg.append("\t...Not found")
+        else:
+            msg.append("\tNo automatic equivalences defined")
 
-        raise RuntimeError("No angle parameters for {}-{}-{}".format(i, j, k))
+        raise RuntimeError("\n".join(msg))
 
     def torsion_parameters(self, i, j, k, l):  # noqa: E741
         """Return the torsion parameters given four atoms types
@@ -1447,6 +1546,7 @@ class Forcefield(object):
         for form in forms:
             result = self._torsion_parameters_helper(i, j, k, l, self.ff[form])
             if result is not None:
+                self.cite_parameter(result[2])
                 return ("explicit", result[0], form, result[2])
 
         # try equivalences
@@ -1460,6 +1560,7 @@ class Forcefield(object):
                     ieq, jeq, keq, leq, self.ff[form]
                 )
                 if result is not None:
+                    self.cite_parameter(result[2])
                     return ("equivalent", result[0], form, result[2])
 
         # try automatic equivalences
@@ -1473,6 +1574,7 @@ class Forcefield(object):
             )
             for form in forms:
                 if key in self.ff[form]:
+                    self.cite_parameter(self.ff[form][key])
                     return ("automatic", key, form, self.ff[form][key])
 
                 # try wildcards, which may have numerical precidence
@@ -1498,6 +1600,7 @@ class Forcefield(object):
                             "like_torsion", (left[0], jauto, kauto, lauto)
                         )
                         if key in self.ff[form]:
+                            self.cite_parameter(self.ff[form][key])
                             return ("automatic", key, form, self.ff[form][key])
                     else:
                         if left[0] < right[0]:
@@ -1505,34 +1608,40 @@ class Forcefield(object):
                                 "like_torsion", (left[0], jauto, kauto, lauto)
                             )
                             if key in self.ff[form]:
+                                self.cite_parameter(self.ff[form][key])
                                 return ("automatic", key, form, self.ff[form][key])
                         else:
                             key, flipped = self.make_canonical(
                                 "like_torsion", (iauto, jauto, kauto, right[0])
                             )
                             if key in self.ff[form]:
+                                self.cite_parameter(self.ff[form][key])
                                 return ("automatic", key, form, self.ff[form][key])
                 elif len(right) > 0:
                     key, flipped = self.make_canonical(
                         "like_torsion", (iauto, jauto, kauto, right[0])
                     )
                     if key in self.ff[form]:
+                        self.cite_parameter(self.ff[form][key])
                         return ("automatic", key, form, self.ff[form][key])
 
                 key, flipped = self.make_canonical(
                     "like_torsion", (iauto, jauto, kauto, "*")
                 )
                 if key in self.ff[form]:
+                    self.cite_parameter(self.ff[form][key])
                     return ("automatic", key, form, self.ff[form][key])
                 key, flipped = self.make_canonical(
                     "like_torsion", ("*", jauto, kauto, lauto)
                 )
                 if key in self.ff[form]:
+                    self.cite_parameter(self.ff[form][key])
                     return ("automatic", key, form, self.ff[form][key])
                 key, flipped = self.make_canonical(
                     "like_torsion", ("*", jauto, kauto, "*")
                 )
                 if key in self.ff[form]:
+                    self.cite_parameter(self.ff[form][key])
                     return ("automatic", key, form, self.ff[form][key])
 
         raise RuntimeError("No torsion parameters for {}-{}-{}-{}".format(i, j, k, l))
@@ -1581,6 +1690,7 @@ class Forcefield(object):
             for form in forms:
                 result = self._oop_parameters_helper(ieq, jeq, keq, leq, form)
                 if result is not None:
+                    self.cite_parameter(result[1])
                     return ("equivalent", result[0], form, result[1])
 
         # try automatic equivalences
@@ -1592,6 +1702,7 @@ class Forcefield(object):
             for form in forms:
                 result = self._oop_parameters_helper(iauto, jauto, kauto, lauto, form)
                 if result is not None:
+                    self.cite_parameter(result[1])
                     return ("automatic", result[0], form, result[1])
 
         if zero:
@@ -1684,6 +1795,7 @@ class Forcefield(object):
         else:
             key, flipped = self.make_canonical("like_bond", (i, j))
         if key in self.ff[form]:
+            self.cite_parameter(self.ff[form][key])
             return ("explicit", key, form, self.ff[form][key])
 
         # try equivalences
@@ -1695,6 +1807,7 @@ class Forcefield(object):
                 jeq = self.ff["equivalence"][j]["nonbond"]
                 key, flipped = self.make_canonical("like_bond", (ieq, jeq))
             if key in self.ff[form]:
+                self.cite_parameter(self.ff[form][key])
                 return ("equivalent", key, form, self.ff[form][key])
 
         # try automatic equivalences
@@ -1706,22 +1819,27 @@ class Forcefield(object):
                 jauto = self.ff["auto_equivalence"][j]["nonbond"]
                 key, flipped = self.make_canonical("like_bond", (iauto, jauto))
             if key in self.ff[form]:
+                self.cite_parameter(self.ff[form][key])
                 return ("automatic", key, form, self.ff[form][key])
 
         # try wildcards
         if j is None:
             key = ("*",)
             if key in self.ff[form]:
+                self.cite_parameter(self.ff[form][key])
                 return ("wildcard", key, form, self.ff[form][key])
         else:
             key = (i, "*")
             if key in self.ff[form]:
+                self.cite_parameter(self.ff[form][key])
                 return ("wildcard", key, form, self.ff[form][key])
             key = ("*", j)
             if key in self.ff[form]:
+                self.cite_parameter(self.ff[form][key])
                 return ("wildcard", key, form, self.ff[form][key])
             key = ("*", "*")
             if key in self.ff[form]:
+                self.cite_parameter(self.ff[form][key])
                 return ("wildcard", key, form, self.ff[form][key])
 
         if j is None:
@@ -1747,6 +1865,7 @@ class Forcefield(object):
             if result[1]:
                 values = {"R10": b2_parameters["R0"], "R20": b1_parameters["R0"]}
             values.update(result[2])
+            self.cite_parameter(result[2])
             return ("explicit", result[0], "bond-bond", values)
 
         # try equivalences
@@ -1759,6 +1878,7 @@ class Forcefield(object):
                 if result[1]:
                     values = {"R10": b2_parameters["R0"], "R20": b1_parameters["R0"]}
                 values.update(result[2])
+                self.cite_parameter(result[2])
                 return ("equivalent", result[0], "bond-bond", values)
 
         if zero:
@@ -1808,6 +1928,7 @@ class Forcefield(object):
             if result[1]:
                 values = {"R10": b3_parameters["R0"], "R30": b1_parameters["R0"]}
             values.update(result[2])
+            self.cite_parameter(result[2])
             return ("explicit", result[0], "bond-bond_1_3", values)
 
         # try equivalences
@@ -1823,6 +1944,7 @@ class Forcefield(object):
                 if result[1]:
                     values = {"R10": b3_parameters["R0"], "R30": b1_parameters["R0"]}
                 values.update(result[2])
+                self.cite_parameter(result[2])
                 return ("equivalent", result[0], "bond-bond_1_3", values)
 
         if zero:
@@ -1856,11 +1978,13 @@ class Forcefield(object):
                     "R20": b1_parameters["R0"],
                 }
                 ii, jj, kk = result[0]
+                self.cite_parameter(parameters)
                 return ("explicit", (kk, jj, ii), "bond-angle", parameters)
             else:
                 parameters = dict(**result[2])
                 parameters["R10"] = b1_parameters["R0"]
                 parameters["R20"] = b2_parameters["R0"]
+                self.cite_parameter(parameters)
                 return ("explicit", result[0], "bond-angle", parameters)
 
         # try equivalences
@@ -1879,11 +2003,13 @@ class Forcefield(object):
                         "R20": b1_parameters["R0"],
                     }
                     ii, jj, kk = result[0]
+                    self.cite_parameter(parameters)
                     return ("equivalent", (kk, jj, ii), "bond-angle", parameters)
                 else:
                     parameters = dict(**result[2])
                     parameters["R10"] = b1_parameters["R0"]
                     parameters["R20"] = b2_parameters["R0"]
+                    self.cite_parameter(parameters)
                     return ("equivalent", result[0], "bond-angle", parameters)
 
         if zero:
@@ -1915,9 +2041,11 @@ class Forcefield(object):
                 values = {"Theta10": Theta20, "Theta20": Theta10}
                 values.update(result[2])
                 ii, jj, kk, ll = result[0]
+                self.cite_parameter(values)
                 return ("explicit", (ll, jj, kk, ii), "angle-angle", values)
             else:
                 values.update(result[2])
+                self.cite_parameter(values)
                 return ("explicit", result[0], "angle-angle", values)
 
         # try equivalences
@@ -1934,9 +2062,11 @@ class Forcefield(object):
                     values = {"Theta10": Theta20, "Theta20": Theta10}
                     values.update(result[2])
                     ii, jj, kk, ll = result[0]
+                    self.cite_parameter(values)
                     return ("equivalent", (ll, jj, kk, ii), "angle-angle", values)
                 else:
                     values.update(result[2])
+                    self.cite_parameter(values)
                     return ("equivalent", result[0], "angle-angle", values)
 
         if zero:
@@ -1999,10 +2129,12 @@ class Forcefield(object):
                     "R0_R": b1_parameters["R0"],
                 }
                 ii, jj, kk, ll = result[0]
+                self.cite_parameter(parameters)
                 return ("explicit", (ll, kk, jj, ii), "end_bond-torsion_3", parameters)
             else:
                 parameters = dict(**result[2])
                 parameters.update(values)
+                self.cite_parameter(parameters)
                 return ("explicit", result[0], "end_bond-torsion_3", parameters)
 
         # try equivalences
@@ -2028,6 +2160,7 @@ class Forcefield(object):
                         "R0_R": b1_parameters["R0"],
                     }
                     ii, jj, kk, ll = result[0]
+                    self.cite_parameter(parameters)
                     return (
                         "equivalent",
                         (ll, kk, jj, ii),
@@ -2037,6 +2170,7 @@ class Forcefield(object):
                 else:
                     parameters = dict(**result[2])
                     parameters.update(values)
+                    self.cite_parameter(parameters)
                     return ("equivalent", result[0], "end_bond-torsion_3", parameters)
 
         if zero:
@@ -2072,6 +2206,7 @@ class Forcefield(object):
         )
         if result is not None:
             values.update(result[2])
+            self.cite_parameter(values)
             return ("explicit", result[0], "middle_bond-torsion_3", values)
 
         # try equivalences
@@ -2085,6 +2220,7 @@ class Forcefield(object):
             )
             if result is not None:
                 values.update(result[2])
+                self.cite_parameter(values)
                 return ("equivalent", result[0], "middle_bond-torsion_3", values)
 
         if zero:
@@ -2129,10 +2265,12 @@ class Forcefield(object):
                     "Theta0_R": a1_parameters["Theta0"],
                 }
                 ii, jj, kk, ll = result[0]
+                self.cite_parameter(parameters)
                 return ("explicit", (ll, kk, jj, ii), "angle-torsion_3", parameters)
             else:
                 parameters = dict(**result[2])
                 parameters.update(values)
+                self.cite_parameter(parameters)
                 return ("explicit", result[0], "angle-torsion_3", parameters)
 
         # try equivalences
@@ -2158,6 +2296,7 @@ class Forcefield(object):
                         "Theta0_R": a1_parameters["Theta0"],
                     }
                     ii, jj, kk, ll = result[0]
+                    self.cite_parameter(parameters)
                     return (
                         "equivalent",
                         (ll, kk, jj, ii),
@@ -2167,6 +2306,7 @@ class Forcefield(object):
                 else:
                     parameters = dict(**result[2])
                     parameters.update(values)
+                    self.cite_parameter(parameters)
                     return ("equivalent", result[0], "angle-torsion_3", parameters)
 
         if zero:
@@ -2205,6 +2345,7 @@ class Forcefield(object):
         )
         if result is not None:
             values.update(result[2])
+            self.cite_parameter(values)
             return ("explicit", result[0], "angle-angle-torsion_1", values)
 
         # try equivalences
@@ -2218,6 +2359,7 @@ class Forcefield(object):
             )
             if result is not None:
                 values.update(result[2])
+                self.cite_parameter(values)
                 return ("equivalent", result[0], "angle-angle-torsion_1", values)
 
         if zero:
@@ -2231,7 +2373,17 @@ class Forcefield(object):
 
     def get_templates(self):
         """Return the templates dict"""
-        return self.ff["templates"]
+        if "templates" in self.ff:
+            return self.ff["templates"]
+        else:
+            return {}
+
+    def get_fragments(self):
+        """Return the fragments dict"""
+        if "fragments" in self.ff:
+            return self.ff["fragments"]
+        else:
+            return {}
 
     def energy_expression(self, configuration, style=""):
         """Create the energy expression for the given structure
@@ -3161,3 +3313,29 @@ class Forcefield(object):
             charge_column = configuration.atoms.get_column(key)
             charge_column[0:] = charges
             logger.debug(f"Set column '{key}' to the charges")
+
+    def cite_parameter(self, data, level=2):
+        """Add citations from the reference associated with a parameter
+
+        Parameters
+        ----------
+        data : dict
+            The ff data for the parameter
+        level : int (optional)
+            The citation level, defaults to 2.
+        """
+        if self.references is not None and "reference" in data:
+            ref = data["reference"]
+            if ref in self.data["reference"]:
+                refdata = self.data["reference"][ref]
+                for citation, bibtex in refdata["citations"].items():
+                    if citation not in self._citations:
+                        forcefield = self.current_forcefield
+                        self.references.cite(
+                            raw=bibtex,
+                            alias=citation,
+                            module="forcefield",
+                            level=level,
+                            note=f"Forcefield '{forcefield}' reference #{ref}",
+                        )
+                        self._citations.add(citation)

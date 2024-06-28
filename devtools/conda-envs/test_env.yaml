@@ -12,6 +12,7 @@ dependencies:
   - molsystem
   - numpy
   - packaging
+  - rdkit
   - seamm-util
   - sympy
 
