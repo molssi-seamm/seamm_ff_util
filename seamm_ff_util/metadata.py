@@ -76,6 +76,19 @@ metadata = {
             "flip": 0,
         },
     },
+    "rigid_bond": {
+        "equation": ["R = R0"],
+        "constants": [
+            ("R0", "Å"),
+        ],
+        "topology": {
+            "type": "bond",
+            "n_atoms": 2,
+            "symmetry": "like_bond",
+            "fill": 0,
+            "flip": 0,
+        },
+    },
     "quadratic_angle": {
         "equation": ["K2*(Theta-Theta0)^2"],
         "constants": [
@@ -130,6 +143,19 @@ metadata = {
             ("Rb", "Å", float),
             ("A", "kcal/mol*Å^12", float),
             ("zero-shift", "degree", float),
+        ],
+        "topology": {
+            "type": "angle",
+            "n_atoms": 3,
+            "symmetry": "like_angle",
+            "fill": 0,
+            "flip": 0,
+        },
+    },
+    "rigid_angle": {
+        "equation": ["Theta = Theta0"],
+        "constants": [
+            ("Theta0", "degree"),
         ],
         "topology": {
             "type": "angle",

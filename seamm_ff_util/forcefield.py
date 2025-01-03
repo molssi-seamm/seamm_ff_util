@@ -1104,6 +1104,7 @@ class Forcefield(object):
         logger.debug(f"{data['constants']=}")
 
         units = {t[0]: {"default": t[1], "input": t[1]} for t in data["constants"]}
+        scale = {t[0]: {"default": 1, "input": 1} for t in data["constants"]}
 
         # Keep track of the equations in the tabulated forms
         eqns = {}
@@ -1123,13 +1124,23 @@ class Forcefield(object):
                     )
             elif what == "equation":
                 eqns[modifier[1]] = " ".join(modifier[3:])
+            elif what == "scale":
+                which = modifier[1]
+                if which in scale:
+                    scale[which]["input"] = float(modifier[2])
+                else:
+                    raise ValueError(
+                        f"Scale give for unrecognized parameter '{which}' in section "
+                        f"'{section} {label}'"
+                    )
 
         factors = []
         for param, tmp in units.items():
+            scale_factor = scale[param]["input"]
             if tmp["default"] == tmp["input"]:
-                factors.append(1)
+                factors.append(1 * scale_factor)
             else:
-                factors.append(Q_(tmp["input"]).m_as(tmp["default"]))
+                factors.append(Q_(tmp["input"]).m_as(tmp["default"]) * scale_factor)
 
         parameters = data["parameters"] = {}
 
