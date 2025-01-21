@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>seamm_ff_util.forcefield &#8212; SEAMM Forcefield Utilities 2025.1.3 documentation</title>
+    <title>seamm_ff_util.forcefield &#8212; SEAMM Forcefield Utilities 2025.1.21 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=c224919a" />
@@ -48,7 +48,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-PQXXTJ2');</script>
 <!-- End Google Tag Manager -->
 
-    <script src="../../_static/documentation_options.js?v=520f5dae"></script>
+    <script src="../../_static/documentation_options.js?v=8ab59db2"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -60,7 +60,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.1.3" />
+  <meta name="docsearch:version" content="2025.1.21" />
   </head>
   
   
@@ -475,19 +475,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <span class="sd">&quot;&quot;&quot;Main class for handling forcefields&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">os.path</span>
-<span class="kn">import</span> <span class="nn">packaging.version</span>
-<span class="kn">import</span> <span class="nn">pprint</span>  <span class="c1"># noqa: F401</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">packaging.version</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pprint</span>  <span class="c1"># noqa: F401</span>
 
-<span class="kn">import</span> <span class="nn">seamm_util</span>
-<span class="kn">from</span> <span class="nn">seamm_util</span> <span class="kn">import</span> <span class="n">Q_</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seamm_util</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seamm_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">Q_</span>
 
-<span class="kn">from</span> <span class="nn">.ff_assigner</span> <span class="kn">import</span> <span class="n">FFAssigner</span>
-<span class="kn">from</span> <span class="nn">.metadata</span> <span class="kn">import</span> <span class="n">metadata</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.ff_assigner</span><span class="w"> </span><span class="kn">import</span> <span class="n">FFAssigner</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">metadata</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 <span class="c1"># logger.setLevel(&quot;DEBUG&quot;)</span>
@@ -495,7 +495,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="NonbondForms">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.NonbondForms">[docs]</a>
-<span class="k">class</span> <span class="nc">NonbondForms</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NonbondForms</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
     <span class="n">SIGMA_EPS</span> <span class="o">=</span> <span class="s2">&quot;sigma-eps&quot;</span>
     <span class="n">RMIN_EPS</span> <span class="o">=</span> <span class="s2">&quot;rmin-eps&quot;</span>
     <span class="n">A_B</span> <span class="o">=</span> <span class="s2">&quot;A-B&quot;</span>
@@ -508,8 +508,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield">[docs]</a>
-<span class="k">class</span> <span class="nc">Forcefield</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fftype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">uri_handler</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">references</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Forcefield</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fftype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">uri_handler</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">references</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read, write, and use a forcefield</span>
 
@@ -550,12 +550,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_forcefield</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">current_forcefield</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">current_forcefield</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The forcefield currently set up for use.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_forcefield</span>
 
     <span class="nd">@current_forcefield</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">current_forcefield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">current_forcefield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ff</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">elif</span> <span class="n">value</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_forcefield</span><span class="p">:</span>
@@ -563,7 +563,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_forcefield</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;&#39;str&#39; name of file for this forcefield.</span>
 
 <span class="sd">        When the filename is set, if the file exists it is read. If it</span>
@@ -577,7 +577,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span>
 
     <span class="nd">@filename</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="kc">None</span>
@@ -595,12 +595,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <span class="bp">self</span><span class="o">.</span><span class="n">_create_file</span><span class="p">()</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">files_visited</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">files_visited</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The list of files used in the forcefield&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_files_visited</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">fftype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fftype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;&#39;str&#39; the type of forcefield to handle</span>
 
 <span class="sd">        When set, the type is checked to make sure it can be handled. If not</span>
@@ -609,7 +609,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fftype</span>
 
     <span class="nd">@fftype</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">fftype</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fftype</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_fftype</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
@@ -618,17 +618,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <span class="bp">self</span><span class="o">.</span><span class="n">_fftype</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">forcefields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forcefields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The list of current forcefields. The first is the default one&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;forcefields&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">references</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">references</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The reference handler.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_references</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">terms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">terms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The terms in the current forcefield.</span>
 
 <span class="sd">        Returns a dictionary whose keys are the terms in the forcefield</span>
@@ -645,7 +645,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <div class="viewcode-block" id="Forcefield.rmin_to_sigma">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.rmin_to_sigma">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">rmin_to_sigma</span><span class="p">(</span><span class="n">rmin</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rmin_to_sigma</span><span class="p">(</span><span class="n">rmin</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert rmin to sigma for LJ potential.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">rmin</span> <span class="o">/</span> <span class="n">two_raised_to_one_sixth</span></div>
 
@@ -653,7 +653,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <div class="viewcode-block" id="Forcefield.sigma_to_rmin">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.sigma_to_rmin">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">sigma_to_rmin</span><span class="p">(</span><span class="n">sigma</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sigma_to_rmin</span><span class="p">(</span><span class="n">sigma</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert sigma to rmin for LJ potential.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">two_raised_to_one_sixth</span></div>
 
@@ -661,7 +661,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <div class="viewcode-block" id="Forcefield.nonbond_transformation">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.nonbond_transformation">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">nonbond_transformation</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nonbond_transformation</span><span class="p">(</span>
         <span class="n">in_form</span><span class="o">=</span><span class="n">NonbondForms</span><span class="o">.</span><span class="n">SIGMA_EPS</span><span class="p">,</span>
         <span class="n">in1_units</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">in2_units</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -751,7 +751,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <div class="viewcode-block" id="Forcefield.no_transform">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.no_transform">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">no_transform</span><span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">,</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">factor2</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">no_transform</span><span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">,</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">factor2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;No transformation of nonbond parameters, just units.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">in1</span> <span class="o">*</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">in2</span> <span class="o">*</span> <span class="n">factor2</span></div>
 
@@ -759,7 +759,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <div class="viewcode-block" id="Forcefield.rmin_eps_to_sigma_eps">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.rmin_eps_to_sigma_eps">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">rmin_eps_to_sigma_eps</span><span class="p">(</span><span class="n">rmin</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">factor2</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rmin_eps_to_sigma_eps</span><span class="p">(</span><span class="n">rmin</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">factor2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform nonbond parameters from rmin-eps to sigma-eps</span>
 <span class="sd">        and apply the unit conversion factors</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -769,7 +769,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <div class="viewcode-block" id="Forcefield.a_b_to_sigma_eps">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.a_b_to_sigma_eps">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">a_b_to_sigma_eps</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">factor2</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">a_b_to_sigma_eps</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">factor2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform nonbond parameters from A-B to sigma-eps</span>
 <span class="sd">        and apply the unit conversion factors</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -784,7 +784,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <div class="viewcode-block" id="Forcefield.ar_br_to_sigma_eps">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.ar_br_to_sigma_eps">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">ar_br_to_sigma_eps</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">factor2</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ar_br_to_sigma_eps</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">factor1</span><span class="p">,</span> <span class="n">factor2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform nonbond parameters from A/r-B/r to sigma-eps</span>
 <span class="sd">        and apply the unit conversion factors</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -800,7 +800,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.clear">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.clear">[docs]</a>
-    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reset the object to its initial, empty, state</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -812,7 +812,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="bp">self</span><span class="o">.</span><span class="n">current_forcefield</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Read the forcefield from the file self.filename</span>
 
 <span class="sd">        self.fftype gives the type of forcefield file. If it is not set</span>
@@ -841,7 +841,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <span class="n">reader</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_files_visited</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">visited</span>
 
-    <span class="k">def</span> <span class="nf">_read_biosym_ff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read_biosym_ff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read and parse a forcefield in Biosym&#39;s format</span>
 
@@ -932,7 +932,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Encountered I/O error opening &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
             <span class="k">raise</span>
 
-    <span class="k">def</span> <span class="nf">_read_biosym_section</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read_biosym_section</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read the body of a section of the forcefield</span>
 
@@ -972,7 +972,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <span class="c1"># Must be a line of data! :-)</span>
             <span class="n">result</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_parse_biosym_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_biosym_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process the &#39;version&#39; section, which looks like</span>
 
@@ -980,7 +980,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="nf">_parse_biosym_define</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_biosym_define</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process a forcefield definition section</span>
 
@@ -1024,7 +1024,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_lines</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_parse_biosym_atom_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_biosym_atom_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process the atom types</span>
 
@@ -1075,7 +1075,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_lines</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_parse_biosym_equivalence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_biosym_equivalence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process the atom type equivalences</span>
 
@@ -1125,7 +1125,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_lines</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_parse_biosym_auto_equivalence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_biosym_auto_equivalence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process the atom type equivalences for automatic types</span>
 
@@ -1193,7 +1193,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_lines</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_parse_biosym_bond_increments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_biosym_bond_increments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process the bond increments</span>
 
@@ -1248,7 +1248,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_lines</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_parse_biosym_templates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_biosym_templates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process the templates, which are simply json</span>
 
@@ -1282,7 +1282,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_lines</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_parse_biosym_fragments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_biosym_fragments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process the templates, which are simply json</span>
 
@@ -1322,7 +1322,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_lines</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_parse_biosym_reference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_biosym_reference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process a &#39;reference&#39; section, which looks like::</span>
 
@@ -1378,7 +1378,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.make_canonical">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.make_canonical">[docs]</a>
-    <span class="k">def</span> <span class="nf">make_canonical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symmetry</span><span class="p">,</span> <span class="n">atom_types</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">make_canonical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symmetry</span><span class="p">,</span> <span class="n">atom_types</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Using the symmetry, order the atom_types canonically</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1435,7 +1435,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <span class="k">return</span> <span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">),</span> <span class="n">flipped</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_parse_biosym_nonbonds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_biosym_nonbonds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process the nonbond parameters, accounting for different expressions</span>
 <span class="sd">        and units.</span>
@@ -1572,7 +1572,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_lines</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_parse_biosym_section</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_biosym_section</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process the 1-term torsion parameters</span>
 
@@ -1705,7 +1705,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.initialize_biosym_forcefield">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.initialize_biosym_forcefield">[docs]</a>
-    <span class="k">def</span> <span class="nf">initialize_biosym_forcefield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forcefield</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initialize_biosym_forcefield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forcefield</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the given version of the Biosym-style forcefield</span>
 
@@ -1765,7 +1765,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <span class="bp">self</span><span class="o">.</span><span class="n">_get_parameters</span><span class="p">(</span><span class="n">fform</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_get_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">functional_form</span><span class="p">,</span> <span class="n">Version</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">functional_form</span><span class="p">,</span> <span class="n">Version</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Select the correct version parameters from the sections for</span>
 <span class="sd">        this functional form&quot;&quot;&quot;</span>
 
@@ -1805,7 +1805,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.mass">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.mass">[docs]</a>
-    <span class="k">def</span> <span class="nf">mass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the atomic mass for an atom type i&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;atom_types&quot;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;atom_types&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
@@ -1815,7 +1815,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.charges">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.charges">[docs]</a>
-    <span class="k">def</span> <span class="nf">charges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">charges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the charge given an atom type i</span>
 
 <span class="sd">        Handle equivalences.</span>
@@ -1845,7 +1845,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.shell_model">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.shell_model">[docs]</a>
-    <span class="k">def</span> <span class="nf">shell_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">shell_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the shell model parameters given an atom type i</span>
 
 <span class="sd">        Handle equivalences.</span>
@@ -1874,7 +1874,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.bond_increments">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_increments">[docs]</a>
-    <span class="k">def</span> <span class="nf">bond_increments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bond_increments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the bond increments given two atoms types i and j</span>
 
 <span class="sd">        Handle automatic equivalences.</span>
@@ -1912,7 +1912,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.bond_parameters">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">bond_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bond_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the bond parameters given two atoms types i and j</span>
 
 <span class="sd">        Handle equivalences and automatic equivalences.</span>
@@ -1952,7 +1952,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.angle_parameters">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.angle_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">angle_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">angle_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the angle parameters given three atom types</span>
 
 <span class="sd">        Handle equivalences and automatic equivalences.</span>
@@ -2070,7 +2070,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.torsion_parameters">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.torsion_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">torsion_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">torsion_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the torsion parameters given four atoms types</span>
 
 <span class="sd">        Handles equivalences and automatic equivalences and wildcards,</span>
@@ -2184,7 +2184,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No torsion parameters for </span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">))</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_torsion_parameters_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_torsion_parameters_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the torsion parameters given four atom types&quot;&quot;&quot;</span>
 
         <span class="c1"># parameter directly available</span>
@@ -2207,7 +2207,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.oop_parameters">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.oop_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">oop_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">oop_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the oop parameters given four atoms types</span>
 
 <span class="sd">        Handles equivalences and automatic equivalences and wildcards,</span>
@@ -2257,7 +2257,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_oop_parameters_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_oop_parameters_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the oop parameters given four atoms types</span>
 
 <span class="sd">        Handles equivalences and automatic equivalences and wildcards,</span>
@@ -2326,7 +2326,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.nonbond_parameters">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.nonbond_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">nonbond_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;nonbond(12-6)&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nonbond_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;nonbond(12-6)&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the nondbond parameters given one or two atoms types i and j</span>
 
 <span class="sd">        Handle equivalences</span>
@@ -2393,7 +2393,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.bond_bond_parameters">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_bond_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">bond_bond_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bond_bond_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the bond-bond parameters given three atoms types</span>
 
 <span class="sd">        Handle equivalences, and if zero=True, return zero valued</span>
@@ -2438,7 +2438,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No bond-bond parameters for </span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_angle_parameters_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_angle_parameters_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the angle-like parameters given three atom types&quot;&quot;&quot;</span>
 
         <span class="c1"># parameter directly available</span>
@@ -2461,7 +2461,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.bond_bond_1_3_parameters">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_bond_1_3_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">bond_bond_1_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bond_bond_1_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the bond-bond_1_3 parameters given four atoms types</span>
 
 <span class="sd">        Handles equivalences wildcards</span>
@@ -2507,7 +2507,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.bond_angle_parameters">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_angle_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">bond_angle_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bond_angle_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the bond-angle parameters given three atoms types</span>
 
 <span class="sd">        Handle equivalences, and if zero=True, return zero valued</span>
@@ -2577,7 +2577,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.angle_angle_parameters">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.angle_angle_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">angle_angle_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">angle_angle_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the angle_angle parameters given four atoms types</span>
 
 <span class="sd">        Handles equivalences and wildcards</span>
@@ -2633,7 +2633,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_angle_angle_parameters_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_angle_angle_parameters_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the torsion parameters given four atom types&quot;&quot;&quot;</span>
 
         <span class="c1"># parameter directly available</span>
@@ -2659,7 +2659,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.end_bond_torsion_3_parameters">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.end_bond_torsion_3_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">end_bond_torsion_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">end_bond_torsion_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the end bond - torsion_3 parameters given four atom types</span>
 
 <span class="sd">        Handle equivalences</span>
@@ -2752,7 +2752,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.middle_bond_torsion_3_parameters">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.middle_bond_torsion_3_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">middle_bond_torsion_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">middle_bond_torsion_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the middle bond - torsion_3 parameters given four atom types</span>
 
 <span class="sd">        Handle equivalences</span>
@@ -2800,7 +2800,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.angle_torsion_3_parameters">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.angle_torsion_3_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">angle_torsion_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">angle_torsion_3_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the angle - torsion_3 parameters given four atom types</span>
 
 <span class="sd">        Handle equivalences</span>
@@ -2893,7 +2893,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.angle_angle_torsion_1_parameters">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.angle_angle_torsion_1_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">angle_angle_torsion_1_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">angle_angle_torsion_1_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa: E741</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the angle - angle - torsion_1 parameters given four atom types</span>
 
 <span class="sd">        Handle equivalences</span>
@@ -2941,7 +2941,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.get_templates">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.get_templates">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_templates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_templates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the templates dict&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s2">&quot;templates&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;templates&quot;</span><span class="p">]</span>
@@ -2951,7 +2951,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.get_fragments">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.get_fragments">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_fragments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_fragments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the fragments dict&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s2">&quot;fragments&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;fragments&quot;</span><span class="p">]</span>
@@ -2961,7 +2961,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.energy_expression">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.energy_expression">[docs]</a>
-    <span class="k">def</span> <span class="nf">energy_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">energy_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the energy expression for the given structure</span>
 
 <span class="sd">        Parameters</span>
@@ -3014,7 +3014,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.setup_topology">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.setup_topology">[docs]</a>
-    <span class="k">def</span> <span class="nf">setup_topology</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_topology</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the list of bonds, angle, torsion, etc. for the configuration</span>
 
 <span class="sd">        This topology information is held in self.topology.</span>
@@ -3076,6 +3076,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">bonds_from_atom</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>  <span class="c1"># noqa: E741</span>
                     <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>  <span class="c1"># noqa: E741</span>
                         <span class="k">continue</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">l</span><span class="p">:</span>
+                        <span class="c1"># 3 membered rings.</span>
+                        <span class="k">continue</span>
                     <span class="n">torsions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">))</span>
 
         <span class="c1"># Out-of-planes</span>
@@ -3096,21 +3099,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_atomic_charge">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_atomic_charge">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_atomic_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_atomic_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle charges.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eex_bond_charge_increment</span><span class="p">(</span><span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Forcefield.eex_charge">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_charge">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Do nothing routine since charges are handled by the increments.&quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="Forcefield.eex_bond_charge_increment">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_bond_charge_increment">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_bond_charge_increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_bond_charge_increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the charges for the structure</span>
 
 <span class="sd">        If they do not exists on the structure, they are created</span>
@@ -3179,7 +3182,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_atoms">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_atoms">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_atoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_atoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List the atoms into the energy expression.</span>
 
 <span class="sd">        Note that if using the shell model, an extra &quot;atom&quot; is added for the shell.</span>
@@ -3251,7 +3254,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_pair">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_pair">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_pair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_pair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the pair (non-bond) portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;In eex_pair&quot;</span><span class="p">)</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
@@ -3332,7 +3335,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_shell_model">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_shell_model">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_shell_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_shell_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the shell model portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
 
@@ -3376,7 +3379,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_bond">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_bond">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the bond portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">bonds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;bonds&quot;</span><span class="p">]</span>
@@ -3412,7 +3415,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_angle">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_angle">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the angle portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">angles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;angles&quot;</span><span class="p">]</span>
@@ -3445,7 +3448,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_torsion">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_torsion">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_torsion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_torsion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the torsion portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
@@ -3481,7 +3484,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_out_of_plane">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_out_of_plane">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_out_of_plane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_out_of_plane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the out-of-plane portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">oops</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;oops&quot;</span><span class="p">]</span>
@@ -3515,7 +3518,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_bond_bond">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_bond_bond">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_bond_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_bond_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the bond-bond portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">angles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;angles&quot;</span><span class="p">]</span>
@@ -3551,7 +3554,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_bond_angle">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_bond_angle">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_bond_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_bond_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the bond-angle portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">angles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;angles&quot;</span><span class="p">]</span>
@@ -3587,7 +3590,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_torsion_middle_bond">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_torsion_middle_bond">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_torsion_middle_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_torsion_middle_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the middle_bond-torsion portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
@@ -3625,7 +3628,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_torsion_end_bond">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_torsion_end_bond">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_torsion_end_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_torsion_end_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the end_bond-torsion portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
@@ -3663,7 +3666,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_torsion_angle">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_torsion_angle">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_torsion_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_torsion_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the angle-torsion portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
@@ -3701,7 +3704,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_angle_torsion_angle">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_angle_torsion_angle">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_angle_torsion_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_angle_torsion_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the angle-angle-torsion portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
@@ -3739,7 +3742,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_1_3_bond_bond">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_1_3_bond_bond">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_1_3_bond_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_1_3_bond_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the 1,3 bond-bond portion of the energy expression&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
@@ -3777,7 +3780,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.eex_angle_angle">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.eex_angle_angle">[docs]</a>
-    <span class="k">def</span> <span class="nf">eex_angle_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_angle_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the angle-angle portion of the energy expression</span>
 
 <span class="sd">        j is the vertex atom of the angles. For the angle-angle parameters</span>
@@ -3838,7 +3841,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.assign_forcefield">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.assign_forcefield">[docs]</a>
-    <span class="k">def</span> <span class="nf">assign_forcefield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">assign_forcefield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Assign the forcefield to the structure, i.e. find the atom types</span>
 <span class="sd">        and charges.</span>
 
@@ -3953,7 +3956,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="viewcode-block" id="Forcefield.cite_parameter">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.cite_parameter">[docs]</a>
-    <span class="k">def</span> <span class="nf">cite_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cite_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add citations from the reference associated with a parameter</span>
 
 <span class="sd">        Parameters</span>
