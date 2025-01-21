@@ -1,6 +1,11 @@
 =======
 History
 =======
+2025.1.21 -- Bugfix: torsions in 3-membered rings
+   * The code allowed the torsion around a 3-membered ring which had the same atom at
+     each end of the torsion. This is not a valid torsion, and the code now checks for
+     it and removes it.
+     
 2024.6.27 -- Support for local forcefield files
    * Added support for local forcefields files which can either be used directly
      or included by existing files.

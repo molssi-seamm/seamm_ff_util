@@ -2508,6 +2508,9 @@ class Forcefield(object):
                 for l in bonds_from_atom[k]:  # noqa: E741
                     if l == j:  # noqa: E741
                         continue
+                    if i == l:
+                        # 3 membered rings.
+                        continue
                     torsions.append((i, j, k, l))
 
         # Out-of-planes
