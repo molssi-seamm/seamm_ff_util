@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Metadata for describing terms in focefields.
-"""
+"""Metadata for describing terms in focefields."""
 
 metadata = {
     "charges": {
@@ -26,6 +25,20 @@ metadata = {
         ],
         "topology": {
             "type": "shell model",
+            "n_atoms": 1,
+            "symmetry": "none",
+            "fill": 0,
+            "flip": 0,
+        },
+    },
+    "dreiding_atomic_parameters": {
+        "equation": [],
+        "constants": [
+            ("Radius", "Å"),
+            ("Theta0", "degree"),
+        ],
+        "topology": {
+            "type": "dreiding atomic parameters",
             "n_atoms": 1,
             "symmetry": "none",
             "fill": 0,
@@ -105,7 +118,7 @@ metadata = {
     },
     "quartic_angle": {
         "equation": [
-            ("K2*(Theta-Theta0)^2 + K3*(Theta-Theta0)^3" "+ K4*(Theta-Theta0)^4")
+            "K2*(Theta-Theta0)^2 + K3*(Theta-Theta0)^3" "+ K4*(Theta-Theta0)^4"
         ],
         "constants": [
             ("Theta0", "degree"),
@@ -227,6 +240,22 @@ metadata = {
             "flip": 0,
         },
     },
+    "torsion_charmm": {
+        "equation": ["K * [1 + cos(n*Phi - d)]"],
+        "constants": [
+            ("K", "kcal/mol"),
+            ("n", ""),
+            ("d", "degrees"),
+            ("weight", ""),
+        ],
+        "topology": {
+            "type": "torsion",
+            "n_atoms": 4,
+            "symmetry": "like_torsion",
+            "fill": 0,
+            "flip": 0,
+        },
+    },
     "torsion_fourier": {
         "equation": [
             "sum i=1,m {Ki *  [1 + cos(ni*Phi - Phi0i)]}",
@@ -249,6 +278,23 @@ metadata = {
         "constants": [
             ("K", "kcal/mol/radian^2"),
             ("Chi0", "degree"),
+        ],
+        "topology": {
+            "type": "out-of-plane",
+            "n_atoms": 4,
+            "symmetry": "like_oop",
+            "fill": 0,
+            "flip": 0,
+        },
+    },
+    "dreiding_out_of_plane": {
+        "equation": [
+            "1/2*K*[1/sin(Psi0)]**2*[cos(Psi) - cos(Psi0)]**2",
+            "K*[1 - cos(Psi)] for Phi0 = 0",
+        ],
+        "constants": [
+            ("K2", "kcal/mol/radian^2"),
+            ("Psi0", "degree"),
         ],
         "topology": {
             "type": "out-of-plane",
@@ -474,7 +520,7 @@ metadata = {
     },
     "angle-angle-torsion_1": {
         "equation": [
-            ("K * (Theta_L - Theta0_L) * (Theta_R - Theta0_R) * " "(Phi - Phi0_1)")
+            "K * (Theta_L - Theta0_L) * (Theta_R - Theta0_R) * " "(Phi - Phi0_1)"
         ],
         "constants": [("K", "kcal/mol/degree^2/degree")],
         "topology": {

@@ -1,6 +1,8 @@
 =======
 History
 =======
+2026.3.16 -- Added handling of Dreiding forcefield.
+
 2025.1.21 -- Bugfix: torsions in 3-membered rings
    * The code allowed the torsion around a 3-membered ring which had the same atom at
      each end of the torsion. This is not a valid torsion, and the code now checks for

@@ -15,6 +15,7 @@ import pprint  # noqa: F401
 import seamm_util
 from seamm_util import Q_
 
+from .dreiding import DreidingMixin
 from .ff_assigner import FFAssigner
 from .metadata import metadata
 
@@ -32,7 +33,7 @@ class NonbondForms(Enum):
 two_raised_to_one_sixth = 2 ** (1 / 6)
 
 
-class Forcefield(object):
+class Forcefield(DreidingMixin):
     def __init__(self, filename=None, fftype=None, uri_handler=None, references=None):
         """
         Read, write, and use a forcefield
@@ -122,6 +123,17 @@ class Forcefield(object):
     def files_visited(self):
         """The list of files used in the forcefield"""
         return self._files_visited
+
+    @property
+    def ff_form(self):
+        """The functional form or type of forcefield, e.g. class2, dreiding, etc."""
+        ffname = self.current_forcefield
+        if "cff" in ffname:
+            return "class2"
+        if "dreiding" in ffname:
+            return "dreiding"
+        else:
+            return "general"
 
     @property
     def fftype(self):
@@ -437,7 +449,7 @@ class Forcefield(object):
         Read the body of a section of the forcefield
 
         Keeps tracks of comments ('!'), annotations ('>'), and modifiers ('@'),
-        returning a dictionary with them plus tte raw lines of data
+        returning a dictionary with them plus the raw lines of data
         """
         result = {"comments": [], "lines": [], "annotations": [], "modifiers": []}
 
@@ -887,7 +899,7 @@ class Forcefield(object):
             i = atom_types[0]
             return ((i,), flipped)
         elif n == 2:
-            i, j = atom_types[0:2]
+            i, j = atom_types
             if symmetry == "like_bond":
                 # order canonically, i<j
                 if i > j:
@@ -895,7 +907,7 @@ class Forcefield(object):
                     flipped = True
                 return ((i, j), flipped)
         elif n == 3:
-            i, j, k = atom_types[0:3]
+            i, j, k = atom_types
             if symmetry == "like_angle":
                 # order canonically, i<k
                 if i > k:
@@ -903,7 +915,7 @@ class Forcefield(object):
                     flipped = True
                 return ((i, j, k), flipped)
         elif n == 4:
-            i, j, k, l = atom_types[0:4]  # noqa: E741
+            i, j, k, l = atom_types  # noqa: E741
             if symmetry == "like_torsion":
                 # order canonically, j<k; i<l if j==k
                 if j == k and i > l:
@@ -1719,6 +1731,8 @@ class Forcefield(object):
         if zero:
             if form == "wilson_out_of_plane":
                 parameters = {"K": 0.0, "Chi0": 0.0}
+            elif form == "dreiding_out_of_plane":
+                parameters = {"K": 0.0, "Psi0": 0.0}
             elif form == "improper_opls":
                 parameters = {"V2": 0.0}
             return ("zeroed", ("*", "*", "*", "*"), form, parameters)
@@ -2396,7 +2410,7 @@ class Forcefield(object):
         else:
             return {}
 
-    def energy_expression(self, configuration, style=""):
+    def energy_expression(self, configuration, style="LAMMPS", ff_form=None):
         """Create the energy expression for the given structure
 
         Parameters
@@ -2406,6 +2420,9 @@ class Forcefield(object):
         style : str = ''
             The style of energy expression. Currently only 'LAMMPS' is
             supported.
+        ff_form : str = None
+            The functional form of the forcefield. If None, it is derived from the name
+            of the forcefield.
 
         Returns
         -------
@@ -2415,6 +2432,10 @@ class Forcefield(object):
         logger.debug("Creating the eex")
 
         eex = {}
+
+        # The functional form of the forcefield
+        if ff_form is None:
+            ff_form = self.ff_form
 
         # The terms in the forcefield
         eex["terms"] = deepcopy(self.ff["terms"])
@@ -2430,7 +2451,7 @@ class Forcefield(object):
         if periodicity == 3:
             eex["cell"] = configuration.cell.parameters
 
-        self.setup_topology(configuration, style)
+        self.setup_topology(configuration, style, ff_form)
 
         self.eex_atoms(eex, configuration)
         logger.debug(f'    forcefield terms: {self.ff["terms"]}')
@@ -2444,9 +2465,13 @@ class Forcefield(object):
             else:
                 function(eex, configuration)
 
+        if ff_form == "dreiding":
+            # Handle hbonds for Drieding, which overwrites nonbonds too.
+            self.dreiding_hydrogen_bonds(eex, configuration)
+
         return eex
 
-    def setup_topology(self, configuration, style=""):
+    def setup_topology(self, configuration, style, ff_form):
         """Create the list of bonds, angle, torsion, etc. for the configuration
 
         This topology information is held in self.topology.
@@ -2455,9 +2480,11 @@ class Forcefield(object):
         ----------
         configuration : int = None
             Which configuration. Defaults to the current_configuration.
-        style : str = ''
+        style : str
             The style of energy expression. Currently only 'LAMMPS' is
             supported.
+        ff_form : str
+            The functional form or type of forcefield.
 
         Returns
         -------
@@ -2484,6 +2511,19 @@ class Forcefield(object):
         bonds = self.topology["bonds"] = [
             (to_index[row["i"]], to_index[row["j"]]) for row in sys_bonds.bonds()
         ]
+
+        # Bond orders
+        if ff_form in ("dreiding",):
+            bond_orders = self.topology["bond orders"] = {
+                (to_index[row["i"]], to_index[row["j"]]): row["bondorder"]
+                for row in sys_bonds.bonds()
+            }
+            bond_orders.update(
+                {
+                    (to_index[row["j"]], to_index[row["i"]]): row["bondorder"]
+                    for row in sys_bonds.bonds()
+                }
+            )
 
         # atoms bonded to each atom i
         self.topology["bonds_from_atom"] = configuration.bonded_neighbors(
@@ -2515,11 +2555,19 @@ class Forcefield(object):
 
         # Out-of-planes
         oops = self.topology["oops"] = []
-        for m in range(1, n_atoms + 1):
-            if len(bonds_from_atom[m]) == 3:
-                i, j, k = bonds_from_atom[m]
-                oops.append((i, m, j, k))
-        if style == "LAMMPS-class2":
+        if ff_form == "dreiding":
+            for m in range(1, n_atoms + 1):
+                if len(bonds_from_atom[m]) == 3:
+                    i, j, k = bonds_from_atom[m]
+                    oops.append((i, m, j, k))
+                    oops.append((j, m, i, k))
+                    oops.append((k, m, i, j))
+        else:
+            for m in range(1, n_atoms + 1):
+                if len(bonds_from_atom[m]) == 3:
+                    i, j, k = bonds_from_atom[m]
+                    oops.append((i, m, j, k))
+        if ff_form == "class2":
             for m in range(1, n_atoms + 1):
                 if len(bonds_from_atom[m]) == 4:
                     i, j, k, l = bonds_from_atom[m]  # noqa: E741
@@ -2897,6 +2945,9 @@ class Forcefield(object):
             parameters_type, real_types, form, parameter_values = self.oop_parameters(
                 types[i], types[j], types[k], types[l], zero=True
             )
+
+            if form == "dreiding_out_of_plane" and parameters_type == "zeroed":
+                continue
 
             new_value = (
                 form,
