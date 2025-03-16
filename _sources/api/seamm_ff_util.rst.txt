@@ -4,42 +4,50 @@ seamm\_ff\_util package
 Submodules
 ----------
 
+seamm\_ff\_util.dreiding module
+-------------------------------
+
+.. automodule:: seamm_ff_util.dreiding
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 seamm\_ff\_util.ff\_assigner module
 -----------------------------------
 
 .. automodule:: seamm_ff_util.ff_assigner
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 seamm\_ff\_util.forcefield module
 ---------------------------------
 
 .. automodule:: seamm_ff_util.forcefield
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 seamm\_ff\_util.metadata module
 -------------------------------
 
 .. automodule:: seamm_ff_util.metadata
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 seamm\_ff\_util.tabulate module
 -------------------------------
 
 .. automodule:: seamm_ff_util.tabulate
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: seamm_ff_util
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

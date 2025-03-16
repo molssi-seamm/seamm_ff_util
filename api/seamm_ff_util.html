@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>seamm_ff_util package &#8212; SEAMM Forcefield Utilities 2025.1.21 documentation</title>
+    <title>seamm_ff_util package &#8212; SEAMM Forcefield Utilities 2025.3.16 documentation</title>
   
   
   
@@ -49,7 +49,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-PQXXTJ2');</script>
 <!-- End Google Tag Manager -->
 
-    <script src="../_static/documentation_options.js?v=8ab59db2"></script>
+    <script src="../_static/documentation_options.js?v=c9e00587"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -63,7 +63,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="prev" title="seamm_ff_util" href="modules.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.1.21" />
+  <meta name="docsearch:version" content="2025.3.16" />
   </head>
   
   
@@ -496,12 +496,54 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
+<section id="module-seamm_ff_util.dreiding">
+<span id="seamm-ff-util-dreiding-module"></span><h2>seamm_ff_util.dreiding module<a class="headerlink" href="#module-seamm_ff_util.dreiding" title="Link to this heading">#</a></h2>
+<p>Mixin class for handling Dreiding forcefields</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="seamm_ff_util.dreiding.DreidingMixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.dreiding.</span></span><span class="sig-name descname"><span class="pre">DreidingMixin</span></span><a class="reference internal" href="../_modules/seamm_ff_util/dreiding.html#DreidingMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.dreiding.DreidingMixin" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.dreiding.DreidingMixin.dreiding_angles">
+<span class="sig-name descname"><span class="pre">dreiding_angles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/dreiding.html#DreidingMixin.dreiding_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.dreiding.DreidingMixin.dreiding_angles" title="Link to this definition">#</a></dt>
+<dd><p>Get the angles and parameters for the structure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.dreiding.DreidingMixin.dreiding_bonds">
+<span class="sig-name descname"><span class="pre">dreiding_bonds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/dreiding.html#DreidingMixin.dreiding_bonds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.dreiding.DreidingMixin.dreiding_bonds" title="Link to this definition">#</a></dt>
+<dd><p>Get the bonds and parameters for the structure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.dreiding.DreidingMixin.dreiding_dihedrals">
+<span class="sig-name descname"><span class="pre">dreiding_dihedrals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/dreiding.html#DreidingMixin.dreiding_dihedrals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.dreiding.DreidingMixin.dreiding_dihedrals" title="Link to this definition">#</a></dt>
+<dd><p>Get the dihedrals and parameters for the structure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.dreiding.DreidingMixin.dreiding_hydrogen_bonds">
+<span class="sig-name descname"><span class="pre">dreiding_hydrogen_bonds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/dreiding.html#DreidingMixin.dreiding_hydrogen_bonds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.dreiding.DreidingMixin.dreiding_hydrogen_bonds" title="Link to this definition">#</a></dt>
+<dd><p>Rework the nonbonds and add the hydrogen bonds, if needed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.dreiding.DreidingMixin.eex_dreiding_atomic_parameters">
+<span class="sig-name descname"><span class="pre">eex_dreiding_atomic_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/dreiding.html#DreidingMixin.eex_dreiding_atomic_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.dreiding.DreidingMixin.eex_dreiding_atomic_parameters" title="Link to this definition">#</a></dt>
+<dd><p>Get the charges for the structure</p>
+<p>If they do not exists on the structure, they are created
+using the bond increments and saved on the structure</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-seamm_ff_util.ff_assigner">
 <span id="seamm-ff-util-ff-assigner-module"></span><h2>seamm_ff_util.ff_assigner module<a class="headerlink" href="#module-seamm_ff_util.ff_assigner" title="Link to this heading">#</a></h2>
 <p>Main class for handling forcefields</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seamm_ff_util.ff_assigner.FFAssigner">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.ff_assigner.</span></span><span class="sig-name descname"><span class="pre">FFAssigner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forcefield</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/ff_assigner.html#FFAssigner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.ff_assigner.FFAssigner" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.ff_assigner.</span></span><span class="sig-name descname"><span class="pre">FFAssigner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forcefield</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/ff_assigner.html#FFAssigner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.ff_assigner.FFAssigner" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.ff_assigner.FFAssigner.assign">
@@ -534,11 +576,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <p>Main class for handling forcefields</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.forcefield.</span></span><span class="sig-name descname"><span class="pre">Forcefield</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fftype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri_handler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">references</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.forcefield.</span></span><span class="sig-name descname"><span class="pre">Forcefield</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fftype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri_handler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">references</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seamm_ff_util.dreiding.DreidingMixin" title="seamm_ff_util.dreiding.DreidingMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">DreidingMixin</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.a_b_to_sigma_eps">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a_b_to_sigma_eps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.a_b_to_sigma_eps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.a_b_to_sigma_eps" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a_b_to_sigma_eps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.a_b_to_sigma_eps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.a_b_to_sigma_eps" title="Link to this definition">#</a></dt>
 <dd><p>Transform nonbond parameters from A-B to sigma-eps
 and apply the unit conversion factors</p>
 </dd></dl>
@@ -573,7 +615,7 @@ and apply the unit conversion factors</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.ar_br_to_sigma_eps">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ar_br_to_sigma_eps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.ar_br_to_sigma_eps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.ar_br_to_sigma_eps" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ar_br_to_sigma_eps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.ar_br_to_sigma_eps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.ar_br_to_sigma_eps" title="Link to this definition">#</a></dt>
 <dd><p>Transform nonbond parameters from A/r-B/r to sigma-eps
 and apply the unit conversion factors</p>
 </dd></dl>
@@ -659,7 +701,7 @@ parameters rather than raise an error</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.current_forcefield">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_forcefield</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.current_forcefield" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_forcefield</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.current_forcefield" title="Link to this definition">#</a></dt>
 <dd><p>The forcefield currently set up for use.</p>
 </dd></dl>
 
@@ -788,7 +830,7 @@ using the bond increments and saved on the structure</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.energy_expression">
-<span class="sig-name descname"><span class="pre">energy_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.energy_expression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.energy_expression" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">energy_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'LAMMPS'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ff_form</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.energy_expression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.energy_expression" title="Link to this definition">#</a></dt>
 <dd><p>Create the energy expression for the given structure</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -796,6 +838,8 @@ using the bond increments and saved on the structure</p>
 <li><p><strong>configuration</strong> (<em>_Configuration</em>) – Which configuration of the system.</p></li>
 <li><p><strong>style</strong> (<em>str = ''</em>) – The style of energy expression. Currently only ‘LAMMPS’ is
 supported.</p></li>
+<li><p><strong>ff_form</strong> (<em>str = None</em>) – The functional form of the forcefield. If None, it is derived from the name
+of the forcefield.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -808,8 +852,14 @@ supported.</p></li>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.ff_form">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ff_form</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.ff_form" title="Link to this definition">#</a></dt>
+<dd><p>The functional form or type of forcefield, e.g. class2, dreiding, etc.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.fftype">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fftype</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.fftype" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fftype</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.fftype" title="Link to this definition">#</a></dt>
 <dd><p>‘str’ the type of forcefield to handle</p>
 <p>When set, the type is checked to make sure it can be handled. If not
 a RunTimeError is raised.</p>
@@ -817,7 +867,7 @@ a RunTimeError is raised.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.filename">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.filename" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.filename" title="Link to this definition">#</a></dt>
 <dd><p>‘str’ name of file for this forcefield.</p>
 <p>When the filename is set, if the file exists it is read. If it
 does not exist, it is created and initialized as a forcefield
@@ -829,13 +879,13 @@ default type for new forcefields is the Biosym .frc format.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.files_visited">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">files_visited</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.files_visited" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">files_visited</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.files_visited" title="Link to this definition">#</a></dt>
 <dd><p>The list of files used in the forcefield</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.forcefields">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">forcefields</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.forcefields" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">forcefields</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.forcefields" title="Link to this definition">#</a></dt>
 <dd><p>The list of current forcefields. The first is the default one</p>
 </dd></dl>
 
@@ -880,7 +930,7 @@ is not specified then the default is the latest version.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.no_transform">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">no_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.no_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.no_transform" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">no_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.no_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.no_transform" title="Link to this definition">#</a></dt>
 <dd><p>No transformation of nonbond parameters, just units.</p>
 </dd></dl>
 
@@ -893,7 +943,7 @@ is not specified then the default is the latest version.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.nonbond_transformation">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nonbond_transformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_form</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NonbondForms.SIGMA_EPS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in1_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in2_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_form</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NonbondForms.SIGMA_EPS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out1_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Å'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out2_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'kcal/mol'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.nonbond_transformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.nonbond_transformation" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nonbond_transformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_form</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NonbondForms.SIGMA_EPS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in1_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in2_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_form</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NonbondForms.SIGMA_EPS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out1_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Å'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out2_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'kcal/mol'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.nonbond_transformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.nonbond_transformation" title="Link to this definition">#</a></dt>
 <dd><p>Return the transform method and unit conversions for the nonbonds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -928,34 +978,35 @@ with numerical precedences</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.references">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">references</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.references" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">references</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.references" title="Link to this definition">#</a></dt>
 <dd><p>The reference handler.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.rmin_eps_to_sigma_eps">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rmin_eps_to_sigma_eps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.rmin_eps_to_sigma_eps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.rmin_eps_to_sigma_eps" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rmin_eps_to_sigma_eps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.rmin_eps_to_sigma_eps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.rmin_eps_to_sigma_eps" title="Link to this definition">#</a></dt>
 <dd><p>Transform nonbond parameters from rmin-eps to sigma-eps
 and apply the unit conversion factors</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.rmin_to_sigma">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rmin_to_sigma</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rmin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.rmin_to_sigma"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.rmin_to_sigma" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rmin_to_sigma</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rmin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.rmin_to_sigma"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.rmin_to_sigma" title="Link to this definition">#</a></dt>
 <dd><p>Convert rmin to sigma for LJ potential.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.setup_topology">
-<span class="sig-name descname"><span class="pre">setup_topology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.setup_topology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.setup_topology" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">setup_topology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ff_form</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.setup_topology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.setup_topology" title="Link to this definition">#</a></dt>
 <dd><p>Create the list of bonds, angle, torsion, etc. for the configuration</p>
 <p>This topology information is held in self.topology.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>configuration</strong> (<em>int = None</em>) – Which configuration. Defaults to the current_configuration.</p></li>
-<li><p><strong>style</strong> (<em>str = ''</em>) – The style of energy expression. Currently only ‘LAMMPS’ is
+<li><p><strong>style</strong> (<em>str</em>) – The style of energy expression. Currently only ‘LAMMPS’ is
 supported.</p></li>
+<li><p><strong>ff_form</strong> (<em>str</em>) – The functional form or type of forcefield.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -973,13 +1024,13 @@ supported.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.sigma_to_rmin">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sigma_to_rmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.sigma_to_rmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.sigma_to_rmin" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sigma_to_rmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.sigma_to_rmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.sigma_to_rmin" title="Link to this definition">#</a></dt>
 <dd><p>Convert sigma to rmin for LJ potential.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.terms">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">terms</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.terms" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">terms</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.terms" title="Link to this definition">#</a></dt>
 <dd><p>The terms in the current forcefield.</p>
 <p>Returns a dictionary whose keys are the terms in the forcefield
 and values are lists of the functional forms for the term.</p>
@@ -1002,7 +1053,7 @@ with numerical precedences</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.NonbondForms">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.forcefield.</span></span><span class="sig-name descname"><span class="pre">NonbondForms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#NonbondForms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.NonbondForms" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.forcefield.</span></span><span class="sig-name descname"><span class="pre">NonbondForms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#NonbondForms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.NonbondForms" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.NonbondForms.AR_BR">
@@ -1108,6 +1159,17 @@ but reset to 0.0 in the returned angles.</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-seamm_ff_util.dreiding">seamm_ff_util.dreiding module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.dreiding.DreidingMixin"><code class="docutils literal notranslate"><span class="pre">DreidingMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.dreiding.DreidingMixin.dreiding_angles"><code class="docutils literal notranslate"><span class="pre">DreidingMixin.dreiding_angles()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.dreiding.DreidingMixin.dreiding_bonds"><code class="docutils literal notranslate"><span class="pre">DreidingMixin.dreiding_bonds()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.dreiding.DreidingMixin.dreiding_dihedrals"><code class="docutils literal notranslate"><span class="pre">DreidingMixin.dreiding_dihedrals()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.dreiding.DreidingMixin.dreiding_hydrogen_bonds"><code class="docutils literal notranslate"><span class="pre">DreidingMixin.dreiding_hydrogen_bonds()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.dreiding.DreidingMixin.eex_dreiding_atomic_parameters"><code class="docutils literal notranslate"><span class="pre">DreidingMixin.eex_dreiding_atomic_parameters()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-seamm_ff_util.ff_assigner">seamm_ff_util.ff_assigner module</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.ff_assigner.FFAssigner"><code class="docutils literal notranslate"><span class="pre">FFAssigner</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.ff_assigner.FFAssigner.assign"><code class="docutils literal notranslate"><span class="pre">FFAssigner.assign()</span></code></a></li>
@@ -1154,6 +1216,7 @@ but reset to 0.0 in the returned angles.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_torsion_middle_bond"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_torsion_middle_bond()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.end_bond_torsion_3_parameters"><code class="docutils literal notranslate"><span class="pre">Forcefield.end_bond_torsion_3_parameters()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.energy_expression"><code class="docutils literal notranslate"><span class="pre">Forcefield.energy_expression()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.ff_form"><code class="docutils literal notranslate"><span class="pre">Forcefield.ff_form</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.fftype"><code class="docutils literal notranslate"><span class="pre">Forcefield.fftype</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.filename"><code class="docutils literal notranslate"><span class="pre">Forcefield.filename</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.files_visited"><code class="docutils literal notranslate"><span class="pre">Forcefield.files_visited</span></code></a></li>
