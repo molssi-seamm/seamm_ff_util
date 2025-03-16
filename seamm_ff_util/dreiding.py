@@ -397,7 +397,7 @@ class DreidingMixin:
                             {
                                 "h_index": h_index,
                                 "donor flag": "i",
-                                "eps": 4.0,
+                                "eps": 9.0,
                                 "sigma": 2.75,
                                 "exponent": 4,
                             },
@@ -411,7 +411,7 @@ class DreidingMixin:
                             {
                                 "h_index": h_index,
                                 "donor flag": "j",
-                                "eps": 4.0,
+                                "eps": 9.0,
                                 "sigma": 2.75,
                                 "exponent": 4,
                             },
