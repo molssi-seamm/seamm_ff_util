@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>seamm_ff_util.ff_assigner &#8212; SEAMM Forcefield Utilities 2025.3.16 documentation</title>
+    <title>seamm_ff_util.ff_assigner &#8212; SEAMM Forcefield Utilities 2025.4.7 documentation</title>
   
   
   
@@ -48,7 +48,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-PQXXTJ2');</script>
 <!-- End Google Tag Manager -->
 
-    <script src="../../_static/documentation_options.js?v=c9e00587"></script>
+    <script src="../../_static/documentation_options.js?v=c38f2275"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -60,7 +60,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.3.16" />
+  <meta name="docsearch:version" content="2025.4.7" />
   </head>
   
   
@@ -484,6 +484,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <span class="c1"># logger.setLevel(&quot;DEBUG&quot;)</span>
 
 
+<div class="viewcode-block" id="ForcefieldAssignmentError">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.ff_assigner.ForcefieldAssignmentError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ForcefieldAssignmentError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The forcefield could not be assigned successfully.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;The atom-types could not be assigned.&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+
+
 <div class="viewcode-block" id="FFAssigner">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.ff_assigner.FFAssigner">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FFAssigner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -502,6 +512,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.ff_assigner.FFAssigner.assign">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">assign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">picture</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Assign the atom types to the structure using SMARTS templates&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">forcefield</span><span class="o">.</span><span class="n">ff_form</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;reaxff&quot;</span><span class="p">,):</span>
+            <span class="c1"># Nothing to do.</span>
+            <span class="k">return</span>
+
         <span class="n">molecule</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">to_RDKMol</span><span class="p">()</span>
 
         <span class="n">n_atoms</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">n_atoms</span>
@@ -536,7 +550,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     <span class="sa">f</span><span class="s2">&quot;New assignment: </span><span class="si">{</span><span class="n">_type</span><span class="si">}</span><span class="s2">&quot;</span>
                                 <span class="p">)</span>
                                 <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-                                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                                <span class="k">raise</span> <span class="n">ForcefieldAssignmentError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                         <span class="n">atom_types</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span> <span class="o">=</span> <span class="n">_type</span>
 
         <span class="c1"># Fragments have priority, so don&#39;t change their assignments</span>
@@ -592,7 +606,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;missing_atom_types.png&quot;</span><span class="p">,</span>
                 <span class="n">highlight_atoms</span><span class="o">=</span><span class="n">untyped</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ForcefieldAssignmentError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;The molecule was successfully atom-typed&quot;</span><span class="p">)</span>
 

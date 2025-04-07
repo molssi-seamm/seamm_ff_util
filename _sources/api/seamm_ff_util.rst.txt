@@ -36,10 +36,18 @@ seamm\_ff\_util.metadata module
    :show-inheritance:
    :undoc-members:
 
-seamm\_ff\_util.tabulate module
--------------------------------
+seamm\_ff\_util.reaxff module
+-----------------------------
 
-.. automodule:: seamm_ff_util.tabulate
+.. automodule:: seamm_ff_util.reaxff
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+seamm\_ff\_util.tabulate\_function module
+-----------------------------------------
+
+.. automodule:: seamm_ff_util.tabulate_function
    :members:
    :show-inheritance:
    :undoc-members:

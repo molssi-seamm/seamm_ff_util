@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>seamm_ff_util &#8212; SEAMM Forcefield Utilities 2025.3.16 documentation</title>
+    <title>seamm_ff_util &#8212; SEAMM Forcefield Utilities 2025.4.7 documentation</title>
   
   
   
@@ -49,7 +49,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-PQXXTJ2');</script>
 <!-- End Google Tag Manager -->
 
-    <script src="../_static/documentation_options.js?v=c9e00587"></script>
+    <script src="../_static/documentation_options.js?v=c38f2275"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -63,7 +63,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="prev" title="API Documentation" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.3.16" />
+  <meta name="docsearch:version" content="2025.4.7" />
   </head>
   
   
@@ -511,6 +511,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.ff_assigner.FFAssigner.draw_atom_types"><code class="docutils literal notranslate"><span class="pre">FFAssigner.draw_atom_types()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.ff_assigner.ForcefieldAssignmentError"><code class="docutils literal notranslate"><span class="pre">ForcefieldAssignmentError</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="seamm_ff_util.html#module-seamm_ff_util.forcefield">seamm_ff_util.forcefield module</a><ul>
@@ -527,6 +528,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_bond_parameters"><code class="docutils literal notranslate"><span class="pre">Forcefield.bond_bond_parameters()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_increments"><code class="docutils literal notranslate"><span class="pre">Forcefield.bond_increments()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.bond_parameters"><code class="docutils literal notranslate"><span class="pre">Forcefield.bond_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.charge_method"><code class="docutils literal notranslate"><span class="pre">Forcefield.charge_method</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.charges"><code class="docutils literal notranslate"><span class="pre">Forcefield.charges()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.cite_parameter"><code class="docutils literal notranslate"><span class="pre">Forcefield.cite_parameter()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.forcefield.Forcefield.clear"><code class="docutils literal notranslate"><span class="pre">Forcefield.clear()</span></code></a></li>
@@ -586,8 +588,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="seamm_ff_util.html#module-seamm_ff_util.metadata">seamm_ff_util.metadata module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="seamm_ff_util.html#module-seamm_ff_util.tabulate">seamm_ff_util.tabulate module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.tabulate.tabulate_angle"><code class="docutils literal notranslate"><span class="pre">tabulate_angle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="seamm_ff_util.html#module-seamm_ff_util.reaxff">seamm_ff_util.reaxff module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.ReaxFFMixin"><code class="docutils literal notranslate"><span class="pre">ReaxFFMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.ReaxFFMixin.eex_reaxff_angle_parameters"><code class="docutils literal notranslate"><span class="pre">ReaxFFMixin.eex_reaxff_angle_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.ReaxFFMixin.eex_reaxff_atomic_parameters"><code class="docutils literal notranslate"><span class="pre">ReaxFFMixin.eex_reaxff_atomic_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.ReaxFFMixin.eex_reaxff_bond_parameters"><code class="docutils literal notranslate"><span class="pre">ReaxFFMixin.eex_reaxff_bond_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.ReaxFFMixin.eex_reaxff_general_parameters"><code class="docutils literal notranslate"><span class="pre">ReaxFFMixin.eex_reaxff_general_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.ReaxFFMixin.eex_reaxff_hydrogen_bond_parameters"><code class="docutils literal notranslate"><span class="pre">ReaxFFMixin.eex_reaxff_hydrogen_bond_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.ReaxFFMixin.eex_reaxff_off_diagonal_parameters"><code class="docutils literal notranslate"><span class="pre">ReaxFFMixin.eex_reaxff_off_diagonal_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.ReaxFFMixin.eex_reaxff_torsion_parameters"><code class="docutils literal notranslate"><span class="pre">ReaxFFMixin.eex_reaxff_torsion_parameters()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.import_reaxff"><code class="docutils literal notranslate"><span class="pre">import_reaxff()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.parse_reax_data"><code class="docutils literal notranslate"><span class="pre">parse_reax_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.read_reaxff_parameters"><code class="docutils literal notranslate"><span class="pre">read_reaxff_parameters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.reaxff_to_molssi_format"><code class="docutils literal notranslate"><span class="pre">reaxff_to_molssi_format()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.reaxff.write_ff_file"><code class="docutils literal notranslate"><span class="pre">write_ff_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="seamm_ff_util.html#module-seamm_ff_util.tabulate_function">seamm_ff_util.tabulate_function module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="seamm_ff_util.html#seamm_ff_util.tabulate_function.tabulate_angle"><code class="docutils literal notranslate"><span class="pre">tabulate_angle()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="seamm_ff_util.html#module-seamm_ff_util">Module contents</a></li>
