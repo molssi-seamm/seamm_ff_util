@@ -3,3 +3,4 @@ numpy
 packaging
 seamm-util
 sympy
+tabulate

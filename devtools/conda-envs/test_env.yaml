@@ -13,6 +13,7 @@ dependencies:
   - numpy
   - packaging
   - rdkit
+  - tabulate
   - seamm-util
   - sympy
 
