@@ -542,4 +542,18 @@ metadata = {
             "flip": 0,
         },
     },
+    "reaxff_general_parameters": {
+        "equation": [],
+        "constants": [
+            ("Radius", "Å"),
+            ("Theta0", "degree"),
+        ],
+        "topology": {
+            "type": "reaxff general parameters",
+            "n_atoms": 0,
+            "symmetry": "none",
+            "fill": 0,
+            "flip": 0,
+        },
+    },
 }

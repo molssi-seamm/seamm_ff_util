@@ -1,7 +1,14 @@
 =======
 History
 =======
-2026.3.16 -- Added handling of Dreiding forcefield.
+2025.4.7 -- Added ability to handle ReaxFF forcefields
+   * Added code to handle ReaxFF forcefield.
+   * Added seamm-reaxff utility to import forcefields in the standard Reax/LAMMPS format
+     into SEAMM's format.
+   * Added handling of a metadata section in the forcefields to be able to support the
+     various types of forcefields.
+     
+2025.3.16 -- Added handling of Dreiding forcefield.
 
 2025.1.21 -- Bugfix: torsions in 3-membered rings
    * The code allowed the torsion around a 3-membered ring which had the same atom at

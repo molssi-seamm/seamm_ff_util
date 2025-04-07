@@ -13,6 +13,13 @@ logger = logging.getLogger(__name__)
 # logger.setLevel("DEBUG")
 
 
+class ForcefieldAssignmentError(Exception):
+    """The forcefield could not be assigned successfully."""
+
+    def __init__(self, message="The atom-types could not be assigned."):
+        super().__init__(message)
+
+
 class FFAssigner(object):
     def __init__(self, forcefield):
         """Handle the assignment of the forcefield to the structure
@@ -27,6 +34,10 @@ class FFAssigner(object):
 
     def assign(self, configuration, picture=False):
         """Assign the atom types to the structure using SMARTS templates"""
+        if self.forcefield.ff_form in ("reaxff",):
+            # Nothing to do.
+            return
+
         molecule = configuration.to_RDKMol()
 
         n_atoms = configuration.n_atoms
@@ -61,7 +72,7 @@ class FFAssigner(object):
                                     f"New assignment: {_type}"
                                 )
                                 logger.error(msg)
-                                raise RuntimeError(msg)
+                                raise ForcefieldAssignmentError(msg)
                         atom_types[atom] = _type
 
         # Fragments have priority, so don't change their assignments
@@ -117,7 +128,7 @@ class FFAssigner(object):
                 filename="missing_atom_types.png",
                 highlight_atoms=untyped,
             )
-            raise RuntimeError(msg)
+            raise ForcefieldAssignmentError(msg)
         else:
             logger.info("The molecule was successfully atom-typed")
 

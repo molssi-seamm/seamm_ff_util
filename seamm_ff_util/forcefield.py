@@ -18,6 +18,7 @@ from seamm_util import Q_
 from .dreiding import DreidingMixin
 from .ff_assigner import FFAssigner
 from .metadata import metadata
+from .reaxff import ReaxFFMixin
 
 logger = logging.getLogger(__name__)
 # logger.setLevel("DEBUG")
@@ -33,7 +34,7 @@ class NonbondForms(Enum):
 two_raised_to_one_sixth = 2 ** (1 / 6)
 
 
-class Forcefield(DreidingMixin):
+class Forcefield(DreidingMixin, ReaxFFMixin):
     def __init__(self, filename=None, fftype=None, uri_handler=None, references=None):
         """
         Read, write, and use a forcefield
@@ -75,6 +76,14 @@ class Forcefield(DreidingMixin):
         self._current_forcefield = None
 
     @property
+    def charge_method(self):
+        """The method for handlign the charges on atoms"""
+        if "metadata" in self.ff and "charges" in self.ff["metadata"]:
+            return self.ff["metadata"]["charges"]["value"]
+        else:
+            return "point"
+
+    @property
     def current_forcefield(self):
         """The forcefield currently set up for use."""
         return self._current_forcefield
@@ -103,7 +112,7 @@ class Forcefield(DreidingMixin):
 
     @filename.setter
     def filename(self, value):
-        if not value:
+        if value is None:
             self.clear()
             self._filename = None
         else:
@@ -127,13 +136,18 @@ class Forcefield(DreidingMixin):
     @property
     def ff_form(self):
         """The functional form or type of forcefield, e.g. class2, dreiding, etc."""
-        ffname = self.current_forcefield
-        if "cff" in ffname:
-            return "class2"
-        if "dreiding" in ffname:
-            return "dreiding"
+        if "metadata" in self.ff and "ff_form" in self.ff["metadata"]:
+            return self.ff["metadata"]["ff_form"]["value"]
         else:
-            return "general"
+            ffname = self.current_forcefield
+            if "cff" in ffname:
+                return "class2"
+            if "dreiding" in ffname:
+                return "dreiding"
+            if "reaxff" in ffname:
+                return "reaxff"
+
+        return "general"
 
     @property
     def fftype(self):
@@ -432,12 +446,26 @@ class Forcefield(DreidingMixin):
                         method = "_parse_biosym_nonbonds"
                     else:
                         method = "_parse_biosym_" + section
-                    logger.info("Parsing forcefield section '" + section + "'.")
+                    logger.info(
+                        f"Parsing forcefield section '{section}' with {method}."
+                    )
+
+                    found = False
                     if method in Forcefield.__dict__:
                         Forcefield.__dict__[method](self, result)
-                    elif section in metadata:
-                        self._parse_biosym_section(result)
+                        found = True
                     else:
+                        found = False
+                        for cls in self.__class__.__mro__:
+                            if method in cls.__dict__:
+                                cls.__dict__[method](self, result)
+                                found = True
+                                break
+                    if not found and section in metadata:
+                        self._parse_biosym_section(result)
+                        found = True
+
+                    if not found:
                         logger.warning("Cannot find parser for " + section)
 
         except IOError:
@@ -532,6 +560,51 @@ class Forcefield(DreidingMixin):
                     "reference": reference,
                     "sections": labels,
                 }
+
+        if not self.keep_lines:
+            del data["lines"]
+
+    def _parse_biosym_metadata(self, data):
+        """
+        Process the metadata describing the forcefield, e.g.
+
+        #metadata CHLiOFSi_Yun_2017
+
+        !Version      Ref   Parameter       Value  Description
+        !---------  -----  ------------  --------  -------------------------------------
+        2025.04.06      1   ff_form        reaxff  The functional form of the forcefield
+        2025.04.06      1   charges        qeq     How charges should be handled
+        ...
+        """
+        section = data["section"]
+        label = data["label"]
+
+        if section not in self.data:
+            self.data[section] = {}
+        if label in self.data[section]:
+            msg = "'{}' already defined in section '{}'".format(label, section)
+            logger.error(msg)
+            raise RuntimeError(msg)
+        self.data[section][label] = data
+        metadata = self.data[section][label]["parameters"] = {}
+
+        for line in data["lines"]:
+            version, reference, parameter, value, description = line.split(maxsplit=4)
+            if parameter not in metadata:
+                metadata[parameter] = {}
+            V = packaging.version.Version(version)
+            if V in metadata[parameter]:
+                msg = (
+                    f"parameter '{parameter}', version {version} defined more than "
+                    f"once in section '{section}'!"
+                )
+                logger.error(msg)
+                raise RuntimeError(msg)
+            metadata[parameter][V] = {
+                "reference": reference,
+                "value": value,
+                "description": description,
+            }
 
         if not self.keep_lines:
             del data["lines"]
@@ -905,7 +978,7 @@ class Forcefield(DreidingMixin):
                 if i > j:
                     i, j = j, i
                     flipped = True
-                return ((i, j), flipped)
+            return ((i, j), flipped)
         elif n == 3:
             i, j, k = atom_types
             if symmetry == "like_angle":
@@ -913,7 +986,7 @@ class Forcefield(DreidingMixin):
                 if i > k:
                     i, k = k, i
                     flipped = True
-                return ((i, j, k), flipped)
+            return ((i, j, k), flipped)
         elif n == 4:
             i, j, k, l = atom_types  # noqa: E741
             if symmetry == "like_torsion":
@@ -924,25 +997,22 @@ class Forcefield(DreidingMixin):
                 elif j > k:
                     i, j, k, l = l, k, j, i  # noqa: E741
                     flipped = True
-                return ((i, j, k, l), flipped)
             elif symmetry == "like_improper":
                 # k is central atom
                 # order canonically, i<j<l; i=j<l or i<j=l
                 i, j, l = sorted((i, j, l))  # noqa: E741
                 flipped = [i, j, k, l] != atom_types
-                return ((i, j, k, l), flipped)
             elif symmetry == "like_oop":
                 # j is central atom
                 # order canonically, i<k<l; i=k<l or i<k=l
                 i, k, l = sorted((i, k, l))  # noqa: E741
                 flipped = [i, j, k, l] != atom_types
-                return ((i, j, k, l), flipped)
             elif symmetry == "like_angle-angle":
                 # order canonically, i<l;
                 if i > l:
                     i, l = l, i  # noqa: E741
                     flipped = True
-                return ((i, j, k, l), flipped)
+            return ((i, j, k, l), flipped)
 
     def _parse_biosym_nonbonds(self, data):
         """
@@ -1311,6 +1381,9 @@ class Forcefield(DreidingMixin):
 
     def mass(self, i):
         """Return the atomic mass for an atom type i"""
+        if self.ff_form == "reaxff":
+            return self.ff["reaxff_atomic_parameters_25-32"][(i,)]["m"]
+
         if i in self.ff["atom_types"]:
             return self.ff["atom_types"][i]["mass"]
 
@@ -2503,9 +2576,10 @@ class Forcefield(DreidingMixin):
         to_index = {j: i + 1 for i, j in enumerate(atom_ids)}
 
         # extend types with a blank so can use 1-based indexing
-        types = self.topology["types"] = [""]
-        key = f"atom_types_{self.current_forcefield}"
-        types.extend(sys_atoms.get_column(key))
+        if self.ff_form != "reaxff":
+            types = self.topology["types"] = [""]
+            key = f"atom_types_{self.current_forcefield}"
+            types.extend(sys_atoms.get_column(key))
 
         # bonds
         bonds = self.topology["bonds"] = [
@@ -2661,8 +2735,11 @@ class Forcefield(DreidingMixin):
         atoms = configuration.atoms
         n_atoms = configuration.n_atoms
         coordinates = atoms.get_coordinates(fractionals=False)
-        key = f"atom_types_{self.current_forcefield}"
-        types = atoms.get_column(key)
+        if self.ff_form == "reaxff":
+            types = atoms.symbols
+        else:
+            key = f"atom_types_{self.current_forcefield}"
+            types = atoms.get_column(key)
 
         result = eex["atoms"] = []
         atom_types = eex["atom types"] = []
@@ -3280,6 +3357,8 @@ class Forcefield(DreidingMixin):
         -------
         None
         """
+        if self.ff_form in ("reaxff",):
+            return
 
         ffname = self.current_forcefield
 
