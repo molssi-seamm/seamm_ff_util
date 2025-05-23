@@ -1,6 +1,13 @@
 =======
 History
 =======
+2025.5.23 -- Added charges in templates and tracking original parameters
+   * Added charges in templates, which override any assignment from the bond increments
+     or charges for the atom types.
+   * Track the original parameters before any unit conversions or other transformations,
+     so that they can be printed along with the actual parameters used by e.g. LAMMPS.
+   * Improved checking for duplicate parameters in the energy expression.
+     
 2025.4.7 -- Added ability to handle ReaxFF forcefields
    * Added code to handle ReaxFF forcefield.
    * Added seamm-reaxff utility to import forcefields in the standard Reax/LAMMPS format

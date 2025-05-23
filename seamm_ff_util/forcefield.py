@@ -12,6 +12,8 @@ import os.path
 import packaging.version
 import pprint  # noqa: F401
 
+import rdkit.Chem
+
 import seamm_util
 from seamm_util import Q_
 
@@ -32,6 +34,13 @@ class NonbondForms(Enum):
 
 
 two_raised_to_one_sixth = 2 ** (1 / 6)
+
+
+class ForcefieldChargeError(Exception):
+    """The charges were not assigned successfully."""
+
+    def __init__(self, message="The charges could not be assigned."):
+        super().__init__(message)
 
 
 class Forcefield(DreidingMixin, ReaxFFMixin):
@@ -1146,6 +1155,8 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
                 "reference": reference,
                 parameter_1: v1,
                 parameter_2: v2,
+                "original " + parameter_1: p1,
+                "original " + parameter_2: p2,
             }
 
         if not self.keep_lines:
@@ -1268,16 +1279,20 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
                 if constant[0] == "Eqn":
                     if value in eqns:
                         params[constant[0]] = eqns[value]
+                        params["original " + constant[0]] = eqns[value]
                     else:
                         raise ValueError(f"Equation '{value}' not found in {section}!")
                 else:
                     if factor == 1:
                         if len(constant) > 2:
                             params[constant[0]] = constant[2](value)
+                            params["original " + constant[0]] = constant[2](value)
                         else:
                             params[constant[0]] = value
+                            params["original " + constant[0]] = value
                     else:
                         params[constant[0]] = float(value) * factor
+                        params["original " + constant[0]] = value
 
         if not self.keep_lines:
             del data["lines"]
@@ -2677,35 +2692,60 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             atom_types = atoms.get_column(key)
 
             total_charge = configuration.charge
-            eex["charges"] = charges = []
+            n_atoms = configuration.n_atoms
+            eex["charges"] = charges = [None] * n_atoms
             total_q = 0.0
             if "shell model" in terms:
                 # Use charges from shell model by preference.
                 shell_q = []
-                for i in range(configuration.n_atoms):
-                    itype = atom_types[i]
+                for i, itype in enumerate(atom_types):
                     tmp = self.shell_model(itype)
                     if tmp is None:
                         # Fall back to charges
                         parameters = self.charges(itype)[3]
                         q = float(parameters["Q"])
-                        charges.append(q)
+                        charges[i] = q
                         total_q += q
                     else:
                         parameters = tmp[3]
                         q = float(parameters["Q"])
                         y = float(parameters["Y"])
-                        charges.append(q - y)
+                        charges[i] = q - y
                         shell_q.append(y)
                         total_q += q
                 charges.extend(shell_q)
             else:
-                for i in range(configuration.n_atoms):
-                    itype = atom_types[i]
-                    parameters = self.charges(itype)[3]
-                    q = float(parameters["Q"])
-                    charges.append(q)
-                    total_q += q
+                # First see if there are any templates
+                molecule = configuration.to_RDKMol()
+                fragments = self.forcefield.get_fragments()
+                for smiles, data in fragments.items():
+                    if "charges" not in data:
+                        continue
+
+                    smarts = data["SMARTS"]
+                    pattern = rdkit.Chem.MolFromSmarts(smarts)
+                    matches = molecule.GetSubstructMatches(
+                        pattern, maxMatches=6 * n_atoms
+                    )
+                    for match in matches:
+                        for charge, atom in zip(data["charges"], match):
+                            # Check if this has been assigned by another fragment
+                            if charges[atom] is not None:
+                                if charge != charges[atom]:
+                                    msg = (
+                                        f"Error in fragment charges for atom {atom} "
+                                        f"already has charge:\n{charges[atom]}\n"
+                                        f"New assignment: {charge}"
+                                    )
+                                    logger.error(msg)
+                                    raise ForcefieldChargeError(msg)
+                            charges[atom] = charge
+                # Use the increments and charges for any left
+                for i, itype in enumerate(atom_types):
+                    if charges[i] is None:
+                        parameters = self.charges(itype)[3]
+                        charges[i] = float(parameters["Q"])
+                    total_q += charges[i]
             if abs(total_q - total_charge) > 0.001:
                 delta = (total_q - total_charge) / len(charges)
                 charges = [q - delta for q in charges]
@@ -2837,7 +2877,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
                     # print(f"{itype}-{jtype} --> {new_value}")
                     for value, count in zip(parameters, range(1, len(parameters) + 1)):
                         # print(f"\t{value}")
-                        if new_value == value:
+                        if (
+                            value[0] == new_value[0]
+                            and value[1] == new_value[1]
+                            and value[4] == new_value[4]
+                        ):
                             index = count
                             break
                     # if index is None:
@@ -2864,7 +2908,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
                 )
                 index = None
                 for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                    if new_value == value:
+                    if (
+                        value[0] == new_value[0]
+                        and value[1] == new_value[1]
+                        and value[4] == new_value[4]
+                    ):
                         index = count
                         break
                 if index is None:
@@ -2904,7 +2952,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
                 )
                 index = None
                 for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                    if new_value == value:
+                    if (
+                        value[0] == new_value[0]
+                        and value[1] == new_value[1]
+                        and value[4] == new_value[4]
+                    ):
                         index = count
                         break
                 if index is None:
@@ -2938,7 +2990,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if new_value == value:
+                if (
+                    value[0] == new_value[0]
+                    and value[1] == new_value[1]
+                    and value[4] == new_value[4]
+                ):
                     index = count
                     break
             if index is None:
@@ -2967,8 +3023,12 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
                 real_types,
             )
             index = None
-            for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if new_value == value:
+            for count, value in enumerate(parameters, start=1):
+                if (
+                    value[0] == new_value[0]
+                    and value[1] == new_value[1]
+                    and value[4] == new_value[4]
+                ):
                     index = count
                     break
             if index is None:
@@ -3001,7 +3061,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if new_value == value:
+                if (
+                    value[0] == new_value[0]
+                    and value[1] == new_value[1]
+                    and value[4] == new_value[4]
+                ):
                     index = count
                     break
             if index is None:
@@ -3035,7 +3099,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if new_value == value:
+                if (
+                    value[0] == new_value[0]
+                    and value[1] == new_value[1]
+                    and value[4] == new_value[4]
+                ):
                     index = count
                     break
             if index is None:
@@ -3068,7 +3136,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if new_value == value:
+                if (
+                    value[0] == new_value[0]
+                    and value[1] == new_value[1]
+                    and value[4] == new_value[4]
+                ):
                     index = count
                     break
             if index is None:
@@ -3101,7 +3173,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if new_value == value:
+                if (
+                    value[0] == new_value[0]
+                    and value[1] == new_value[1]
+                    and value[4] == new_value[4]
+                ):
                     index = count
                     break
             if index is None:
@@ -3136,7 +3212,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if new_value == value:
+                if (
+                    value[0] == new_value[0]
+                    and value[1] == new_value[1]
+                    and value[4] == new_value[4]
+                ):
                     index = count
                     break
             if index is None:
@@ -3171,7 +3251,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if new_value == value:
+                if (
+                    value[0] == new_value[0]
+                    and value[1] == new_value[1]
+                    and value[4] == new_value[4]
+                ):
                     index = count
                     break
             if index is None:
@@ -3206,7 +3290,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if new_value == value:
+                if (
+                    value[0] == new_value[0]
+                    and value[1] == new_value[1]
+                    and value[4] == new_value[4]
+                ):
                     index = count
                     break
             if index is None:
@@ -3241,7 +3329,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if new_value == value:
+                if (
+                    value[0] == new_value[0]
+                    and value[1] == new_value[1]
+                    and value[4] == new_value[4]
+                ):
                     index = count
                     break
             if index is None:
@@ -3276,7 +3368,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if new_value == value:
+                if (
+                    value[0] == new_value[0]
+                    and value[1] == new_value[1]
+                    and value[4] == new_value[4]
+                ):
                     index = count
                     break
             if index is None:
@@ -3334,7 +3430,11 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if new_value == value:
+                if (
+                    value[0] == new_value[0]
+                    and value[1] == new_value[1]
+                    and value[4] == new_value[4]
+                ):
                     index = count
                     break
             if index is None:
@@ -3375,7 +3475,33 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             configuration.atoms.add_attribute(key, coltype="str")
         configuration.atoms[key] = atom_types
 
-        # Now get the charges if forcefield has them.
+        # Get any charges. First see if there are any templates
+        n_atoms = configuration.n_atoms
+        charges = [None] * n_atoms
+        molecule = configuration.to_RDKMol()
+        fragments = self.get_fragments()
+        for smiles, data in fragments.items():
+            if "charges" not in data:
+                continue
+
+            smarts = data["SMARTS"]
+            pattern = rdkit.Chem.MolFromSmarts(smarts)
+            matches = molecule.GetSubstructMatches(pattern, maxMatches=6 * n_atoms)
+            for match in matches:
+                for charge, atom in zip(data["charges"], match):
+                    # Check if this has been assigned by another fragment
+                    if charges[atom] is not None:
+                        if charge != charges[atom]:
+                            msg = (
+                                f"Error in fragment charges for atom {atom} "
+                                f"already has charge:\n{charges[atom]}\n"
+                                f"New assignment: {charge}"
+                            )
+                            logger.error(msg)
+                            raise ForcefieldChargeError(msg)
+                    charges[atom] = charge
+
+        # Now get the charges from increments and charges in the forcefield
         terms = self.terms
         if "bond charge increment" in terms:
             logger.debug("Getting the charges for the system")
@@ -3384,18 +3510,17 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             logger.debug(f"{atom_types=}")
             logger.debug(f"{neighbors=}")
 
-            charges = []
             total_q = 0.0
-            for i in range(configuration.n_atoms):
-                itype = atom_types[i]
-                parameters = self.charges(itype)[3]
-                q = float(parameters["Q"])
-                for j in neighbors[i]:
-                    jtype = atom_types[j]
-                    parameters = self.bond_increments(itype, jtype)[3]
-                    q += float(parameters["deltaij"])
-                charges.append(q)
-                total_q += q
+            for i, itype in enumerate(atom_types):
+                if charges[i] is None:
+                    parameters = self.charges(itype)[3]
+                    q = float(parameters["Q"])
+                    for j in neighbors[i]:
+                        jtype = atom_types[j]
+                        parameters = self.bond_increments(itype, jtype)[3]
+                        q += float(parameters["deltaij"])
+                    charges[i] = q
+                total_q += charges[i]
             if abs(total_q - total_charge) > 0.001:
                 delta = (total_q - total_charge) / len(charges)
                 charges = [q - delta for q in charges]
@@ -3415,32 +3540,30 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
         elif "atomic charge" in terms:
             logger.debug("Getting the charges for the system")
 
-            charges = []
             total_q = 0.0
             if "shell model" in terms:
                 # Use charges from shell model by preference.
-                for i in range(configuration.n_atoms):
-                    itype = atom_types[i]
-                    tmp = self.shell_model(itype)
-                    if tmp is None:
-                        # Fall back to charges
+                for i, itype in enumerate(atom_types):
+                    if charges[i] is None:
+                        tmp = self.shell_model(itype)
+                        if tmp is None:
+                            # Fall back to charges
+                            parameters = self.charges(itype)[3]
+                            q = float(parameters["Q"])
+                            charges[i] = q
+                        else:
+                            parameters = tmp[3]
+                            q = float(parameters["Q"])
+                            y = float(parameters["Y"])
+                            charges[i] = q - y
+                    total_q += charges[i]
+            else:
+                for i, itype in enumerate(atom_types):
+                    if charges[i] is None:
                         parameters = self.charges(itype)[3]
                         q = float(parameters["Q"])
-                        charges.append(q)
-                        total_q += q
-                    else:
-                        parameters = tmp[3]
-                        q = float(parameters["Q"])
-                        y = float(parameters["Y"])
-                        charges.append(q - y)
-                        total_q += q
-            else:
-                for i in range(configuration.n_atoms):
-                    itype = atom_types[i]
-                    parameters = self.charges(itype)[3]
-                    q = float(parameters["Q"])
-                    charges.append(q)
-                    total_q += q
+                        charges[i] = q
+                    total_q += charges[i]
             if abs(total_q - total_charge) > 0.001:
                 delta = (total_q - total_charge) / len(charges)
                 charges = [q - delta for q in charges]
