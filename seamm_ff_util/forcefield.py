@@ -2717,7 +2717,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             else:
                 # First see if there are any templates
                 molecule = configuration.to_RDKMol()
-                fragments = self.forcefield.get_fragments()
+                fragments = self.get_fragments()
                 for smiles, data in fragments.items():
                     if "charges" not in data:
                         continue
@@ -2877,11 +2877,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
                     # print(f"{itype}-{jtype} --> {new_value}")
                     for value, count in zip(parameters, range(1, len(parameters) + 1)):
                         # print(f"\t{value}")
-                        if (
-                            value[0] == new_value[0]
-                            and value[1] == new_value[1]
-                            and value[4] == new_value[4]
-                        ):
+                        if self.eex_compare_values(value, new_value):
                             index = count
                             break
                     # if index is None:
@@ -2908,11 +2904,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
                 )
                 index = None
                 for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                    if (
-                        value[0] == new_value[0]
-                        and value[1] == new_value[1]
-                        and value[4] == new_value[4]
-                    ):
+                    if self.eex_compare_values(value, new_value):
                         index = count
                         break
                 if index is None:
@@ -2952,11 +2944,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
                 )
                 index = None
                 for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                    if (
-                        value[0] == new_value[0]
-                        and value[1] == new_value[1]
-                        and value[4] == new_value[4]
-                    ):
+                    if self.eex_compare_values(value, new_value):
                         index = count
                         break
                 if index is None:
@@ -2990,11 +2978,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if (
-                    value[0] == new_value[0]
-                    and value[1] == new_value[1]
-                    and value[4] == new_value[4]
-                ):
+                if self.eex_compare_values(value, new_value):
                     index = count
                     break
             if index is None:
@@ -3024,11 +3008,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for count, value in enumerate(parameters, start=1):
-                if (
-                    value[0] == new_value[0]
-                    and value[1] == new_value[1]
-                    and value[4] == new_value[4]
-                ):
+                if self.eex_compare_values(value, new_value):
                     index = count
                     break
             if index is None:
@@ -3061,11 +3041,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if (
-                    value[0] == new_value[0]
-                    and value[1] == new_value[1]
-                    and value[4] == new_value[4]
-                ):
+                if self.eex_compare_values(value, new_value):
                     index = count
                     break
             if index is None:
@@ -3099,11 +3075,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if (
-                    value[0] == new_value[0]
-                    and value[1] == new_value[1]
-                    and value[4] == new_value[4]
-                ):
+                if self.eex_compare_values(value, new_value):
                     index = count
                     break
             if index is None:
@@ -3136,11 +3108,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if (
-                    value[0] == new_value[0]
-                    and value[1] == new_value[1]
-                    and value[4] == new_value[4]
-                ):
+                if self.eex_compare_values(value, new_value):
                     index = count
                     break
             if index is None:
@@ -3173,11 +3141,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if (
-                    value[0] == new_value[0]
-                    and value[1] == new_value[1]
-                    and value[4] == new_value[4]
-                ):
+                if self.eex_compare_values(value, new_value):
                     index = count
                     break
             if index is None:
@@ -3212,11 +3176,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if (
-                    value[0] == new_value[0]
-                    and value[1] == new_value[1]
-                    and value[4] == new_value[4]
-                ):
+                if self.eex_compare_values(value, new_value):
                     index = count
                     break
             if index is None:
@@ -3251,11 +3211,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if (
-                    value[0] == new_value[0]
-                    and value[1] == new_value[1]
-                    and value[4] == new_value[4]
-                ):
+                if self.eex_compare_values(value, new_value):
                     index = count
                     break
             if index is None:
@@ -3290,11 +3246,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if (
-                    value[0] == new_value[0]
-                    and value[1] == new_value[1]
-                    and value[4] == new_value[4]
-                ):
+                if self.eex_compare_values(value, new_value):
                     index = count
                     break
             if index is None:
@@ -3329,11 +3281,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if (
-                    value[0] == new_value[0]
-                    and value[1] == new_value[1]
-                    and value[4] == new_value[4]
-                ):
+                if self.eex_compare_values(value, new_value):
                     index = count
                     break
             if index is None:
@@ -3368,11 +3316,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if (
-                    value[0] == new_value[0]
-                    and value[1] == new_value[1]
-                    and value[4] == new_value[4]
-                ):
+                if self.eex_compare_values(value, new_value):
                     index = count
                     break
             if index is None:
@@ -3430,11 +3374,7 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             )
             index = None
             for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                if (
-                    value[0] == new_value[0]
-                    and value[1] == new_value[1]
-                    and value[4] == new_value[4]
-                ):
+                if self.eex_compare_values(value, new_value):
                     index = count
                     break
             if index is None:
@@ -3443,6 +3383,10 @@ class Forcefield(DreidingMixin, ReaxFFMixin):
             result.append((i, j, k, l, index))
         eex["n_angle-angle"] = len(result)
         eex["n_angle-angle_types"] = len(parameters)
+
+    def eex_compare_values(old, new):
+        """Compare parameters values to see if they are the same."""
+        return old[0] == new[0] and old[1] == new[1] and old[4] == new[4]
 
     def assign_forcefield(self, configuration):
         """Assign the forcefield to the structure, i.e. find the atom types
