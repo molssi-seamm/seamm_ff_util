@@ -3,13 +3,20 @@
 
 """Tests for `seamm_ff_util` package."""
 
+import json
 import seamm_ff_util  # noqa: F401
 
 
 def test_bond_bond_explicit(pcff):
     """Test of bond_bond parameters, which should fine explicit ones"""
 
-    expected = {"K": "3.3872", "reference": "1", "R20": "1.1010", "R10": "1.5300"}
+    expected = {
+        "R10": "1.5300",
+        "R20": "1.1010",
+        "reference": "1",
+        "K": "3.3872",
+        "original K": "3.3872",
+    }
 
     i = "h"
     j = "c"
@@ -17,6 +24,8 @@ def test_bond_bond_explicit(pcff):
     ptype, key, form, parameters = pcff.bond_bond_parameters(i, j, k)
     assert ptype == "explicit"
     assert key == ("c", "c", "h")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected
 
 
@@ -34,7 +43,13 @@ def test_bond_bond_explicit_kji(pcff):
 
 def test_bond_bond_equivalent(pcff):
     """Simple test of bond_bond parameters using equivalencies"""
-    expected = {"K": "3.3872", "reference": "1", "R20": "1.1010", "R10": "1.5300"}
+    expected = {
+        "R10": "1.5300",
+        "R20": "1.1010",
+        "reference": "1",
+        "K": "3.3872",
+        "original K": "3.3872",
+    }
 
     i = "h"
     j = "c"
@@ -42,4 +57,6 @@ def test_bond_bond_equivalent(pcff):
     ptype, key, form, parameters = pcff.bond_bond_parameters(i, j, k)
     assert ptype == "equivalent"
     assert key == ("c", "c", "h")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected

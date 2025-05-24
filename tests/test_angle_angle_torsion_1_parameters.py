@@ -3,6 +3,7 @@
 
 """Tests for `seamm_ff_util` package."""
 
+import json
 import seamm_ff_util  # noqa: F401
 
 
@@ -11,10 +12,11 @@ def test_angle_angle_torsion_1_explicit(pcff):
     explicit ones"""
 
     expected = {
-        "K": "-14.3155",
-        "reference": "1",
         "Theta0_L": "110.7700",
         "Theta0_R": "108.4000",
+        "reference": "1",
+        "K": "-14.3155",
+        "original K": "-14.3155",
     }
 
     i = "h"
@@ -24,6 +26,8 @@ def test_angle_angle_torsion_1_explicit(pcff):
     ptype, key, form, parameters = pcff.angle_angle_torsion_1_parameters(i, j, k, l)
     assert ptype == "explicit"
     assert key == ("c_0", "c", "c", "h")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected
 
 
@@ -31,10 +35,11 @@ def test_angle_angle_torsion_1_explicit_lkji(pcff):
     """known angle_angle_torsion_1 parameters, ordered backwards"""
 
     expected = {
-        "K": "-14.3155",
-        "reference": "1",
         "Theta0_L": "108.4000",
         "Theta0_R": "110.7700",
+        "reference": "1",
+        "K": "-14.3155",
+        "original K": "-14.3155",
     }
 
     i = "c_0"
@@ -44,6 +49,8 @@ def test_angle_angle_torsion_1_explicit_lkji(pcff):
     ptype, key, form, parameters = pcff.angle_angle_torsion_1_parameters(i, j, k, l)
     assert ptype == "explicit"
     assert key == ("c_0", "c", "c", "h")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected
 
 
@@ -51,10 +58,11 @@ def test_angle_angle_torsion_1_equivalent(pcff):
     """Simple test of angle_angle_torsion_1 parameters using equivalencies"""
 
     expected = {
-        "K": "-5.8888",
-        "reference": "1",
         "Theta0_L": "111.0000",
         "Theta0_R": "120.0500",
+        "reference": "1",
+        "K": "-5.8888",
+        "original K": "-5.8888",
     }
 
     i = "h"
@@ -64,4 +72,6 @@ def test_angle_angle_torsion_1_equivalent(pcff):
     ptype, key, form, parameters = pcff.angle_angle_torsion_1_parameters(i, j, k, l)
     assert ptype == "equivalent"
     assert key == ("h", "c", "cp", "cp")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected
