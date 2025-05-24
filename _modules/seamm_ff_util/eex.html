@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>seamm_ff_util.eex &#8212; SEAMM Forcefield Utilities 2025.5.23 documentation</title>
+    <title>seamm_ff_util.eex &#8212; SEAMM Forcefield Utilities 2025.5.23.1 documentation</title>
   
   
   
@@ -48,7 +48,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-PQXXTJ2');</script>
 <!-- End Google Tag Manager -->
 
-    <script src="../../_static/documentation_options.js?v=522d63a9"></script>
+    <script src="../../_static/documentation_options.js?v=8a9cc854"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -60,7 +60,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.5.23" />
+  <meta name="docsearch:version" content="2025.5.23.1" />
   </head>
   
   
@@ -506,8 +506,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;entering eex_increment&quot;</span><span class="p">)</span>
 
         <span class="c1"># terms = self.terms</span>
-        <span class="c1"># ff_name = self.current_forcefield</span>
-        <span class="c1"># atoms = configuration.atoms</span>
+        <span class="n">ff_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_forcefield</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">atoms</span>
         <span class="c1"># if &quot;atomic charge&quot; in terms and &quot;shell model&quot; in terms:</span>
         <span class="c1">#     logger.debug(&quot;Getting the charges for the system&quot;)</span>
 
@@ -580,11 +580,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="c1">#         )</span>
         <span class="c1">#     logger.debug(&quot;Charges from charges:\n&quot; + pprint.pformat(charges))</span>
         <span class="c1"># else:</span>
-        <span class="c1">#     key = f&quot;charges_{ff_name}&quot;</span>
-        <span class="c1">#     if key in atoms:</span>
-        <span class="c1">#         eex[&quot;charges&quot;] = [*atoms[key]]</span>
-        <span class="c1">#     else:</span>
-        <span class="c1">#         raise RuntimeError(&quot;No charges on system!&quot;)</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;charges_</span><span class="si">{</span><span class="n">ff_name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">atoms</span><span class="p">:</span>
+            <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;charges&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">atoms</span><span class="p">[</span><span class="n">key</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No charges on system!&quot;</span><span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;leaving eex_increment&quot;</span><span class="p">)</span></div>
 
