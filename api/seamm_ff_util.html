@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>seamm_ff_util package &#8212; SEAMM Forcefield Utilities 2025.4.7 documentation</title>
+    <title>seamm_ff_util package &#8212; SEAMM Forcefield Utilities 2025.5.23 documentation</title>
   
   
   
@@ -49,7 +49,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-PQXXTJ2');</script>
 <!-- End Google Tag Manager -->
 
-    <script src="../_static/documentation_options.js?v=c38f2275"></script>
+    <script src="../_static/documentation_options.js?v=522d63a9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -63,7 +63,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="prev" title="seamm_ff_util" href="modules.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.4.7" />
+  <meta name="docsearch:version" content="2025.5.23" />
   </head>
   
   
@@ -538,6 +538,138 @@ using the bond increments and saved on the structure</p>
 </dd></dl>
 
 </section>
+<section id="module-seamm_ff_util.eex">
+<span id="seamm-ff-util-eex-module"></span><h2>seamm_ff_util.eex module<a class="headerlink" href="#module-seamm_ff_util.eex" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.eex.</span></span><span class="sig-name descname"><span class="pre">EEX_Mixin</span></span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A mixin class for handling the energy expression (eex).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_1_3_bond_bond">
+<span class="sig-name descname"><span class="pre">eex_1_3_bond_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_1_3_bond_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_1_3_bond_bond" title="Link to this definition">#</a></dt>
+<dd><p>Create the 1,3 bond-bond portion of the energy expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_angle">
+<span class="sig-name descname"><span class="pre">eex_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_angle" title="Link to this definition">#</a></dt>
+<dd><p>Create the angle portion of the energy expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_angle_angle">
+<span class="sig-name descname"><span class="pre">eex_angle_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_angle_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_angle_angle" title="Link to this definition">#</a></dt>
+<dd><p>Create the angle-angle portion of the energy expression</p>
+<p>j is the vertex atom of the angles. For the angle-angle parameters
+the bond j-k is the common bond, i.e. the angles are i-j-k and j-k l</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_angle_torsion_angle">
+<span class="sig-name descname"><span class="pre">eex_angle_torsion_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_angle_torsion_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_angle_torsion_angle" title="Link to this definition">#</a></dt>
+<dd><p>Create the angle-angle-torsion portion of the energy expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_atomic_charge">
+<span class="sig-name descname"><span class="pre">eex_atomic_charge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_atomic_charge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_atomic_charge" title="Link to this definition">#</a></dt>
+<dd><p>Handle charges.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_atoms">
+<span class="sig-name descname"><span class="pre">eex_atoms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_atoms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_atoms" title="Link to this definition">#</a></dt>
+<dd><p>List the atoms into the energy expression.</p>
+<p>Note that if using the shell model, an extra “atom” is added for the shell.
+At the moment the mass is split 90:10 between core and shell.
+The shells are appended at the end of the atoms so bonds, etc. work using
+the atom indices.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_bond">
+<span class="sig-name descname"><span class="pre">eex_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_bond" title="Link to this definition">#</a></dt>
+<dd><p>Create the bond portion of the energy expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_bond_angle">
+<span class="sig-name descname"><span class="pre">eex_bond_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_bond_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_bond_angle" title="Link to this definition">#</a></dt>
+<dd><p>Create the bond-angle portion of the energy expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_bond_bond">
+<span class="sig-name descname"><span class="pre">eex_bond_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_bond_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_bond_bond" title="Link to this definition">#</a></dt>
+<dd><p>Create the bond-bond portion of the energy expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_bond_charge_increment">
+<span class="sig-name descname"><span class="pre">eex_bond_charge_increment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_bond_charge_increment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_bond_charge_increment" title="Link to this definition">#</a></dt>
+<dd><p>Get the charges for the structure</p>
+<p>If they do not exist on the structure, they are created
+using the bond increments and saved on the structure</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_charge">
+<span class="sig-name descname"><span class="pre">eex_charge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_charge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_charge" title="Link to this definition">#</a></dt>
+<dd><p>Do nothing routine since charges are handled by the increments.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_compare_values">
+<span class="sig-name descname"><span class="pre">eex_compare_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_compare_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_compare_values" title="Link to this definition">#</a></dt>
+<dd><p>Compare parameters values to see if they are the same.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_out_of_plane">
+<span class="sig-name descname"><span class="pre">eex_out_of_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_out_of_plane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_out_of_plane" title="Link to this definition">#</a></dt>
+<dd><p>Create the out-of-plane portion of the energy expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_pair">
+<span class="sig-name descname"><span class="pre">eex_pair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_pair"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_pair" title="Link to this definition">#</a></dt>
+<dd><p>Create the pair (non-bond) portion of the energy expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_shell_model">
+<span class="sig-name descname"><span class="pre">eex_shell_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_shell_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_shell_model" title="Link to this definition">#</a></dt>
+<dd><p>Create the shell model portion of the energy expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_torsion">
+<span class="sig-name descname"><span class="pre">eex_torsion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_torsion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_torsion" title="Link to this definition">#</a></dt>
+<dd><p>Create the torsion portion of the energy expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_torsion_angle">
+<span class="sig-name descname"><span class="pre">eex_torsion_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_torsion_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_torsion_angle" title="Link to this definition">#</a></dt>
+<dd><p>Create the angle-torsion portion of the energy expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_torsion_end_bond">
+<span class="sig-name descname"><span class="pre">eex_torsion_end_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_torsion_end_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_torsion_end_bond" title="Link to this definition">#</a></dt>
+<dd><p>Create the end_bond-torsion portion of the energy expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seamm_ff_util.eex.EEX_Mixin.eex_torsion_middle_bond">
+<span class="sig-name descname"><span class="pre">eex_torsion_middle_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/eex.html#EEX_Mixin.eex_torsion_middle_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.eex.EEX_Mixin.eex_torsion_middle_bond" title="Link to this definition">#</a></dt>
+<dd><p>Create the middle_bond-torsion portion of the energy expression</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-seamm_ff_util.ff_assigner">
 <span id="seamm-ff-util-ff-assigner-module"></span><h2>seamm_ff_util.ff_assigner module<a class="headerlink" href="#module-seamm_ff_util.ff_assigner" title="Link to this heading">#</a></h2>
 <p>Main class for handling forcefields</p>
@@ -584,7 +716,7 @@ using the bond increments and saved on the structure</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.forcefield.</span></span><span class="sig-name descname"><span class="pre">Forcefield</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fftype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri_handler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">references</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#seamm_ff_util.dreiding.DreidingMixin" title="seamm_ff_util.dreiding.DreidingMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">DreidingMixin</span></code></a>, <a class="reference internal" href="#seamm_ff_util.reaxff.ReaxFFMixin" title="seamm_ff_util.reaxff.ReaxFFMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReaxFFMixin</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#seamm_ff_util.eex.EEX_Mixin" title="seamm_ff_util.eex.EEX_Mixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">EEX_Mixin</span></code></a>, <a class="reference internal" href="#seamm_ff_util.dreiding.DreidingMixin" title="seamm_ff_util.dreiding.DreidingMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">DreidingMixin</span></code></a>, <a class="reference internal" href="#seamm_ff_util.reaxff.ReaxFFMixin" title="seamm_ff_util.reaxff.ReaxFFMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReaxFFMixin</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.a_b_to_sigma_eps">
 <em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a_b_to_sigma_eps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.a_b_to_sigma_eps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.a_b_to_sigma_eps" title="Link to this definition">#</a></dt>
@@ -716,122 +848,6 @@ parameters rather than raise an error</p>
 <dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.current_forcefield">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_forcefield</span></span><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.current_forcefield" title="Link to this definition">#</a></dt>
 <dd><p>The forcefield currently set up for use.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_1_3_bond_bond">
-<span class="sig-name descname"><span class="pre">eex_1_3_bond_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_1_3_bond_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_1_3_bond_bond" title="Link to this definition">#</a></dt>
-<dd><p>Create the 1,3 bond-bond portion of the energy expression</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_angle">
-<span class="sig-name descname"><span class="pre">eex_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_angle" title="Link to this definition">#</a></dt>
-<dd><p>Create the angle portion of the energy expression</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_angle_angle">
-<span class="sig-name descname"><span class="pre">eex_angle_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_angle_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_angle_angle" title="Link to this definition">#</a></dt>
-<dd><p>Create the angle-angle portion of the energy expression</p>
-<p>j is the vertex atom of the angles. For the angle-angle parameters
-the bond j-k is the common bond, i.e. the angles are i-j-k and j-k l</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_angle_torsion_angle">
-<span class="sig-name descname"><span class="pre">eex_angle_torsion_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_angle_torsion_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_angle_torsion_angle" title="Link to this definition">#</a></dt>
-<dd><p>Create the angle-angle-torsion portion of the energy expression</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_atomic_charge">
-<span class="sig-name descname"><span class="pre">eex_atomic_charge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_atomic_charge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_atomic_charge" title="Link to this definition">#</a></dt>
-<dd><p>Handle charges.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_atoms">
-<span class="sig-name descname"><span class="pre">eex_atoms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_atoms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_atoms" title="Link to this definition">#</a></dt>
-<dd><p>List the atoms into the energy expression.</p>
-<p>Note that if using the shell model, an extra “atom” is added for the shell.
-At the moment the mass is split 90:10 between core and shell.
-The shells are appended at the end of the atoms so bonds, etc. work using
-the atom indices.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_bond">
-<span class="sig-name descname"><span class="pre">eex_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_bond" title="Link to this definition">#</a></dt>
-<dd><p>Create the bond portion of the energy expression</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_bond_angle">
-<span class="sig-name descname"><span class="pre">eex_bond_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_bond_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_bond_angle" title="Link to this definition">#</a></dt>
-<dd><p>Create the bond-angle portion of the energy expression</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_bond_bond">
-<span class="sig-name descname"><span class="pre">eex_bond_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_bond_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_bond_bond" title="Link to this definition">#</a></dt>
-<dd><p>Create the bond-bond portion of the energy expression</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_bond_charge_increment">
-<span class="sig-name descname"><span class="pre">eex_bond_charge_increment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_bond_charge_increment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_bond_charge_increment" title="Link to this definition">#</a></dt>
-<dd><p>Get the charges for the structure</p>
-<p>If they do not exists on the structure, they are created
-using the bond increments and saved on the structure</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_charge">
-<span class="sig-name descname"><span class="pre">eex_charge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_charge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_charge" title="Link to this definition">#</a></dt>
-<dd><p>Do nothing routine since charges are handled by the increments.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_out_of_plane">
-<span class="sig-name descname"><span class="pre">eex_out_of_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_out_of_plane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_out_of_plane" title="Link to this definition">#</a></dt>
-<dd><p>Create the out-of-plane portion of the energy expression</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_pair">
-<span class="sig-name descname"><span class="pre">eex_pair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_pair"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_pair" title="Link to this definition">#</a></dt>
-<dd><p>Create the pair (non-bond) portion of the energy expression</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_shell_model">
-<span class="sig-name descname"><span class="pre">eex_shell_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_shell_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_shell_model" title="Link to this definition">#</a></dt>
-<dd><p>Create the shell model portion of the energy expression</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_torsion">
-<span class="sig-name descname"><span class="pre">eex_torsion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_torsion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_torsion" title="Link to this definition">#</a></dt>
-<dd><p>Create the torsion portion of the energy expression</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_torsion_angle">
-<span class="sig-name descname"><span class="pre">eex_torsion_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_torsion_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_torsion_angle" title="Link to this definition">#</a></dt>
-<dd><p>Create the angle-torsion portion of the energy expression</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_torsion_end_bond">
-<span class="sig-name descname"><span class="pre">eex_torsion_end_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_torsion_end_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_torsion_end_bond" title="Link to this definition">#</a></dt>
-<dd><p>Create the end_bond-torsion portion of the energy expression</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seamm_ff_util.forcefield.Forcefield.eex_torsion_middle_bond">
-<span class="sig-name descname"><span class="pre">eex_torsion_middle_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#Forcefield.eex_torsion_middle_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.Forcefield.eex_torsion_middle_bond" title="Link to this definition">#</a></dt>
-<dd><p>Create the middle_bond-torsion portion of the energy expression</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1062,6 +1078,13 @@ and values are lists of the functional forms for the term.</p>
 with numerical precedences</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="seamm_ff_util.forcefield.ForcefieldChargeError">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seamm_ff_util.forcefield.</span></span><span class="sig-name descname"><span class="pre">ForcefieldChargeError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'The</span> <span class="pre">charges</span> <span class="pre">could</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">assigned.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/seamm_ff_util/forcefield.html#ForcefieldChargeError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seamm_ff_util.forcefield.ForcefieldChargeError" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>The charges were not assigned successfully.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -1303,6 +1326,31 @@ but reset to 0.0 in the returned angles.</p>
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-seamm_ff_util.eex">seamm_ff_util.eex module</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_1_3_bond_bond"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_1_3_bond_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_angle"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_angle_angle"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_angle_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_angle_torsion_angle"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_angle_torsion_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_atomic_charge"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_atomic_charge()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_atoms"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_atoms()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_bond"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_bond_angle"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_bond_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_bond_bond"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_bond_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_bond_charge_increment"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_bond_charge_increment()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_charge"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_charge()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_compare_values"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_compare_values()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_out_of_plane"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_out_of_plane()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_pair"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_pair()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_shell_model"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_shell_model()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_torsion"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_torsion()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_torsion_angle"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_torsion_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_torsion_end_bond"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_torsion_end_bond()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.eex.EEX_Mixin.eex_torsion_middle_bond"><code class="docutils literal notranslate"><span class="pre">EEX_Mixin.eex_torsion_middle_bond()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-seamm_ff_util.ff_assigner">seamm_ff_util.ff_assigner module</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.ff_assigner.FFAssigner"><code class="docutils literal notranslate"><span class="pre">FFAssigner</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.ff_assigner.FFAssigner.assign"><code class="docutils literal notranslate"><span class="pre">FFAssigner.assign()</span></code></a></li>
@@ -1331,24 +1379,6 @@ but reset to 0.0 in the returned angles.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.cite_parameter"><code class="docutils literal notranslate"><span class="pre">Forcefield.cite_parameter()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.clear"><code class="docutils literal notranslate"><span class="pre">Forcefield.clear()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.current_forcefield"><code class="docutils literal notranslate"><span class="pre">Forcefield.current_forcefield</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_1_3_bond_bond"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_1_3_bond_bond()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_angle"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_angle()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_angle_angle"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_angle_angle()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_angle_torsion_angle"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_angle_torsion_angle()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_atomic_charge"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_atomic_charge()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_atoms"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_atoms()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_bond"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_bond()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_bond_angle"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_bond_angle()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_bond_bond"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_bond_bond()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_bond_charge_increment"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_bond_charge_increment()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_charge"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_charge()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_out_of_plane"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_out_of_plane()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_pair"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_pair()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_shell_model"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_shell_model()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_torsion"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_torsion()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_torsion_angle"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_torsion_angle()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_torsion_end_bond"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_torsion_end_bond()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.eex_torsion_middle_bond"><code class="docutils literal notranslate"><span class="pre">Forcefield.eex_torsion_middle_bond()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.end_bond_torsion_3_parameters"><code class="docutils literal notranslate"><span class="pre">Forcefield.end_bond_torsion_3_parameters()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.energy_expression"><code class="docutils literal notranslate"><span class="pre">Forcefield.energy_expression()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.ff_form"><code class="docutils literal notranslate"><span class="pre">Forcefield.ff_form</span></code></a></li>
@@ -1376,6 +1406,7 @@ but reset to 0.0 in the returned angles.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.Forcefield.torsion_parameters"><code class="docutils literal notranslate"><span class="pre">Forcefield.torsion_parameters()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.ForcefieldChargeError"><code class="docutils literal notranslate"><span class="pre">ForcefieldChargeError</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.NonbondForms"><code class="docutils literal notranslate"><span class="pre">NonbondForms</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.NonbondForms.AR_BR"><code class="docutils literal notranslate"><span class="pre">NonbondForms.AR_BR</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seamm_ff_util.forcefield.NonbondForms.A_B"><code class="docutils literal notranslate"><span class="pre">NonbondForms.A_B</span></code></a></li>

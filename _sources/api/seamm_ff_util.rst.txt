@@ -12,6 +12,14 @@ seamm\_ff\_util.dreiding module
    :show-inheritance:
    :undoc-members:
 
+seamm\_ff\_util.eex module
+--------------------------
+
+.. automodule:: seamm_ff_util.eex
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 seamm\_ff\_util.ff\_assigner module
 -----------------------------------
 

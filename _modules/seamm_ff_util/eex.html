@@ -1,0 +1,1315 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>seamm_ff_util.eex &#8212; SEAMM Forcefield Utilities 2025.5.23 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=c224919a" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PQXXTJ2');</script>
+<!-- End Google Tag Manager -->
+
+    <script src="../../_static/documentation_options.js?v=522d63a9"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/seamm_ff_util/eex';</script>
+
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2025.5.23" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/SEAMM logo.png" class="logo__image only-light" alt=""/>
+    <img src="../../_static/SEAMM Inverted 288x181.png" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">SEAMM Forcefield Utilities</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer_guide/index.html">
+    Developer Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Documentation
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../authors.html">
+    Credits
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../history.html">
+    History
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://molssi-seamm.github.io">
+    SEAMM Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://molssi.org">
+    MolSSI
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/molssi-seamm/seamm_ff_util" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/MolSSI_NSF" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer_guide/index.html">
+    Developer Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../authors.html">
+    Credits
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../history.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://molssi-seamm.github.io">
+    SEAMM Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://molssi.org">
+    MolSSI
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/molssi-seamm/seamm_ff_util" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/MolSSI_NSF" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">seamm_ff_util.eex</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for seamm_ff_util.eex</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="EEX_Mixin">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EEX_Mixin</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A mixin class for handling the energy expression (eex).&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="EEX_Mixin.eex_atomic_charge">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_atomic_charge">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_atomic_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle charges.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eex_bond_charge_increment</span><span class="p">(</span><span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_charge">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_charge">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do nothing routine since charges are handled by the increments.&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_bond_charge_increment">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_bond_charge_increment">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_bond_charge_increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the charges for the structure</span>
+
+<span class="sd">        If they do not exist on the structure, they are created</span>
+<span class="sd">        using the bond increments and saved on the structure&quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;entering eex_increment&quot;</span><span class="p">)</span>
+
+        <span class="c1"># terms = self.terms</span>
+        <span class="c1"># ff_name = self.current_forcefield</span>
+        <span class="c1"># atoms = configuration.atoms</span>
+        <span class="c1"># if &quot;atomic charge&quot; in terms and &quot;shell model&quot; in terms:</span>
+        <span class="c1">#     logger.debug(&quot;Getting the charges for the system&quot;)</span>
+
+        <span class="c1">#     # Atom types</span>
+        <span class="c1">#     key = f&quot;atom_types_{ff_name}&quot;</span>
+        <span class="c1">#     atom_types = atoms.get_column(key)</span>
+
+        <span class="c1">#     total_charge = configuration.charge</span>
+        <span class="c1">#     n_atoms = configuration.n_atoms</span>
+        <span class="c1">#     eex[&quot;charges&quot;] = charges = [None] * n_atoms</span>
+        <span class="c1">#     total_q = 0.0</span>
+        <span class="c1">#     if &quot;shell model&quot; in terms:</span>
+        <span class="c1">#         # Use charges from shell model by preference.</span>
+        <span class="c1">#         shell_q = []</span>
+        <span class="c1">#         for i, itype in enumerate(atom_types):</span>
+        <span class="c1">#             tmp = self.shell_model(itype)</span>
+        <span class="c1">#             if tmp is None:</span>
+        <span class="c1">#                 # Fall back to charges</span>
+        <span class="c1">#                 parameters = self.charges(itype)[3]</span>
+        <span class="c1">#                 q = float(parameters[&quot;Q&quot;])</span>
+        <span class="c1">#                 charges[i] = q</span>
+        <span class="c1">#                 total_q += q</span>
+        <span class="c1">#             else:</span>
+        <span class="c1">#                 parameters = tmp[3]</span>
+        <span class="c1">#                 q = float(parameters[&quot;Q&quot;])</span>
+        <span class="c1">#                 y = float(parameters[&quot;Y&quot;])</span>
+        <span class="c1">#                 charges[i] = q - y</span>
+        <span class="c1">#                 shell_q.append(y)</span>
+        <span class="c1">#                 total_q += q</span>
+        <span class="c1">#         charges.extend(shell_q)</span>
+        <span class="c1">#     else:</span>
+        <span class="c1">#         # First see if there are any templates</span>
+        <span class="c1">#         molecule = configuration.to_RDKMol()</span>
+        <span class="c1">#         fragments = self.get_fragments()</span>
+        <span class="c1">#         for smiles, data in fragments.items():</span>
+        <span class="c1">#             if &quot;charges&quot; not in data:</span>
+        <span class="c1">#                 continue</span>
+
+        <span class="c1">#             smarts = data[&quot;SMARTS&quot;]</span>
+        <span class="c1">#             pattern = rdkit.Chem.MolFromSmarts(smarts)</span>
+        <span class="c1">#             matches = molecule.GetSubstructMatches(</span>
+        <span class="c1">#                 pattern, maxMatches=6 * n_atoms</span>
+        <span class="c1">#             )</span>
+        <span class="c1">#             for match in matches:</span>
+        <span class="c1">#                 for charge, atom in zip(data[&quot;charges&quot;], match):</span>
+        <span class="c1">#                     # Check if this has been assigned by another fragment</span>
+        <span class="c1">#                     if charges[atom] is not None:</span>
+        <span class="c1">#                         if charge != charges[atom]:</span>
+        <span class="c1">#                             msg = (</span>
+        <span class="c1">#                                 f&quot;Error in fragment charges for atom {atom} &quot;</span>
+        <span class="c1">#                                 f&quot;already has charge:\n{charges[atom]}\n&quot;</span>
+        <span class="c1">#                                 f&quot;New assignment: {charge}&quot;</span>
+        <span class="c1">#                             )</span>
+        <span class="c1">#                             logger.error(msg)</span>
+        <span class="c1">#                             raise ForcefieldChargeError(msg)</span>
+        <span class="c1">#                     charges[atom] = charge</span>
+        <span class="c1">#         # Use the increments and charges for any left</span>
+        <span class="c1">#         for i, itype in enumerate(atom_types):</span>
+        <span class="c1">#             if charges[i] is None:</span>
+        <span class="c1">#                 parameters = self.charges(itype)[3]</span>
+        <span class="c1">#                 charges[i] = float(parameters[&quot;Q&quot;])</span>
+        <span class="c1">#             total_q += charges[i]</span>
+        <span class="c1">#     if abs(total_q - total_charge) &gt; 0.001:</span>
+        <span class="c1">#         delta = (total_q - total_charge) / len(charges)</span>
+        <span class="c1">#         charges = [q - delta for q in charges]</span>
+        <span class="c1">#         logger.warning(</span>
+        <span class="c1">#             f&quot;The total charge from the forcefield, {total_q:3f}, does not &quot;</span>
+        <span class="c1">#             f&quot;match the formal charge, {total_charge}.&quot;</span>
+        <span class="c1">#             f&quot;\nAdjusted each atom&#39;s charge by {-delta:.3f} to compensate.&quot;</span>
+        <span class="c1">#         )</span>
+        <span class="c1">#     logger.debug(&quot;Charges from charges:\n&quot; + pprint.pformat(charges))</span>
+        <span class="c1"># else:</span>
+        <span class="c1">#     key = f&quot;charges_{ff_name}&quot;</span>
+        <span class="c1">#     if key in atoms:</span>
+        <span class="c1">#         eex[&quot;charges&quot;] = [*atoms[key]]</span>
+        <span class="c1">#     else:</span>
+        <span class="c1">#         raise RuntimeError(&quot;No charges on system!&quot;)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;leaving eex_increment&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_atoms">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_atoms">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_atoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List the atoms into the energy expression.</span>
+
+<span class="sd">        Note that if using the shell model, an extra &quot;atom&quot; is added for the shell.</span>
+<span class="sd">        At the moment the mass is split 90:10 between core and shell.</span>
+<span class="sd">        The shells are appended at the end of the atoms so bonds, etc. work using</span>
+<span class="sd">        the atom indices.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">atoms</span>
+        <span class="n">n_atoms</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">n_atoms</span>
+        <span class="n">coordinates</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">(</span><span class="n">fractionals</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff_form</span> <span class="o">==</span> <span class="s2">&quot;reaxff&quot;</span><span class="p">:</span>
+            <span class="n">types</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">symbols</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;atom_types_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">current_forcefield</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">types</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">get_column</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;atoms&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">atom_types</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;atom types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">masses</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;masses&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">shells</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;shell_of_atom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shell_of_atom</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">itype</span><span class="p">,</span> <span class="n">xyz</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">types</span><span class="p">,</span> <span class="n">coordinates</span><span class="p">):</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">xyz</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell_model</span><span class="p">(</span><span class="n">itype</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">itype</span> <span class="ow">in</span> <span class="n">atom_types</span><span class="p">:</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">atom_types</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">itype</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">atom_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">itype</span><span class="p">)</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">atom_types</span><span class="p">)</span>
+                    <span class="n">masses</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">mass</span><span class="p">(</span><span class="n">itype</span><span class="p">),</span> <span class="n">itype</span><span class="p">))</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+                <span class="n">shell_of_atom</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">itype</span> <span class="ow">in</span> <span class="n">atom_types</span><span class="p">:</span>
+                    <span class="c1"># core</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">atom_types</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;core_&quot;</span> <span class="o">+</span> <span class="n">itype</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+                    <span class="c1"># shell</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">atom_types</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">itype</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="n">shell_of_atom</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shells</span><span class="p">)</span> <span class="o">+</span> <span class="n">n_atoms</span><span class="p">)</span>
+                    <span class="n">shells</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># core</span>
+                    <span class="n">atom_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;core_&quot;</span> <span class="o">+</span> <span class="n">itype</span><span class="p">)</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">atom_types</span><span class="p">)</span>
+                    <span class="n">masses</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mf">0.9</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mass</span><span class="p">(</span><span class="n">itype</span><span class="p">)),</span> <span class="s2">&quot;core_&quot;</span> <span class="o">+</span> <span class="n">itype</span><span class="p">))</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+                    <span class="c1"># shell</span>
+                    <span class="n">atom_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">itype</span><span class="p">)</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">atom_types</span><span class="p">)</span>
+                    <span class="n">masses</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mf">0.1</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mass</span><span class="p">(</span><span class="n">itype</span><span class="p">)),</span> <span class="s2">&quot;shell_&quot;</span> <span class="o">+</span> <span class="n">itype</span><span class="p">))</span>
+                    <span class="n">shell_of_atom</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shells</span><span class="p">)</span> <span class="o">+</span> <span class="n">n_atoms</span><span class="p">)</span>
+                    <span class="n">shells</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shells</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">shells</span><span class="p">)</span>
+
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_atoms&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_atoms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_atom_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">atom_types</span><span class="p">)</span>
+
+        <span class="c1"># molecule for each atom and shell (if any)</span>
+        <span class="n">molecule</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;molecule&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_atoms</span>
+        <span class="n">molecules</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">find_molecules</span><span class="p">(</span><span class="n">as_indices</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">molecule_id</span><span class="p">,</span> <span class="n">atoms</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">molecules</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">atoms</span><span class="p">:</span>
+                <span class="n">molecule</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span> <span class="o">=</span> <span class="n">molecule_id</span>
+                <span class="k">if</span> <span class="n">shell_of_atom</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">molecule</span><span class="p">[</span><span class="n">shell_of_atom</span><span class="p">[</span><span class="n">atom</span><span class="p">]]</span> <span class="o">=</span> <span class="n">molecule_id</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_pair">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_pair">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_pair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the pair (non-bond) portion of the energy expression&quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;In eex_pair&quot;</span><span class="p">)</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+
+        <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">pair_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;nonbond(12-6)&quot;</span><span class="p">,</span> <span class="s2">&quot;nonbond(9-6)&quot;</span><span class="p">,</span> <span class="s2">&quot;buckingham&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">pair_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">[</span><span class="s2">&quot;functional_forms&quot;</span><span class="p">]:</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Error finding pair_type in eex_pair&quot;</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;nonbonds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;nonbond parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">pair_type</span> <span class="o">==</span> <span class="s2">&quot;buckingham&quot;</span><span class="p">:</span>
+            <span class="n">types</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;atom types&quot;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">itype</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">types</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">itype</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;core_&quot;</span><span class="p">:</span>
+                    <span class="n">itype</span> <span class="o">=</span> <span class="s2">&quot;core&quot;</span>
+                <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">jtype</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]):</span>
+                    <span class="k">if</span> <span class="n">jtype</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;core_&quot;</span><span class="p">:</span>
+                        <span class="n">jtype</span> <span class="o">=</span> <span class="s2">&quot;core&quot;</span>
+                    <span class="c1"># print(f&quot;{i}-{j} {itype} - {jtype} ##&quot;)</span>
+                    <span class="p">(</span>
+                        <span class="n">parameters_type</span><span class="p">,</span>
+                        <span class="n">real_types</span><span class="p">,</span>
+                        <span class="n">form</span><span class="p">,</span>
+                        <span class="n">parameter_values</span><span class="p">,</span>
+                    <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonbond_parameters</span><span class="p">(</span><span class="n">itype</span><span class="p">,</span> <span class="n">jtype</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">pair_type</span><span class="p">)</span>
+                    <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">form</span><span class="p">,</span>
+                        <span class="n">parameter_values</span><span class="p">,</span>
+                        <span class="p">(</span><span class="n">itype</span><span class="p">,</span> <span class="n">jtype</span><span class="p">),</span>
+                        <span class="n">parameters_type</span><span class="p">,</span>
+                        <span class="n">real_types</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="c1"># print(f&quot;{itype}-{jtype} --&gt; {new_value}&quot;)</span>
+                    <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                        <span class="c1"># print(f&quot;\t{value}&quot;)</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                            <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                            <span class="k">break</span>
+                    <span class="c1"># if index is None:</span>
+                    <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+                    <span class="c1"># print(f&quot;Added {new_value} as {index}&quot;)</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">itype</span> <span class="ow">in</span> <span class="n">types</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="k">if</span> <span class="n">itype</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;core_&quot;</span><span class="p">:</span>
+                    <span class="n">itype</span> <span class="o">=</span> <span class="s2">&quot;core&quot;</span>
+                <span class="p">(</span>
+                    <span class="n">parameters_type</span><span class="p">,</span>
+                    <span class="n">real_types</span><span class="p">,</span>
+                    <span class="n">form</span><span class="p">,</span>
+                    <span class="n">parameter_values</span><span class="p">,</span>
+                <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonbond_parameters</span><span class="p">(</span><span class="n">itype</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">pair_type</span><span class="p">)</span>
+                <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">form</span><span class="p">,</span>
+                    <span class="n">parameter_values</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">itype</span><span class="p">,),</span>
+                    <span class="n">parameters_type</span><span class="p">,</span>
+                    <span class="n">real_types</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                        <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_nonbonds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_nonbond_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_shell_model">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_shell_model">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_shell_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the shell model portion of the energy expression&quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="s2">&quot;bonds&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">eex</span><span class="p">:</span>
+            <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bonds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bond parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bonds&quot;</span><span class="p">]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bond parameters&quot;</span><span class="p">]</span>
+
+        <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;atom_types_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">current_forcefield</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">get_column</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">shell_of_atom</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;shell_of_atom&quot;</span><span class="p">]</span>
+        <span class="n">n_atoms</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">n_atoms</span>
+
+        <span class="k">for</span> <span class="n">atom_no</span><span class="p">,</span> <span class="n">shell_no</span><span class="p">,</span> <span class="n">itype</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_atoms</span><span class="p">),</span> <span class="n">shell_of_atom</span><span class="p">,</span> <span class="n">types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">shell_no</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parameters_type</span><span class="p">,</span> <span class="n">real_types</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="n">parameter_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell_model</span><span class="p">(</span>
+                    <span class="n">itype</span>
+                <span class="p">)</span>
+                <span class="n">real_type</span> <span class="o">=</span> <span class="n">real_types</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">form</span><span class="p">,</span>
+                    <span class="p">{</span><span class="s2">&quot;R0&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;K2&quot;</span><span class="p">:</span> <span class="n">parameter_values</span><span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">]},</span>
+                    <span class="p">(</span><span class="s2">&quot;core_&quot;</span> <span class="o">+</span> <span class="n">itype</span><span class="p">,</span> <span class="n">itype</span><span class="p">),</span>
+                    <span class="n">parameters_type</span><span class="p">,</span>
+                    <span class="p">(</span><span class="s2">&quot;core_&quot;</span> <span class="o">+</span> <span class="n">real_type</span><span class="p">,</span> <span class="n">real_type</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                        <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">atom_no</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">shell_no</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bonds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_bond">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_bond">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the bond portion of the energy expression&quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+        <span class="n">bonds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;bonds&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="s2">&quot;bonds&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">eex</span><span class="p">:</span>
+            <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bonds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bond parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bonds&quot;</span><span class="p">]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bond parameters&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">bonds</span><span class="p">:</span>
+            <span class="n">parameters_type</span><span class="p">,</span> <span class="n">real_types</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="n">parameter_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bond_parameters</span><span class="p">(</span>
+                <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">]),</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bonds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_angle">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_angle">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the angle portion of the energy expression&quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+        <span class="n">angles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;angles&quot;</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;angles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;angle parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">:</span>
+            <span class="n">parameters_type</span><span class="p">,</span> <span class="n">real_types</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="n">parameter_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_parameters</span><span class="p">(</span>
+                <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">]),</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_torsion">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_torsion">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_torsion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the torsion portion of the energy expression&quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+        <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;torsion parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">torsions</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">torsion_parameters</span><span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">]),</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_torsions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_torsion_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_out_of_plane">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_out_of_plane">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_out_of_plane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the out-of-plane portion of the energy expression&quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+        <span class="n">oops</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;oops&quot;</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;oops&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;oop parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">oops</span><span class="p">:</span>
+            <span class="n">parameters_type</span><span class="p">,</span> <span class="n">real_types</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="n">parameter_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oop_parameters</span><span class="p">(</span>
+                <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">zero</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">form</span> <span class="o">==</span> <span class="s2">&quot;dreiding_out_of_plane&quot;</span> <span class="ow">and</span> <span class="n">parameters_type</span> <span class="o">==</span> <span class="s2">&quot;zeroed&quot;</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">]),</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_oops&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_oop_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_bond_bond">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_bond_bond">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_bond_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the bond-bond portion of the energy expression&quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+        <span class="n">angles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;angles&quot;</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bond-bond&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bond-bond parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bond_bond_parameters</span><span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">zero</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">]),</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond-bond&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond-bond_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_bond_angle">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_bond_angle">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_bond_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the bond-angle portion of the energy expression&quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+        <span class="n">angles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;angles&quot;</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bond-angle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bond-angle parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bond_angle_parameters</span><span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">zero</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">]),</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond-angle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond-angle_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_torsion_middle_bond">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_torsion_middle_bond">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_torsion_middle_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the middle_bond-torsion portion of the energy expression&quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+        <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;middle_bond-torsion_3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;middle_bond-torsion_3 parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">torsions</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middle_bond_torsion_3_parameters</span><span class="p">(</span>
+                <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">zero</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">]),</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_middle_bond-torsion_3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_middle_bond-torsion_3_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_torsion_end_bond">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_torsion_end_bond">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_torsion_end_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the end_bond-torsion portion of the energy expression&quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+        <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;end_bond-torsion_3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;end_bond-torsion_3 parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">torsions</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_bond_torsion_3_parameters</span><span class="p">(</span>
+                <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">zero</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">]),</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_end_bond-torsion_3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_end_bond-torsion_3_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_torsion_angle">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_torsion_angle">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_torsion_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the angle-torsion portion of the energy expression&quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+        <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;angle-torsion_3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;angle-torsion_3 parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">torsions</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_torsion_3_parameters</span><span class="p">(</span>
+                <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">zero</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">]),</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle-torsion_3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle-torsion_3_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_angle_torsion_angle">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_angle_torsion_angle">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_angle_torsion_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the angle-angle-torsion portion of the energy expression&quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+        <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;angle-angle-torsion_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;angle-angle-torsion_1 parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">torsions</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_angle_torsion_1_parameters</span><span class="p">(</span>
+                <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">zero</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">]),</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle-angle-torsion_1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle-angle-torsion_1_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_1_3_bond_bond">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_1_3_bond_bond">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_1_3_bond_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the 1,3 bond-bond portion of the energy expression&quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+        <span class="n">torsions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;torsions&quot;</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bond-bond_1_3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;bond-bond_1_3 parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">torsions</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bond_bond_1_3_parameters</span><span class="p">(</span>
+                <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">zero</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">]),</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond-bond_1_3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_bond-bond_1_3_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_angle_angle">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_angle_angle">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_angle_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eex</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the angle-angle portion of the energy expression</span>
+
+<span class="sd">        j is the vertex atom of the angles. For the angle-angle parameters</span>
+<span class="sd">        the bond j-k is the common bond, i.e. the angles are i-j-k and j-k l</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
+        <span class="n">oops</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;oops&quot;</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;angle-angle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;angle-angle parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">oops</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="n">parameter_values</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_angle_parameters</span><span class="p">(</span>
+                <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">zero</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">K1</span> <span class="o">=</span> <span class="n">parameter_values</span><span class="p">[</span><span class="s2">&quot;K&quot;</span><span class="p">]</span>
+            <span class="n">Theta10</span> <span class="o">=</span> <span class="n">parameter_values</span><span class="p">[</span><span class="s2">&quot;Theta10&quot;</span><span class="p">]</span>
+            <span class="n">Theta30</span> <span class="o">=</span> <span class="n">parameter_values</span><span class="p">[</span><span class="s2">&quot;Theta20&quot;</span><span class="p">]</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_angle_parameters</span><span class="p">(</span>
+                <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">zero</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">K2</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;K&quot;</span><span class="p">]</span>
+            <span class="n">Theta20</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;Theta20&quot;</span><span class="p">]</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_angle_parameters</span><span class="p">(</span>
+                <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">zero</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">K3</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;K&quot;</span><span class="p">]</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">form</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;K1&quot;</span><span class="p">:</span> <span class="n">K1</span><span class="p">,</span>
+                    <span class="s2">&quot;K2&quot;</span><span class="p">:</span> <span class="n">K2</span><span class="p">,</span>
+                    <span class="s2">&quot;K3&quot;</span><span class="p">:</span> <span class="n">K3</span><span class="p">,</span>
+                    <span class="s2">&quot;Theta10&quot;</span><span class="p">:</span> <span class="n">Theta10</span><span class="p">,</span>
+                    <span class="s2">&quot;Theta20&quot;</span><span class="p">:</span> <span class="n">Theta20</span><span class="p">,</span>
+                    <span class="s2">&quot;Theta30&quot;</span><span class="p">:</span> <span class="n">Theta30</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">]),</span>
+                <span class="n">parameters_type</span><span class="p">,</span>
+                <span class="n">real_types</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle-angle&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">eex</span><span class="p">[</span><span class="s2">&quot;n_angle-angle_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EEX_Mixin.eex_compare_values">
+<a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_compare_values">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eex_compare_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare parameters values to see if they are the same.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">old</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">new</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">old</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">new</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">old</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="n">new</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
