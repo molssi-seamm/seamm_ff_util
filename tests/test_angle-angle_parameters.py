@@ -3,6 +3,7 @@
 
 """Tests for `seamm_ff_util` package."""
 
+import json
 import seamm_ff_util  # noqa: F401
 
 
@@ -10,10 +11,11 @@ def test_angle_angle_explicit(pcff):
     """Test of bond_bond parameters, which should fine explicit ones"""
 
     expected = {
-        "K": "3.5475",
-        "reference": "1",
         "Theta10": "107.6600",
         "Theta20": "105.8500",
+        "reference": "1",
+        "K": "3.5475",
+        "original K": "3.5475",
     }
 
     i = "h"
@@ -23,6 +25,8 @@ def test_angle_angle_explicit(pcff):
     ptype, key, form, parameters = pcff.angle_angle_parameters(i, j, k, l)
     assert ptype == "explicit"
     assert key == ("h", "c", "h", "n+")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected
 
 
@@ -42,10 +46,11 @@ def test_angle_angle_explicit_ljki(pcff):
 def test_angle_angle_equivalent(pcff):
     """Simple test of bond_bond parameters using equivalencies"""
     expected = {
-        "K": "5.9863",
-        "reference": "6",
         "Theta10": "116.0640",
         "Theta20": "116.0640",
+        "reference": "6",
+        "K": "5.9863",
+        "original K": "5.9863",
     }
 
     i = "c5"
@@ -55,4 +60,6 @@ def test_angle_angle_equivalent(pcff):
     ptype, key, form, parameters = pcff.angle_angle_parameters(i, j, k, l)
     assert ptype == "equivalent"
     assert key == ("cp", "cp", "c_1", "cp")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected

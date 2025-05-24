@@ -3,6 +3,7 @@
 
 """Tests for `seamm_ff_util` package."""
 
+import json
 import seamm_ff_util  # noqa: F401
 
 
@@ -36,13 +37,19 @@ def test_angle_torsion_3_explicit_kji(pcff):
     """known angle_torsion_3 parameters, ordered backwards"""
 
     expected = {
-        "V1_L": "-1.6930",
-        "V1_R": "0.0492",
-        "V2_L": "-0.6252",
-        "V2_R": "0.7162",
-        "V3_L": "-0.2148",
-        "V3_R": "-0.2277",
         "reference": "1",
+        "V1_L": "-1.6930",
+        "original V1_L": "-1.6930",
+        "V2_L": "-0.6252",
+        "original V2_L": "-0.6252",
+        "V3_L": "-0.2148",
+        "original V3_L": "-0.2148",
+        "V1_R": "0.0492",
+        "original V1_R": "0.0492",
+        "V2_R": "0.7162",
+        "original V2_R": "0.7162",
+        "V3_R": "-0.2277",
+        "original V3_R": "-0.2277",
         "Theta0_L": "108.4000",
         "Theta0_R": "110.7700",
     }
@@ -54,6 +61,8 @@ def test_angle_torsion_3_explicit_kji(pcff):
     ptype, key, form, parameters = pcff.angle_torsion_3_parameters(i, j, k, l)
     assert ptype == "explicit"
     assert key == ("c_0", "c", "c", "h")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected
 
 
@@ -61,13 +70,19 @@ def test_angle_torsion_3_equivalent(pcff):
     """Simple test of angle_torsion_3 parameters using equivalencies"""
 
     expected = {
-        "V1_L": "4.6266",
-        "V1_R": "0.2251",
-        "V2_L": "0.1632",
-        "V2_R": "0.6548",
-        "V3_L": "0.0461",
-        "V3_R": "0.1237",
         "reference": "1",
+        "V1_L": "4.6266",
+        "original V1_L": "4.6266",
+        "V2_L": "0.1632",
+        "original V2_L": "0.1632",
+        "V3_L": "0.0461",
+        "original V3_L": "0.0461",
+        "V1_R": "0.2251",
+        "original V1_R": "0.2251",
+        "V2_R": "0.6548",
+        "original V2_R": "0.6548",
+        "V3_R": "0.1237",
+        "original V3_R": "0.1237",
         "Theta0_L": "111.0000",
         "Theta0_R": "120.0500",
     }
@@ -79,4 +94,6 @@ def test_angle_torsion_3_equivalent(pcff):
     ptype, key, form, parameters = pcff.angle_torsion_3_parameters(i, j, k, l)
     assert ptype == "equivalent"
     assert key == ("h", "c", "cp", "cp")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected

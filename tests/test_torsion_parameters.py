@@ -3,6 +3,7 @@
 
 """Tests for `seamm_ff_util` package."""
 
+import json
 import seamm_ff_util  # noqa: F401
 
 
@@ -10,13 +11,19 @@ def test_torsion_explicit(pcff):
     """Test of torsion parameters, which should find explicit ones"""
 
     expected = {
-        "Phi0_1": "0.0",
-        "Phi0_2": "0.0",
-        "Phi0_3": "0.0",
-        "V1": "0.0000",
-        "V2": "0.0000",
-        "V3": "-0.2000",
         "reference": "8",
+        "V1": "0.0000",
+        "original V1": "0.0000",
+        "Phi0_1": "0.0",
+        "original Phi0_1": "0.0",
+        "V2": "0.0000",
+        "original V2": "0.0000",
+        "Phi0_2": "0.0",
+        "original Phi0_2": "0.0",
+        "V3": "-0.2000",
+        "original V3": "-0.2000",
+        "Phi0_3": "0.0",
+        "original Phi0_3": "0.0",
     }
 
     i = "h"
@@ -26,6 +33,8 @@ def test_torsion_explicit(pcff):
     ptype, key, form, parameters = pcff.torsion_parameters(i, j, k, l)
     assert ptype == "explicit"
     assert key == ("br", "c", "c", "h")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected
 
 
@@ -45,13 +54,19 @@ def test_torsion_explicit_lkji(pcff):
 def test_torsion_equivalent(pcff):
     """Simple test of torsion parameters using equivalencies"""
     expected = {
-        "Phi0_1": "0.0",
-        "Phi0_2": "0.0",
-        "Phi0_3": "0.0",
-        "V1": "0.0000",
-        "V2": "1.8769",
-        "V3": "0.0000",
         "reference": "1",
+        "V1": "0.0000",
+        "original V1": "0.0000",
+        "Phi0_1": "0.0",
+        "original Phi0_1": "0.0",
+        "V2": "1.8769",
+        "original V2": "1.8769",
+        "Phi0_2": "0.0",
+        "original Phi0_2": "0.0",
+        "V3": "0.0000",
+        "original V3": "0.0000",
+        "Phi0_3": "0.0",
+        "original Phi0_3": "0.0",
     }
 
     i = "hp"
@@ -61,12 +76,22 @@ def test_torsion_equivalent(pcff):
     ptype, key, form, parameters = pcff.torsion_parameters(i, j, k, l)
     assert ptype == "equivalent"
     assert key == ("h", "cp", "cp", "h")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected
 
 
 def test_torsion_auto(pcff):
     """test of torsion parameters using automatic parameters"""
-    expected = {"KPhi": "3.0000", "Phi0": "180.0000", "n": "2", "reference": "2"}
+    expected = {
+        "reference": "2",
+        "KPhi": "3.0000",
+        "original KPhi": "3.0000",
+        "n": "2",
+        "original n": "2",
+        "Phi0": "180.0000",
+        "original Phi0": "180.0000",
+    }
 
     i = "hp"
     j = "c5"
@@ -75,4 +100,6 @@ def test_torsion_auto(pcff):
     ptype, key, form, parameters = pcff.torsion_parameters(i, j, k, l)
     assert ptype == "automatic"
     assert key == ("*", "cp_", "cp_", "*")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected

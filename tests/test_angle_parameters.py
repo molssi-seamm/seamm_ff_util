@@ -12,11 +12,15 @@ def test_angle_explicit(pcff):
     """Test of angle parameters, which should find explicit ones"""
 
     expected = {
-        "K2": "46.0608",
-        "K3": "0.0000",
-        "K4": "0.0000",
-        "Theta0": "106.9999",
         "reference": "8",
+        "Theta0": "106.9999",
+        "original Theta0": "106.9999",
+        "K2": "46.0608",
+        "original K2": "46.0608",
+        "K3": "0.0000",
+        "original K3": "0.0000",
+        "K4": "0.0000",
+        "original K4": "0.0000",
     }
 
     i = "h"
@@ -46,11 +50,15 @@ def test_angle_explicit_kji(pcff):
 def test_angle_equivalent(pcff):
     """Simple test of angle parameters using equivalencies"""
     expected = {
-        "K2": "35.1558",
-        "K3": "-12.4682",
-        "K4": "0.0000",
-        "Theta0": "117.9400",
         "reference": "1",
+        "Theta0": "117.9400",
+        "original Theta0": "117.9400",
+        "K2": "35.1558",
+        "original K2": "35.1558",
+        "K3": "-12.4682",
+        "original K3": "-12.4682",
+        "K4": "0.0000",
+        "original K4": "0.0000",
     }
 
     i = "c5"
@@ -59,12 +67,20 @@ def test_angle_equivalent(pcff):
     ptype, key, form, parameters = pcff.angle_parameters(i, j, k)
     assert ptype == "equivalent"
     assert key == ("cp", "cp", "h")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected
 
 
 def test_angle_auto(pcff):
     """test of angle parameters using automatic parameters"""
-    expected = {"K2": "80.0000", "Theta0": "120.0000", "reference": "2"}
+    expected = {
+        "reference": "2",
+        "Theta0": "120.0000",
+        "original Theta0": "120.0000",
+        "K2": "80.0000",
+        "original K2": "80.0000",
+    }
 
     i = "c5"
     j = "c5"
@@ -72,4 +88,6 @@ def test_angle_auto(pcff):
     ptype, key, form, parameters = pcff.angle_parameters(i, j, k)
     assert ptype == "automatic"
     assert key == ("*7", "cp_", "c_")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected
