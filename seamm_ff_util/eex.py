@@ -25,8 +25,8 @@ class EEX_Mixin:
         logger.debug("entering eex_increment")
 
         # terms = self.terms
-        # ff_name = self.current_forcefield
-        # atoms = configuration.atoms
+        ff_name = self.current_forcefield
+        atoms = configuration.atoms
         # if "atomic charge" in terms and "shell model" in terms:
         #     logger.debug("Getting the charges for the system")
 
@@ -99,11 +99,11 @@ class EEX_Mixin:
         #         )
         #     logger.debug("Charges from charges:\n" + pprint.pformat(charges))
         # else:
-        #     key = f"charges_{ff_name}"
-        #     if key in atoms:
-        #         eex["charges"] = [*atoms[key]]
-        #     else:
-        #         raise RuntimeError("No charges on system!")
+        key = f"charges_{ff_name}"
+        if key in atoms:
+            eex["charges"] = [*atoms[key]]
+        else:
+            raise RuntimeError("No charges on system!")
 
         logger.debug("leaving eex_increment")
 
