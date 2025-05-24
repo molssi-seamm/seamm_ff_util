@@ -727,6 +727,6 @@ class EEX_Mixin:
         eex["n_angle-angle"] = len(result)
         eex["n_angle-angle_types"] = len(parameters)
 
-    def eex_compare_values(old, new):
+    def eex_compare_values(self, old, new):
         """Compare parameters values to see if they are the same."""
         return old[0] == new[0] and old[1] == new[1] and old[4] == new[4]
