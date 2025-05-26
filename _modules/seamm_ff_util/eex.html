@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>seamm_ff_util.eex &#8212; SEAMM Forcefield Utilities 2025.5.23.1 documentation</title>
+    <title>seamm_ff_util.eex &#8212; SEAMM Forcefield Utilities 2025.5.26 documentation</title>
   
   
   
@@ -48,7 +48,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-PQXXTJ2');</script>
 <!-- End Google Tag Manager -->
 
-    <script src="../../_static/documentation_options.js?v=8a9cc854"></script>
+    <script src="../../_static/documentation_options.js?v=0a24fd17"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -60,7 +60,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.5.23.1" />
+  <meta name="docsearch:version" content="2025.5.26" />
   </head>
   
   
@@ -472,6 +472,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pprint</span>  <span class="c1"># noqa: F401</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -733,8 +734,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <span class="n">real_types</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
-                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">new_value</span><span class="p">:</span>
                         <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
                         <span class="k">break</span>
                 <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -919,7 +920,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <span class="n">real_types</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
                     <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
                     <span class="k">break</span>
@@ -954,8 +955,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <span class="n">parameters_type</span><span class="p">,</span>
                 <span class="n">real_types</span><span class="p">,</span>
             <span class="p">)</span>
+            <span class="c1"># if self.eex_compare_values(value, new_value):</span>
             <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
                     <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
                     <span class="k">break</span>
@@ -991,7 +993,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <span class="n">real_types</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
                     <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
                     <span class="k">break</span>
@@ -1029,7 +1031,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <span class="n">real_types</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
                     <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
                     <span class="k">break</span>
@@ -1067,7 +1069,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <span class="n">real_types</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
                     <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
                     <span class="k">break</span>
@@ -1105,7 +1107,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <span class="n">real_types</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
                     <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
                     <span class="k">break</span>
@@ -1143,7 +1145,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <span class="n">real_types</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
                     <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
                     <span class="k">break</span>
@@ -1181,7 +1183,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <span class="n">real_types</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eex_compare_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
                     <span class="n">index</span> <span class="o">=</span> <span class="n">count</span>
                     <span class="k">break</span>
@@ -1199,7 +1201,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the angle-angle portion of the energy expression</span>
 
 <span class="sd">        j is the vertex atom of the angles. For the angle-angle parameters</span>
-<span class="sd">        the bond j-k is the common bond, i.e. the angles are i-j-k and j-k l</span>
+<span class="sd">        the bond j-k is the common bond, i.e. the angles are i-j-k and j-k-l</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span>
         <span class="n">oops</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;oops&quot;</span><span class="p">]</span>
@@ -1218,15 +1220,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <span class="n">K1</span> <span class="o">=</span> <span class="n">parameter_values</span><span class="p">[</span><span class="s2">&quot;K&quot;</span><span class="p">]</span>
             <span class="n">Theta10</span> <span class="o">=</span> <span class="n">parameter_values</span><span class="p">[</span><span class="s2">&quot;Theta10&quot;</span><span class="p">]</span>
             <span class="n">Theta30</span> <span class="o">=</span> <span class="n">parameter_values</span><span class="p">[</span><span class="s2">&quot;Theta20&quot;</span><span class="p">]</span>
+            <span class="n">oK1</span> <span class="o">=</span> <span class="n">parameter_values</span><span class="p">[</span><span class="s2">&quot;original K&quot;</span><span class="p">]</span>
+            <span class="n">oTheta10</span> <span class="o">=</span> <span class="n">parameter_values</span><span class="p">[</span><span class="s2">&quot;original Theta10&quot;</span><span class="p">]</span>
+            <span class="n">oTheta30</span> <span class="o">=</span> <span class="n">parameter_values</span><span class="p">[</span><span class="s2">&quot;original Theta20&quot;</span><span class="p">]</span>
             <span class="n">tmp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_angle_parameters</span><span class="p">(</span>
                 <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">zero</span><span class="o">=</span><span class="kc">True</span>
             <span class="p">)[</span><span class="mi">3</span><span class="p">]</span>
             <span class="n">K2</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;K&quot;</span><span class="p">]</span>
             <span class="n">Theta20</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;Theta20&quot;</span><span class="p">]</span>
+            <span class="n">oK2</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;original K&quot;</span><span class="p">]</span>
+            <span class="n">oTheta20</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;original Theta20&quot;</span><span class="p">]</span>
             <span class="n">tmp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_angle_parameters</span><span class="p">(</span>
                 <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">zero</span><span class="o">=</span><span class="kc">True</span>
             <span class="p">)[</span><span class="mi">3</span><span class="p">]</span>
             <span class="n">K3</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;K&quot;</span><span class="p">]</span>
+            <span class="n">oK3</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;original K&quot;</span><span class="p">]</span>
             <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">form</span><span class="p">,</span>
                 <span class="p">{</span>
@@ -1236,6 +1244,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <span class="s2">&quot;Theta10&quot;</span><span class="p">:</span> <span class="n">Theta10</span><span class="p">,</span>
                     <span class="s2">&quot;Theta20&quot;</span><span class="p">:</span> <span class="n">Theta20</span><span class="p">,</span>
                     <span class="s2">&quot;Theta30&quot;</span><span class="p">:</span> <span class="n">Theta30</span><span class="p">,</span>
+                    <span class="s2">&quot;original K1&quot;</span><span class="p">:</span> <span class="n">oK1</span><span class="p">,</span>
+                    <span class="s2">&quot;original K2&quot;</span><span class="p">:</span> <span class="n">oK2</span><span class="p">,</span>
+                    <span class="s2">&quot;original K3&quot;</span><span class="p">:</span> <span class="n">oK3</span><span class="p">,</span>
+                    <span class="s2">&quot;original Theta10&quot;</span><span class="p">:</span> <span class="n">oTheta10</span><span class="p">,</span>
+                    <span class="s2">&quot;original Theta20&quot;</span><span class="p">:</span> <span class="n">oTheta20</span><span class="p">,</span>
+                    <span class="s2">&quot;original Theta30&quot;</span><span class="p">:</span> <span class="n">oTheta30</span><span class="p">,</span>
                 <span class="p">},</span>
                 <span class="p">(</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">types</span><span class="p">[</span><span class="n">l</span><span class="p">]),</span>
                 <span class="n">parameters_type</span><span class="p">,</span>
@@ -1258,6 +1272,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.eex.EEX_Mixin.eex_compare_values">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">eex_compare_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare parameters values to see if they are the same.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff_form</span> <span class="o">==</span> <span class="s2">&quot;class2&quot;</span><span class="p">:</span>
+            <span class="c1"># Lammps class2 relies on having all the angles, torsions, and oops</span>
+            <span class="c1"># for the cross terms to match.</span>
+            <span class="k">return</span> <span class="n">old</span> <span class="o">==</span> <span class="n">new</span>
+
         <span class="k">return</span> <span class="n">old</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">new</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">old</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">new</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">old</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="n">new</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span></div>
 </div>
 
