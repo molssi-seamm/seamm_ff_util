@@ -11,6 +11,7 @@ def test_bond_explicit(pcff):
     """Simple test of known bond parameters"""
     expected = {
         "reference": "8",
+        "version": "2.1",
         "R0": "1.1010",
         "original R0": "1.1010",
         "K2": "345.0000",
@@ -46,6 +47,7 @@ def test_bond_equivalent(pcff):
     """Simple test of bond parameters using equivalencies"""
     expected = {
         "reference": "8",
+        "version": "2.1",
         "R0": "1.0982",
         "original R0": "1.0982",
         "K2": "372.8251",
@@ -70,6 +72,7 @@ def test_bond_auto(pcff):
     """Simple test of bond parameters using automatic parameters"""
     expected = {
         "reference": "2",
+        "version": "2.0",
         "R0": "1.9200",
         "original R0": "1.9200",
         "K2": "223.6000",

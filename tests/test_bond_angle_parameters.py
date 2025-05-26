@@ -12,6 +12,7 @@ def test_bond_angle_explicit(pcff):
 
     expected = {
         "reference": "1",
+        "version": "1.0",
         "K12": "20.7540",
         "original K12": "20.7540",
         "K23": "11.4210",
@@ -35,11 +36,16 @@ def test_bond_angle_explicit_kji(pcff):
     """known bond_angle parameters, ordered backwards"""
 
     expected = {
+        "reference": "1",
+        "version": "1.0",
         "K12": "11.4210",
         "K23": "20.7540",
-        "reference": "1",
         "R10": "1.5300",
         "R20": "1.1010",
+        "original K12": "11.4210",
+        "original K23": "20.7540",
+        "original R10": "1.5300",
+        "original R20": "1.1010",
     }
     i = "h"
     j = "c"
@@ -47,6 +53,8 @@ def test_bond_angle_explicit_kji(pcff):
     ptype, key, form, parameters = pcff.bond_angle_parameters(i, j, k)
     assert ptype == "explicit"
     assert key == ("h", "c", "c")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected
 
 
@@ -54,12 +62,15 @@ def test_bond_angle_equivalent(pcff):
     """Simple test of bond_angle parameters using equivalencies"""
     expected = {
         "reference": "1",
+        "version": "1.0",
         "K12": "20.7540",
         "original K12": "20.7540",
         "K23": "11.4210",
         "original K23": "11.4210",
         "R10": "1.5300",
         "R20": "1.1010",
+        "original R10": "1.1010",
+        "original R20": "1.5300",
     }
 
     i = "c"

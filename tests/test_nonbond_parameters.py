@@ -11,6 +11,7 @@ def test_nonbond_explicit(pcff):
     """Simple test of known nonbond parameters"""
     expected = {
         "reference": "1",
+        "version": "2.0",
         "rmin": 2.995,
         "eps": 0.02,
         "original rmin": "2.9950",
@@ -30,6 +31,7 @@ def test_nonbond_equivalent(pcff):
     """Simple test of nonbond parameters using equivalencies"""
     expected = {
         "reference": "1",
+        "version": "2.0",
         "rmin": 4.01,
         "eps": 0.064,
         "original rmin": "4.0100",

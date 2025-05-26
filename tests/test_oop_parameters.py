@@ -12,6 +12,7 @@ def test_oop_explicit(pcff):
 
     expected = {
         "reference": "1",
+        "version": "1.0",
         "K": "10.8102",
         "original K": "10.8102",
         "Chi0": "0.0000",
@@ -47,6 +48,7 @@ def test_oop_equivalent(pcff):
     """Simple test of out-of-plane parameters using equivalencies"""
     expected = {
         "reference": "1",
+        "version": "1.0",
         "K": "10.8102",
         "original K": "10.8102",
         "Chi0": "0.0000",
@@ -69,6 +71,7 @@ def test_oop_auto(pcff):
     """test of out-of-plane parameters using automatic parameters"""
     expected = {
         "reference": "1",
+        "version": "2.0",
         "K": "36.0000",
         "original K": "36.0000",
         "Chi0": "0.0000",

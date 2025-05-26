@@ -12,15 +12,24 @@ def test_angle_torsion_3_explicit(pcff):
     explicit ones"""
 
     expected = {
-        "V1_L": "0.0492",
-        "V1_R": "-1.6930",
-        "V2_L": "0.7162",
-        "V2_R": "-0.6252",
-        "V3_L": "-0.2277",
-        "V3_R": "-0.2148",
         "reference": "1",
+        "version": "1.0",
+        "V1_L": "0.0492",
+        "V2_L": "0.7162",
+        "V3_L": "-0.2277",
+        "V1_R": "-1.6930",
+        "V2_R": "-0.6252",
+        "V3_R": "-0.2148",
         "Theta0_L": "108.4000",
         "Theta0_R": "110.7700",
+        "original V1_L": "0.0492",
+        "original V2_L": "0.7162",
+        "original V3_L": "-0.2277",
+        "original V1_R": "-1.6930",
+        "original V2_R": "-0.6252",
+        "original V3_R": "-0.2148",
+        "original Theta0_L": "108.4000",
+        "original Theta0_R": "110.7700",
     }
 
     i = "h"
@@ -30,6 +39,8 @@ def test_angle_torsion_3_explicit(pcff):
     ptype, key, form, parameters = pcff.angle_torsion_3_parameters(i, j, k, l)
     assert ptype == "explicit"
     assert key == ("h", "c", "c", "c_0")
+    if parameters != expected:
+        print(json.dumps(parameters, indent=4))
     assert parameters == expected
 
 
@@ -38,6 +49,7 @@ def test_angle_torsion_3_explicit_kji(pcff):
 
     expected = {
         "reference": "1",
+        "version": "1.0",
         "V1_L": "-1.6930",
         "original V1_L": "-1.6930",
         "V2_L": "-0.6252",
@@ -52,6 +64,8 @@ def test_angle_torsion_3_explicit_kji(pcff):
         "original V3_R": "-0.2277",
         "Theta0_L": "108.4000",
         "Theta0_R": "110.7700",
+        "original Theta0_L": "108.4000",
+        "original Theta0_R": "110.7700",
     }
 
     i = "c_0"
@@ -71,6 +85,7 @@ def test_angle_torsion_3_equivalent(pcff):
 
     expected = {
         "reference": "1",
+        "version": "1.0",
         "V1_L": "4.6266",
         "original V1_L": "4.6266",
         "V2_L": "0.1632",
@@ -85,6 +100,8 @@ def test_angle_torsion_3_equivalent(pcff):
         "original V3_R": "0.1237",
         "Theta0_L": "111.0000",
         "Theta0_R": "120.0500",
+        "original Theta0_L": "111.0000",
+        "original Theta0_R": "120.0500",
     }
 
     i = "h"

@@ -14,7 +14,10 @@ def test_angle_angle_torsion_1_explicit(pcff):
     expected = {
         "Theta0_L": "110.7700",
         "Theta0_R": "108.4000",
+        "original Theta0_L": "110.7700",
+        "original Theta0_R": "108.4000",
         "reference": "1",
+        "version": "1.0",
         "K": "-14.3155",
         "original K": "-14.3155",
     }
@@ -37,7 +40,10 @@ def test_angle_angle_torsion_1_explicit_lkji(pcff):
     expected = {
         "Theta0_L": "108.4000",
         "Theta0_R": "110.7700",
+        "original Theta0_L": "108.4000",
+        "original Theta0_R": "110.7700",
         "reference": "1",
+        "version": "1.0",
         "K": "-14.3155",
         "original K": "-14.3155",
     }
@@ -60,7 +66,10 @@ def test_angle_angle_torsion_1_equivalent(pcff):
     expected = {
         "Theta0_L": "111.0000",
         "Theta0_R": "120.0500",
+        "original Theta0_L": "111.0000",
+        "original Theta0_R": "120.0500",
         "reference": "1",
+        "version": "1.0",
         "K": "-5.8888",
         "original K": "-5.8888",
     }
