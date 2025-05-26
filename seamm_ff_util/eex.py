@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import pprint  # noqa: F401
 
 logger = logging.getLogger(__name__)
 
@@ -246,8 +247,8 @@ class EEX_Mixin:
                     real_types,
                 )
                 index = None
-                for value, count in zip(parameters, range(1, len(parameters) + 1)):
-                    if self.eex_compare_values(value, new_value):
+                for count, value in enumerate(parameters, start=1):
+                    if value == new_value:
                         index = count
                         break
                 if index is None:
@@ -417,7 +418,7 @@ class EEX_Mixin:
                 real_types,
             )
             index = None
-            for value, count in zip(parameters, range(1, len(parameters) + 1)):
+            for count, value in enumerate(parameters, start=1):
                 if self.eex_compare_values(value, new_value):
                     index = count
                     break
@@ -449,8 +450,9 @@ class EEX_Mixin:
                 parameters_type,
                 real_types,
             )
+            # if self.eex_compare_values(value, new_value):
             index = None
-            for value, count in zip(parameters, range(1, len(parameters) + 1)):
+            for count, value in enumerate(parameters, start=1):
                 if self.eex_compare_values(value, new_value):
                     index = count
                     break
@@ -483,7 +485,7 @@ class EEX_Mixin:
                 real_types,
             )
             index = None
-            for value, count in zip(parameters, range(1, len(parameters) + 1)):
+            for count, value in enumerate(parameters, start=1):
                 if self.eex_compare_values(value, new_value):
                     index = count
                     break
@@ -518,7 +520,7 @@ class EEX_Mixin:
                 real_types,
             )
             index = None
-            for value, count in zip(parameters, range(1, len(parameters) + 1)):
+            for count, value in enumerate(parameters, start=1):
                 if self.eex_compare_values(value, new_value):
                     index = count
                     break
@@ -553,7 +555,7 @@ class EEX_Mixin:
                 real_types,
             )
             index = None
-            for value, count in zip(parameters, range(1, len(parameters) + 1)):
+            for count, value in enumerate(parameters, start=1):
                 if self.eex_compare_values(value, new_value):
                     index = count
                     break
@@ -588,7 +590,7 @@ class EEX_Mixin:
                 real_types,
             )
             index = None
-            for value, count in zip(parameters, range(1, len(parameters) + 1)):
+            for count, value in enumerate(parameters, start=1):
                 if self.eex_compare_values(value, new_value):
                     index = count
                     break
@@ -623,7 +625,7 @@ class EEX_Mixin:
                 real_types,
             )
             index = None
-            for value, count in zip(parameters, range(1, len(parameters) + 1)):
+            for count, value in enumerate(parameters, start=1):
                 if self.eex_compare_values(value, new_value):
                     index = count
                     break
@@ -658,7 +660,7 @@ class EEX_Mixin:
                 real_types,
             )
             index = None
-            for value, count in zip(parameters, range(1, len(parameters) + 1)):
+            for count, value in enumerate(parameters, start=1):
                 if self.eex_compare_values(value, new_value):
                     index = count
                     break
@@ -673,7 +675,7 @@ class EEX_Mixin:
         """Create the angle-angle portion of the energy expression
 
         j is the vertex atom of the angles. For the angle-angle parameters
-        the bond j-k is the common bond, i.e. the angles are i-j-k and j-k l
+        the bond j-k is the common bond, i.e. the angles are i-j-k and j-k-l
         """
         types = self.topology["types"]
         oops = self.topology["oops"]
@@ -692,15 +694,21 @@ class EEX_Mixin:
             K1 = parameter_values["K"]
             Theta10 = parameter_values["Theta10"]
             Theta30 = parameter_values["Theta20"]
+            oK1 = parameter_values["original K"]
+            oTheta10 = parameter_values["original Theta10"]
+            oTheta30 = parameter_values["original Theta20"]
             tmp = self.angle_angle_parameters(
                 types[k], types[j], types[i], types[l], zero=True
             )[3]
             K2 = tmp["K"]
             Theta20 = tmp["Theta20"]
+            oK2 = tmp["original K"]
+            oTheta20 = tmp["original Theta20"]
             tmp = self.angle_angle_parameters(
                 types[i], types[j], types[l], types[k], zero=True
             )[3]
             K3 = tmp["K"]
+            oK3 = tmp["original K"]
             new_value = (
                 form,
                 {
@@ -710,6 +718,12 @@ class EEX_Mixin:
                     "Theta10": Theta10,
                     "Theta20": Theta20,
                     "Theta30": Theta30,
+                    "original K1": oK1,
+                    "original K2": oK2,
+                    "original K3": oK3,
+                    "original Theta10": oTheta10,
+                    "original Theta20": oTheta20,
+                    "original Theta30": oTheta30,
                 },
                 (types[i], types[j], types[k], types[l]),
                 parameters_type,
@@ -729,4 +743,9 @@ class EEX_Mixin:
 
     def eex_compare_values(self, old, new):
         """Compare parameters values to see if they are the same."""
+        if self.ff_form == "class2":
+            # Lammps class2 relies on having all the angles, torsions, and oops
+            # for the cross terms to match.
+            return old == new
+
         return old[0] == new[0] and old[1] == new[1] and old[4] == new[4]

@@ -12,15 +12,24 @@ def test_end_bond_torsion_3_explicit(pcff):
     explicit ones"""
 
     expected = {
-        "V1_L": "0.0870",
-        "V1_R": "0.2217",
-        "V2_L": "0.5143",
-        "V2_R": "0.4780",
-        "V3_L": "-0.2448",
-        "V3_R": "-0.0817",
         "reference": "1",
+        "version": "1.0",
+        "V1_L": "0.0870",
+        "V2_L": "0.5143",
+        "V3_L": "-0.2448",
+        "V1_R": "0.2217",
+        "V2_R": "0.4780",
+        "V3_R": "-0.0817",
         "R0_L": "1.5140",
         "R0_R": "1.1010",
+        "original V1_L": "0.0870",
+        "original V2_L": "0.5143",
+        "original V3_L": "-0.2448",
+        "original V1_R": "0.2217",
+        "original V2_R": "0.4780",
+        "original V3_R": "-0.0817",
+        "original R0_L": "1.5140",
+        "original R0_R": "1.1010",
     }
 
     i = "h"
@@ -40,6 +49,7 @@ def test_end_bond_torsion_3_explicit_kji(pcff):
 
     expected = {
         "reference": "1",
+        "version": "1.0",
         "V1_L": "0.2217",
         "original V1_L": "0.2217",
         "V2_L": "0.4780",
@@ -54,6 +64,8 @@ def test_end_bond_torsion_3_explicit_kji(pcff):
         "original V3_R": "-0.2448",
         "R0_L": "1.5140",
         "R0_R": "1.1010",
+        "original R0_L": "1.5140",
+        "original R0_R": "1.1010",
     }
 
     i = "c_0"
@@ -72,6 +84,7 @@ def test_end_bond_torsion_3_equivalent(pcff):
     """Simple test of end_bond_torsion_3 parameters using equivalencies"""
     expected = {
         "reference": "1",
+        "version": "1.0",
         "V1_L": "1.3997",
         "original V1_L": "1.3997",
         "V2_L": "0.7756",
@@ -86,6 +99,8 @@ def test_end_bond_torsion_3_equivalent(pcff):
         "original V3_R": "0.3978",
         "R0_L": "1.1010",
         "R0_R": "1.4170",
+        "original R0_L": "1.1010",
+        "original R0_R": "1.4170",
     }
 
     i = "h"

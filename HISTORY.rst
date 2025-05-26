@@ -1,6 +1,12 @@
 =======
 History
 =======
+2025.5.26 -- Track more of the original parameters
+   * Added tracking of the original parameters for cross terms like bond-bond terms.
+   * Improved chacking for duplicate parameters to remove most duplicates, except for
+     class 2 forcefields, where the cross terms must have the same terms as the
+     diagonal time, i.e. angle and bond-bond terms must share a list of angles.
+
 2025.5.23 -- Added charges in templates and tracking original parameters
    * Added charges in templates, which override any assignment from the bond increments
      or charges for the atom types.

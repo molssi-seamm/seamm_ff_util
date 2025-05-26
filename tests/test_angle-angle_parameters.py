@@ -13,7 +13,10 @@ def test_angle_angle_explicit(pcff):
     expected = {
         "Theta10": "107.6600",
         "Theta20": "105.8500",
+        "original Theta10": "107.6600",
+        "original Theta20": "105.8500",
         "reference": "1",
+        "version": "1.0",
         "K": "3.5475",
         "original K": "3.5475",
     }
@@ -48,7 +51,10 @@ def test_angle_angle_equivalent(pcff):
     expected = {
         "Theta10": "116.0640",
         "Theta20": "116.0640",
+        "original Theta10": "116.0640",
+        "original Theta20": "116.0640",
         "reference": "6",
+        "version": "2.1",
         "K": "5.9863",
         "original K": "5.9863",
     }

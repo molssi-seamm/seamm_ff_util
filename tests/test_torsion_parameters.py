@@ -12,6 +12,7 @@ def test_torsion_explicit(pcff):
 
     expected = {
         "reference": "8",
+        "version": "2.1",
         "V1": "0.0000",
         "original V1": "0.0000",
         "Phi0_1": "0.0",
@@ -55,6 +56,7 @@ def test_torsion_equivalent(pcff):
     """Simple test of torsion parameters using equivalencies"""
     expected = {
         "reference": "1",
+        "version": "1.0",
         "V1": "0.0000",
         "original V1": "0.0000",
         "Phi0_1": "0.0",
@@ -85,6 +87,7 @@ def test_torsion_auto(pcff):
     """test of torsion parameters using automatic parameters"""
     expected = {
         "reference": "2",
+        "version": "2.0",
         "KPhi": "3.0000",
         "original KPhi": "3.0000",
         "n": "2",

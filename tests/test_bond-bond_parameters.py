@@ -12,8 +12,11 @@ def test_bond_bond_explicit(pcff):
 
     expected = {
         "R10": "1.5300",
+        "original R10": "1.5300",
         "R20": "1.1010",
+        "original R20": "1.1010",
         "reference": "1",
+        "version": "1.0",
         "K": "3.3872",
         "original K": "3.3872",
     }
@@ -38,6 +41,11 @@ def test_bond_bond_explicit_kji(pcff):
     ptype2, key2, form, parameters2 = pcff.bond_bond_parameters(k, j, i)
     assert ptype2 == "explicit"
     assert key2 == ("c", "c", "h")
+    if parameters != parameters2:
+        print("parameters=")
+        print(json.dumps(parameters, indent=4))
+        print("not equal to parameters2=")
+        print(json.dumps(parameters2, indent=4))
     assert parameters == parameters2
 
 
@@ -45,8 +53,11 @@ def test_bond_bond_equivalent(pcff):
     """Simple test of bond_bond parameters using equivalencies"""
     expected = {
         "R10": "1.5300",
+        "original R10": "1.5300",
         "R20": "1.1010",
+        "original R20": "1.1010",
         "reference": "1",
+        "version": "1.0",
         "K": "3.3872",
         "original K": "3.3872",
     }

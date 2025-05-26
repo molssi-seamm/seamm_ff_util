@@ -14,6 +14,7 @@ def test_middle_bond_torsion_3_explicit(pcff):
     expected = {
         "R0": "1.5300",
         "reference": "1",
+        "version": "1.0",
         "V1": "-10.0179",
         "original V1": "-10.0179",
         "V2": "-2.8145",
@@ -40,6 +41,7 @@ def test_middle_bond_torsion_3_explicit_lkji(pcff):
     expected = {
         "R0": "1.5300",
         "reference": "1",
+        "version": "1.0",
         "V1": "-10.0179",
         "original V1": "-10.0179",
         "V2": "-2.8145",
@@ -65,6 +67,7 @@ def test_middle_bond_torsion_3_equivalent(pcff):
     expected = {
         "R0": "1.5010",
         "reference": "1",
+        "version": "1.0",
         "V1": "-5.5679",
         "original V1": "-5.5679",
         "V2": "1.4083",

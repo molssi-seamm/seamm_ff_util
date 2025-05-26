@@ -14,6 +14,7 @@ def test_bond_bond_1_3_explicit(pcff):
         "R10": "1.1010",
         "R30": "1.4170",
         "reference": "1",
+        "version": "1.0",
         "K": "-3.4826",
         "original K": "-3.4826",
     }
@@ -49,6 +50,7 @@ def test_bond_bond_1_3_equivalent(pcff):
         "R10": "1.1010",
         "R30": "1.4170",
         "reference": "1",
+        "version": "1.0",
         "K": "-3.4826",
         "original K": "-3.4826",
     }

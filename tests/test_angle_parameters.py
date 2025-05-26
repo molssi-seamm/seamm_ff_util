@@ -13,6 +13,7 @@ def test_angle_explicit(pcff):
 
     expected = {
         "reference": "8",
+        "version": "2.1",
         "Theta0": "106.9999",
         "original Theta0": "106.9999",
         "K2": "46.0608",
@@ -51,6 +52,7 @@ def test_angle_equivalent(pcff):
     """Simple test of angle parameters using equivalencies"""
     expected = {
         "reference": "1",
+        "version": "1.0",
         "Theta0": "117.9400",
         "original Theta0": "117.9400",
         "K2": "35.1558",
@@ -76,6 +78,7 @@ def test_angle_auto(pcff):
     """test of angle parameters using automatic parameters"""
     expected = {
         "reference": "2",
+        "version": "2.0",
         "Theta0": "120.0000",
         "original Theta0": "120.0000",
         "K2": "80.0000",

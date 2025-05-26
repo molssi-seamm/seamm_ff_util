@@ -774,6 +774,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 raise RuntimeError(msg)
             equivalences[atom_type][V] = {
                 "reference": reference,
+                "version": version,
                 "nonbond": nonbond,
                 "bond_increment": bond_increment,
                 "bond": bond,
@@ -836,6 +837,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 raise RuntimeError(msg)
             parameters[key][V] = {
                 "reference": reference,
+                "version": version,
                 "deltaij": deltaij,
                 "deltaji": deltaji,
             }
@@ -1154,6 +1156,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
 
             parameters[key][V] = {
                 "reference": reference,
+                "version": version,
                 parameter_1: v1,
                 parameter_2: v2,
                 "original " + parameter_1: p1,
@@ -1263,7 +1266,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 )
                 logger.error(msg)
                 raise RuntimeError(msg)
-            params = parameters[key][V] = {"reference": reference}
+            params = parameters[key][V] = {"reference": reference, "version": version}
             values = words[2 + n_atoms :]
             if "fill" in data["topology"]:
                 n = data["topology"]["fill"]
@@ -1971,13 +1974,23 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
         # Get the reference bond lengths...
         b1_type, b1_types, b1_form, b1_parameters = self.bond_parameters(i, j)
         b2_type, b2_types, b2_form, b2_parameters = self.bond_parameters(j, k)
-        values = {"R10": b1_parameters["R0"], "R20": b2_parameters["R0"]}
+        values = {
+            "R10": b1_parameters["R0"],
+            "original R10": b1_parameters["original R0"],
+            "R20": b2_parameters["R0"],
+            "original R20": b2_parameters["original R0"],
+        }
 
         # parameters directly available
         result = self._angle_parameters_helper(i, j, k, self.ff["bond-bond"])
         if result is not None:
             if result[1]:
-                values = {"R10": b2_parameters["R0"], "R20": b1_parameters["R0"]}
+                values = {
+                    "R10": b2_parameters["R0"],
+                    "original R10": b2_parameters["original R0"],
+                    "R20": b1_parameters["R0"],
+                    "original R20": b1_parameters["original R0"],
+                }
             values.update(result[2])
             self.cite_parameter(result[2])
             return ("explicit", result[0], "bond-bond", values)
@@ -1990,7 +2003,12 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             result = self._angle_parameters_helper(ieq, jeq, keq, self.ff["bond-bond"])
             if result is not None:
                 if result[1]:
-                    values = {"R10": b2_parameters["R0"], "R20": b1_parameters["R0"]}
+                    values = {
+                        "R10": b2_parameters["R0"],
+                        "original R10": b2_parameters["original R0"],
+                        "R20": b1_parameters["R0"],
+                        "original R20": b1_parameters["original R0"],
+                    }
                 values.update(result[2])
                 self.cite_parameter(result[2])
                 return ("equivalent", result[0], "bond-bond", values)
@@ -2000,7 +2018,13 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 "zeroed",
                 ("*", "*", "*"),
                 "bond-bond",
-                {"K": "0.0", "R10": "1.5", "R20": "1.5"},
+                {
+                    "K": "0.0",
+                    "R10": "1.5",
+                    "R20": "1.5",
+                    "original R10": "1.5",
+                    "original R20": "1.5",
+                },
             )
         else:
             raise RuntimeError("No bond-bond parameters for {}-{}-{}".format(i, j, k))
@@ -2086,10 +2110,15 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             if result[1]:
                 parameters = {
                     "reference": result[2]["reference"],
+                    "version": result[2]["version"],
                     "K12": result[2]["K23"],
                     "K23": result[2]["K12"],
                     "R10": b2_parameters["R0"],
                     "R20": b1_parameters["R0"],
+                    "original K12": result[2]["original K23"],
+                    "original K23": result[2]["original K12"],
+                    "original R10": b2_parameters["original R0"],
+                    "original R20": b1_parameters["original R0"],
                 }
                 ii, jj, kk = result[0]
                 self.cite_parameter(parameters)
@@ -2111,10 +2140,15 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 if result[1]:
                     parameters = {
                         "reference": result[2]["reference"],
+                        "version": result[2]["version"],
                         "K12": result[2]["K23"],
                         "K23": result[2]["K12"],
                         "R10": b2_parameters["R0"],
                         "R20": b1_parameters["R0"],
+                        "original K12": result[2]["original K23"],
+                        "original K23": result[2]["original K12"],
+                        "original R10": b2_parameters["original R0"],
+                        "original R20": b1_parameters["original R0"],
                     }
                     ii, jj, kk = result[0]
                     self.cite_parameter(parameters)
@@ -2123,6 +2157,8 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                     parameters = dict(**result[2])
                     parameters["R10"] = b1_parameters["R0"]
                     parameters["R20"] = b2_parameters["R0"]
+                    parameters["original R10"] = b2_parameters["original R0"]
+                    parameters["original R20"] = b1_parameters["original R0"]
                     self.cite_parameter(parameters)
                     return ("equivalent", result[0], "bond-angle", parameters)
 
@@ -2131,7 +2167,16 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 "zeroed",
                 ("*", "*", "*"),
                 "bond-angle",
-                {"K12": "0.0", "K23": "0.0", "R10": "1.5", "R20": "1.5"},
+                {
+                    "K12": "0.0",
+                    "K23": "0.0",
+                    "R10": "1.5",
+                    "R20": "1.5",
+                    "original K12": "0.0",
+                    "original K23": "0.0",
+                    "original R10": "1.5",
+                    "original R20": "1.5",
+                },
             )
         else:
             raise RuntimeError("No bond-angle parameters for {}-{}-{}".format(i, j, k))
@@ -2146,13 +2191,25 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
         a2_type, a2_types, a2_form, a2_parameters = self.angle_parameters(k, j, l)
         Theta10 = a1_parameters["Theta0"]
         Theta20 = a2_parameters["Theta0"]
-        values = {"Theta10": Theta10, "Theta20": Theta20}
+        oTheta10 = a1_parameters["original Theta0"]
+        oTheta20 = a2_parameters["original Theta0"]
+        values = {
+            "Theta10": Theta10,
+            "Theta20": Theta20,
+            "original Theta10": oTheta10,
+            "original Theta20": oTheta20,
+        }
 
         # parameter directly available
         result = self._angle_angle_parameters_helper(i, j, k, l, self.ff["angle-angle"])
         if result is not None:
             if result[1]:
-                values = {"Theta10": Theta20, "Theta20": Theta10}
+                values = {
+                    "Theta10": Theta20,
+                    "Theta20": Theta10,
+                    "original Theta10": oTheta20,
+                    "original Theta20": oTheta10,
+                }
                 values.update(result[2])
                 ii, jj, kk, ll = result[0]
                 self.cite_parameter(values)
@@ -2173,7 +2230,12 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             )
             if result is not None:
                 if result[1]:
-                    values = {"Theta10": Theta20, "Theta20": Theta10}
+                    values = {
+                        "Theta10": Theta20,
+                        "Theta20": Theta10,
+                        "original Theta10": oTheta20,
+                        "original Theta20": oTheta10,
+                    }
                     values.update(result[2])
                     ii, jj, kk, ll = result[0]
                     self.cite_parameter(values)
@@ -2184,7 +2246,14 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                     return ("equivalent", result[0], "angle-angle", values)
 
         if zero:
-            parameters = {"K": 0.0, "Theta10": "109.0", "Theta20": "109.0"}
+            parameters = {
+                "K": "0.0",
+                "Theta10": "109.0",
+                "Theta20": "109.0",
+                "original K": "0.0",
+                "original Theta10": "109.0",
+                "original Theta20": "109.0",
+            }
             return ("zeroed", ("*", "*", "*", "*"), "angle-angle", parameters)
         else:
             raise RuntimeError(
@@ -2223,7 +2292,12 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
         # Get the reference bond lengths...
         b1_type, b1_types, b1_form, b1_parameters = self.bond_parameters(i, j)
         b2_type, b2_types, b2_form, b2_parameters = self.bond_parameters(k, l)
-        values = {"R0_L": b1_parameters["R0"], "R0_R": b2_parameters["R0"]}
+        values = {
+            "R0_L": b1_parameters["R0"],
+            "R0_R": b2_parameters["R0"],
+            "original R0_L": b1_parameters["original R0"],
+            "original R0_R": b2_parameters["original R0"],
+        }
 
         # parameters directly available
         result = self._torsion_parameters_helper(
@@ -2233,6 +2307,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             if result[1]:
                 parameters = {
                     "reference": result[2]["reference"],
+                    "version": result[2]["version"],
                     "V1_L": result[2]["V1_R"],
                     "V2_L": result[2]["V2_R"],
                     "V3_L": result[2]["V3_R"],
@@ -2241,6 +2316,14 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                     "V3_R": result[2]["V3_L"],
                     "R0_L": b2_parameters["R0"],
                     "R0_R": b1_parameters["R0"],
+                    "original V1_L": result[2]["original V1_R"],
+                    "original V2_L": result[2]["original V2_R"],
+                    "original V3_L": result[2]["original V3_R"],
+                    "original V1_R": result[2]["original V1_L"],
+                    "original V2_R": result[2]["original V2_L"],
+                    "original V3_R": result[2]["original V3_L"],
+                    "original R0_L": b2_parameters["original R0"],
+                    "original R0_R": b1_parameters["original R0"],
                 }
                 ii, jj, kk, ll = result[0]
                 self.cite_parameter(parameters)
@@ -2264,6 +2347,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 if result[1]:
                     parameters = {
                         "reference": result[2]["reference"],
+                        "version": result[2]["version"],
                         "V1_L": result[2]["V1_R"],
                         "V2_L": result[2]["V2_R"],
                         "V3_L": result[2]["V3_R"],
@@ -2272,6 +2356,14 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                         "V3_R": result[2]["V3_L"],
                         "R0_L": b2_parameters["R0"],
                         "R0_R": b1_parameters["R0"],
+                        "original V1_L": result[2]["original V1_R"],
+                        "original V2_L": result[2]["original V2_R"],
+                        "original V3_L": result[2]["original V3_R"],
+                        "original V1_R": result[2]["original V1_L"],
+                        "original V2_R": result[2]["original V2_L"],
+                        "original V3_R": result[2]["original V3_L"],
+                        "original R0_L": b2_parameters["original R0"],
+                        "original R0_R": b1_parameters["original R0"],
                     }
                     ii, jj, kk, ll = result[0]
                     self.cite_parameter(parameters)
@@ -2297,6 +2389,14 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 "V3_R": "0.0",
                 "R0_L": "1.5",
                 "R0_R": "1.5",
+                "original V1_L": "0.0",
+                "original V2_L": "0.0",
+                "original V3_L": "0.0",
+                "original V1_R": "0.0",
+                "original V2_R": "0.0",
+                "original V3_R": "0.0",
+                "original R0_L": "1.5",
+                "original R0_R": "1.5",
             }
             return ("zeroed", ("*", "*", "*", "*"), "end_bond-torsion_3", parameters)
         else:
@@ -2342,7 +2442,16 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 "zeroed",
                 ("*", "*", "*", "*"),
                 "middle_bond-torsion_3",
-                {"R0": "1.5", "V1": "0.0", "V2": "0.0", "V3": "0.0"},
+                {
+                    "R0": "1.5",
+                    "V1": "0.0",
+                    "V2": "0.0",
+                    "V3": "0.0",
+                    "original R0": "1.5",
+                    "original V1": "0.0",
+                    "original V2": "0.0",
+                    "original V3": "0.0",
+                },
             )
         else:
             raise RuntimeError(
@@ -2361,6 +2470,8 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
         values = {
             "Theta0_L": a1_parameters["Theta0"],
             "Theta0_R": a2_parameters["Theta0"],
+            "original Theta0_L": a1_parameters["original Theta0"],
+            "original Theta0_R": a2_parameters["original Theta0"],
         }
 
         # parameters directly available
@@ -2369,6 +2480,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             if result[1]:
                 parameters = {
                     "reference": result[2]["reference"],
+                    "version": result[2]["version"],
                     "V1_L": result[2]["V1_R"],
                     "V2_L": result[2]["V2_R"],
                     "V3_L": result[2]["V3_R"],
@@ -2377,6 +2489,14 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                     "V3_R": result[2]["V3_L"],
                     "Theta0_L": a2_parameters["Theta0"],
                     "Theta0_R": a1_parameters["Theta0"],
+                    "original V1_L": result[2]["original V1_R"],
+                    "original V2_L": result[2]["original V2_R"],
+                    "original V3_L": result[2]["original V3_R"],
+                    "original V1_R": result[2]["original V1_L"],
+                    "original V2_R": result[2]["original V2_L"],
+                    "original V3_R": result[2]["original V3_L"],
+                    "original Theta0_L": a2_parameters["original Theta0"],
+                    "original Theta0_R": a1_parameters["original Theta0"],
                 }
                 ii, jj, kk, ll = result[0]
                 self.cite_parameter(parameters)
@@ -2400,6 +2520,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 if result[1]:
                     parameters = {
                         "reference": result[2]["reference"],
+                        "version": result[2]["version"],
                         "V1_L": result[2]["V1_R"],
                         "V2_L": result[2]["V2_R"],
                         "V3_L": result[2]["V3_R"],
@@ -2408,6 +2529,14 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                         "V3_R": result[2]["V3_L"],
                         "Theta0_L": a2_parameters["Theta0"],
                         "Theta0_R": a1_parameters["Theta0"],
+                        "original V1_L": result[2]["original V1_R"],
+                        "original V2_L": result[2]["original V2_R"],
+                        "original V3_L": result[2]["original V3_R"],
+                        "original V1_R": result[2]["original V1_L"],
+                        "original V2_R": result[2]["original V2_L"],
+                        "original V3_R": result[2]["original V3_L"],
+                        "original Theta0_L": a2_parameters["original Theta0"],
+                        "original Theta0_R": a1_parameters["original Theta0"],
                     }
                     ii, jj, kk, ll = result[0]
                     self.cite_parameter(parameters)
@@ -2433,6 +2562,14 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 "V3_R": "0.0",
                 "Theta0_L": "109.0",
                 "Theta0_R": "109.0",
+                "original V1_L": "0.0",
+                "original V2_L": "0.0",
+                "original V3_L": "0.0",
+                "original V1_R": "0.0",
+                "original V2_R": "0.0",
+                "original V3_R": "0.0",
+                "original Theta0_L": "109.0",
+                "original Theta0_R": "109.0",
             }
             return ("zeroed", ("*", "*", "*", "*"), "angle-torsion_3", parameters)
         else:
@@ -2451,6 +2588,8 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
         values = {
             "Theta0_L": a1_parameters["Theta0"],
             "Theta0_R": a2_parameters["Theta0"],
+            "original Theta0_L": a1_parameters["original Theta0"],
+            "original Theta0_R": a2_parameters["original Theta0"],
         }
 
         # parameters directly available
@@ -2477,7 +2616,14 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 return ("equivalent", result[0], "angle-angle-torsion_1", values)
 
         if zero:
-            parameters = {"Theta0_L": "109.0", "Theta0_R": "109.0", "K": "0.0"}
+            parameters = {
+                "Theta0_L": "109.0",
+                "Theta0_R": "109.0",
+                "K": "0.0",
+                "original Theta0_L": "109.0",
+                "original Theta0_R": "109.0",
+                "original K": "0.0",
+            }
             return ("zeroed", ("*", "*", "*", "*"), "angle-angle-torsion_1", parameters)
         else:
             raise RuntimeError(
