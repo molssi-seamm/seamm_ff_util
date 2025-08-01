@@ -1,6 +1,13 @@
 =======
 History
 =======
+2025.8.1 -- Bugfix: tabulated angles cause a crash
+   * The changes for tracking the original parameters introduced an error into the code
+     handling tabulated angles. This is now fixed.
+   * Added the element symbol corresponding to the atom type in the energy
+     expression. This allows LAMMPS to add the correct element symbol to trajectories,
+     if desired.
+
 2025.5.26 -- Track more of the original parameters
    * Added tracking of the original parameters for cross terms like bond-bond terms.
    * Improved chacking for duplicate parameters to remove most duplicates, except for

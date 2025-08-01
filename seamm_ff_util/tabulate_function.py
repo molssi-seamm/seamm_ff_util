@@ -29,19 +29,28 @@ def tabulate_angle(equation, values, derivative=None, step=0.2):
     if "zero-shift" in values:
         thetas[0] += values.pop("zero-shift")
 
-    symbols = [sympy.symbols(key) for key in values.keys()]
+    variables = []
+    filtered_values = {}
+    for key in values.keys():
+        if key.startswith("original "):
+            continue
+        if key in ("version",):
+            continue
+        variables.append(key)
+        filtered_values[key] = values[key]
+    symbols = [sympy.symbols(key) for key in variables]
     Theta = sympy.symbols("Theta")
     symbols.append(Theta)
     eqn = sympy.parse_expr(equation)
     E = sympy.lambdify(symbols, eqn, "numpy")
 
-    Es = E(**values, Theta=np.radians(thetas))
+    Es = E(**filtered_values, Theta=np.radians(thetas))
     if derivative is None:
         deqn = sympy.diff(eqn, Theta)
     else:
         deqn = sympy.parse_expr(derivative)
     dE = sympy.lambdify(symbols, deqn, "numpy")
-    dEs = dE(**values, Theta=np.radians(thetas))
+    dEs = dE(**filtered_values, Theta=np.radians(thetas))
 
     # Undo any shift
     thetas[0] = 0.0
