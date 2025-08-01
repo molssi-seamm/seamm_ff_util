@@ -1398,6 +1398,17 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 if key is not None:
                     newdata[item] = data[item][key]
 
+    def element(self, i):
+        """Return the element symbol for an atom type i"""
+        if self.ff_form == "reaxff":
+            if (i,) in self.ff["reaxff_atomic_parameters_25-32"]:
+                return i
+
+        if i in self.ff["atom_types"]:
+            return self.ff["atom_types"][i]["element"]
+
+        raise RuntimeError("no atom type data for {}".format(i))
+
     def mass(self, i):
         """Return the atomic mass for an atom type i"""
         if self.ff_form == "reaxff":

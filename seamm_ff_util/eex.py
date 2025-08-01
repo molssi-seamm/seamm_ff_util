@@ -128,6 +128,7 @@ class EEX_Mixin:
         result = eex["atoms"] = []
         atom_types = eex["atom types"] = []
         masses = eex["masses"] = []
+        elements = eex["elements"] = []
 
         shells = []
         eex["shell_of_atom"] = shell_of_atom = []
@@ -141,6 +142,7 @@ class EEX_Mixin:
                     atom_types.append(itype)
                     index = len(atom_types)
                     masses.append((self.mass(itype), itype))
+                    elements.append(self.element(itype))
                 result.append((x, y, z, index))
                 shell_of_atom.append(None)
             else:
@@ -157,6 +159,7 @@ class EEX_Mixin:
                     atom_types.append("core_" + itype)
                     index = len(atom_types)
                     masses.append((0.9 * float(self.mass(itype)), "core_" + itype))
+                    elements.append(self.element(itype))
                     result.append((x, y, z, index))
                     # shell
                     atom_types.append(itype)
