@@ -2869,10 +2869,15 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
 
         Returns
         -------
-        None
+        [str]
+            Any warnings for the user, e.g. that the charges had to be adjusted.
+            These are also logged, but a step should print them where the user
+            will see them, in its output rather than in the log.
         """
+        warnings = []
+
         if self.ff_form in ("reaxff",):
-            return
+            return warnings
 
         ffname = self.current_forcefield
 
@@ -2938,11 +2943,13 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             if abs(total_q - total_charge) > 0.001:
                 delta = (total_q - total_charge) / len(charges)
                 charges = [q - delta for q in charges]
-                logger.warning(
-                    f"The total charge from the forcefield, {total_q:3f}, does not "
-                    f"match the formal charge, {total_charge}."
-                    f"\nAdjusted each atom's charge by {-delta:.3f} to compensate."
+                text = (
+                    f"Warning: the total charge from the forcefield, {total_q:.6f}, "
+                    f"does not match the charge of the system, {total_charge}. Each "
+                    f"atom's charge was adjusted by {-delta:.6f} to compensate."
                 )
+                logger.warning(text)
+                warnings.append(text)
             logger.debug("Charges from increments:\n" + pprint.pformat(charges))
 
             key = f"charges_{ffname}"
@@ -2981,11 +2988,13 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             if abs(total_q - total_charge) > 0.001:
                 delta = (total_q - total_charge) / len(charges)
                 charges = [q - delta for q in charges]
-                logger.warning(
-                    f"The total charge from the forcefield, {total_q:3f}, does not "
-                    f"match the formal charge, {total_charge}."
-                    f"\nAdjusted each atom's charge by {-delta:.3f} to compensate."
+                text = (
+                    f"Warning: the total charge from the forcefield, {total_q:.6f}, "
+                    f"does not match the charge of the system, {total_charge}. Each "
+                    f"atom's charge was adjusted by {-delta:.6f} to compensate."
                 )
+                logger.warning(text)
+                warnings.append(text)
             logger.debug("Charges from charges:\n" + pprint.pformat(charges))
 
             key = f"charges_{ffname}"
@@ -2994,6 +3003,8 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             charge_column = configuration.atoms.get_column(key)
             charge_column[0:] = charges
             logger.debug(f"Set column '{key}' to the charges")
+
+        return warnings
 
     def cite_parameter(self, data, level=2):
         """Add citations from the reference associated with a parameter
