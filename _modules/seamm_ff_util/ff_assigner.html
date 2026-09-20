@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>seamm_ff_util.ff_assigner &#8212; SEAMM Forcefield Utilities 2025.8.1 documentation</title>
+    <title>seamm_ff_util.ff_assigner &#8212; SEAMM Forcefield Utilities 2026.9.20 documentation</title>
   
   
   
@@ -26,8 +26,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -35,10 +35,10 @@
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=c224919a" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -48,33 +48,40 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-PQXXTJ2');</script>
 <!-- End Google Tag Manager -->
 
-    <script src="../../_static/documentation_options.js?v=881247ce"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/documentation_options.js?v=c24a4294"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/seamm_ff_util/ff_assigner';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
 
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.8.1" />
+  <meta name="docsearch:version" content="2026.9.20" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -100,7 +107,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -230,11 +237,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       
         <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
       
         <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -247,8 +261,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           
           
           
-          <a href="https://github.com/molssi-seamm/seamm_ff_util" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/molssi-seamm/seamm_ff_util" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
         <li class="nav-item">
           
@@ -259,8 +272,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           
           
           
-          <a href="https://twitter.com/MolSSI_NSF" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">Twitter</span></a>
+          <a href="https://twitter.com/MolSSI_NSF" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i><span class="visually-hidden">Twitter</span></a>
         </li>
 </ul></div>
       
@@ -375,11 +387,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         
           <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
         
           <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -392,8 +411,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           
           
           
-          <a href="https://github.com/molssi-seamm/seamm_ff_util" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/molssi-seamm/seamm_ff_util" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
         <li class="nav-item">
           
@@ -404,8 +422,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           
           
           
-          <a href="https://twitter.com/MolSSI_NSF" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">Twitter</span></a>
+          <a href="https://twitter.com/MolSSI_NSF" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i><span class="visually-hidden">Twitter</span></a>
         </li>
 </ul></div>
         
@@ -471,7 +488,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <h1>Source code for seamm_ff_util.ff_assigner</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 
-<span class="sd">&quot;&quot;&quot;Main class for handling forcefields&quot;&quot;&quot;</span>
+<span class="sd">"""Main class for handling forcefields"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
@@ -481,15 +498,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <span class="kn">import</span><span class="w"> </span><span class="nn">rdkit.Chem.AllChem</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-<span class="c1"># logger.setLevel(&quot;DEBUG&quot;)</span>
+<span class="c1"># logger.setLevel("DEBUG")</span>
 
 
 <div class="viewcode-block" id="ForcefieldAssignmentError">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.ff_assigner.ForcefieldAssignmentError">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ForcefieldAssignmentError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The forcefield could not be assigned successfully.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""The forcefield could not be assigned successfully."""</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;The atom-types could not be assigned.&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">"The atom-types could not be assigned."</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 
@@ -498,21 +515,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.ff_assigner.FFAssigner">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FFAssigner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forcefield</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle the assignment of the forcefield to the structure</span>
+<span class="w">        </span><span class="sd">"""Handle the assignment of the forcefield to the structure</span>
 
 <span class="sd">        This class is closely related to the Forcefield class, but</span>
 <span class="sd">        separated from it due to the dependencies it carries along,</span>
 <span class="sd">        coupled with the fact that it is not needed in some</span>
 <span class="sd">        computations where the forcefield itself is.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">forcefield</span> <span class="o">=</span> <span class="n">forcefield</span>
 
 <div class="viewcode-block" id="FFAssigner.assign">
 <a class="viewcode-back" href="../../api/seamm_ff_util.html#seamm_ff_util.ff_assigner.FFAssigner.assign">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">assign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">picture</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Assign the atom types to the structure using SMARTS templates&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">forcefield</span><span class="o">.</span><span class="n">ff_form</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;reaxff&quot;</span><span class="p">,):</span>
+<span class="w">        </span><span class="sd">"""Assign the atom types to the structure using SMARTS templates"""</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">forcefield</span><span class="o">.</span><span class="n">ff_form</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"reaxff"</span><span class="p">,):</span>
             <span class="c1"># Nothing to do.</span>
             <span class="k">return</span>
 
@@ -520,47 +537,47 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         <span class="n">n_atoms</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">n_atoms</span>
 
-        <span class="n">atom_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;?&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_atoms</span>
+        <span class="n">atom_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"?"</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_atoms</span>
 
         <span class="c1"># First try the fragments, if any</span>
         <span class="n">fragments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forcefield</span><span class="o">.</span><span class="n">get_fragments</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">smiles</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">fragments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">smarts</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;SMARTS&quot;</span><span class="p">]</span>
+            <span class="n">smarts</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"SMARTS"</span><span class="p">]</span>
 
             <span class="n">pattern</span> <span class="o">=</span> <span class="n">rdkit</span><span class="o">.</span><span class="n">Chem</span><span class="o">.</span><span class="n">MolFromSmarts</span><span class="p">(</span><span class="n">smarts</span><span class="p">)</span>
 
             <span class="n">matches</span> <span class="o">=</span> <span class="n">molecule</span><span class="o">.</span><span class="n">GetSubstructMatches</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">maxMatches</span><span class="o">=</span><span class="mi">6</span> <span class="o">*</span> <span class="n">n_atoms</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">smiles</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">smiles</span> <span class="o">+</span> <span class="s2">": "</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">:</span>
-                    <span class="k">for</span> <span class="n">_type</span><span class="p">,</span> <span class="n">atom</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;atom types&quot;</span><span class="p">],</span> <span class="n">match</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">_type</span><span class="p">,</span> <span class="n">atom</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"atom types"</span><span class="p">],</span> <span class="n">match</span><span class="p">):</span>
                         <span class="c1"># Check if this has already been assigned to another fragment</span>
-                        <span class="k">if</span> <span class="n">atom_types</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;?&quot;</span><span class="p">:</span>
-                            <span class="n">key1</span> <span class="o">=</span> <span class="n">atom_types</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                            <span class="n">key2</span> <span class="o">=</span> <span class="n">_type</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="n">atom_types</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">"?"</span><span class="p">:</span>
+                            <span class="n">key1</span> <span class="o">=</span> <span class="n">atom_types</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"_"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                            <span class="n">key2</span> <span class="o">=</span> <span class="n">_type</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"_"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                             <span class="k">if</span> <span class="n">key2</span> <span class="o">!=</span> <span class="n">key1</span><span class="p">:</span>
                                 <span class="bp">self</span><span class="o">.</span><span class="n">draw_atom_types</span><span class="p">(</span>
                                     <span class="n">molecule</span><span class="p">,</span>
                                     <span class="n">atom_types</span><span class="p">,</span>
-                                    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;duplicate_atom_types.png&quot;</span><span class="p">,</span>
+                                    <span class="n">filename</span><span class="o">=</span><span class="s2">"duplicate_atom_types.png"</span><span class="p">,</span>
                                 <span class="p">)</span>
                                 <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-                                    <span class="sa">f</span><span class="s2">&quot;Error in fragment atom typing: atom </span><span class="si">{</span><span class="n">atom</span><span class="si">}</span><span class="s2"> &quot;</span>
-                                    <span class="sa">f</span><span class="s2">&quot;already typed:</span><span class="se">\n</span><span class="si">{</span><span class="n">atom_types</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-                                    <span class="sa">f</span><span class="s2">&quot;New assignment: </span><span class="si">{</span><span class="n">_type</span><span class="si">}</span><span class="s2">&quot;</span>
+                                    <span class="sa">f</span><span class="s2">"Error in fragment atom typing: atom </span><span class="si">{</span><span class="n">atom</span><span class="si">}</span><span class="s2"> "</span>
+                                    <span class="sa">f</span><span class="s2">"already typed:</span><span class="se">\n</span><span class="si">{</span><span class="n">atom_types</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span>
+                                    <span class="sa">f</span><span class="s2">"New assignment: </span><span class="si">{</span><span class="n">_type</span><span class="si">}</span><span class="s2">"</span>
                                 <span class="p">)</span>
                                 <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                                 <span class="k">raise</span> <span class="n">ForcefieldAssignmentError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                         <span class="n">atom_types</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span> <span class="o">=</span> <span class="n">_type</span>
 
-        <span class="c1"># Fragments have priority, so don&#39;t change their assignments</span>
-        <span class="n">assigned</span> <span class="o">=</span> <span class="p">[</span><span class="n">type_</span> <span class="o">!=</span> <span class="s2">&quot;?&quot;</span> <span class="k">for</span> <span class="n">type_</span> <span class="ow">in</span> <span class="n">atom_types</span><span class="p">]</span>
+        <span class="c1"># Fragments have priority, so don't change their assignments</span>
+        <span class="n">assigned</span> <span class="o">=</span> <span class="p">[</span><span class="n">type_</span> <span class="o">!=</span> <span class="s2">"?"</span> <span class="k">for</span> <span class="n">type_</span> <span class="ow">in</span> <span class="n">atom_types</span><span class="p">]</span>
 
         <span class="c1"># And now the templates for the atom_types</span>
         <span class="n">templates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forcefield</span><span class="o">.</span><span class="n">get_templates</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">atom_type</span> <span class="ow">in</span> <span class="n">templates</span><span class="p">:</span>
             <span class="n">template</span> <span class="o">=</span> <span class="n">templates</span><span class="p">[</span><span class="n">atom_type</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">smarts</span> <span class="ow">in</span> <span class="n">template</span><span class="p">[</span><span class="s2">&quot;smarts&quot;</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">smarts</span> <span class="ow">in</span> <span class="n">template</span><span class="p">[</span><span class="s2">"smarts"</span><span class="p">]:</span>
                 <span class="n">pattern</span> <span class="o">=</span> <span class="n">rdkit</span><span class="o">.</span><span class="n">Chem</span><span class="o">.</span><span class="n">MolFromSmarts</span><span class="p">(</span><span class="n">smarts</span><span class="p">)</span>
 
                 <span class="n">ind_map</span> <span class="o">=</span> <span class="p">{}</span>
@@ -571,7 +588,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <span class="n">map_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">ind_map</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">ind_map</span><span class="p">)]</span>
 
                 <span class="n">matches</span> <span class="o">=</span> <span class="n">molecule</span><span class="o">.</span><span class="n">GetSubstructMatches</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">maxMatches</span><span class="o">=</span><span class="mi">6</span> <span class="o">*</span> <span class="n">n_atoms</span><span class="p">)</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">atom_type</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">atom_type</span> <span class="o">+</span> <span class="s2">": "</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">:</span>
                         <span class="n">atom_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">match</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">map_list</span><span class="p">]</span>
@@ -579,7 +596,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             <span class="k">if</span> <span class="ow">not</span> <span class="n">assigned</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span>
                                 <span class="n">atom_types</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">atom_type</span>
                         <span class="n">tmp</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">atom_ids</span><span class="p">]</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp</span><span class="p">))</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp</span><span class="p">))</span>
 
         <span class="c1"># Create a picture with the atom types if requested</span>
         <span class="k">if</span> <span class="n">picture</span><span class="p">:</span>
@@ -588,27 +605,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">untyped</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">atom</span><span class="p">,</span> <span class="n">atom_type</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">molecule</span><span class="o">.</span><span class="n">GetAtoms</span><span class="p">(),</span> <span class="n">atom_types</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">atom_type</span> <span class="o">==</span> <span class="s2">&quot;?&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">atom_type</span> <span class="o">==</span> <span class="s2">"?"</span><span class="p">:</span>
                 <span class="n">untyped</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">GetSymbol</span><span class="p">(),</span> <span class="n">atom_type</span><span class="p">))</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">GetSymbol</span><span class="p">(),</span> <span class="n">atom_type</span><span class="p">))</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">untyped</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="s2">&quot;The forcefield does not have atom types for&quot;</span>
-                <span class="s2">&quot; the molecule!. See missing_atom_types.png&quot;</span>
-                <span class="s2">&quot; for more detail.&quot;</span>
+                <span class="s2">"The forcefield does not have atom types for"</span>
+                <span class="s2">" the molecule!. See missing_atom_types.png"</span>
+                <span class="s2">" for more detail."</span>
             <span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">draw_atom_types</span><span class="p">(</span>
                 <span class="n">molecule</span><span class="p">,</span>
                 <span class="n">atom_types</span><span class="p">,</span>
-                <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;missing_atom_types.png&quot;</span><span class="p">,</span>
+                <span class="n">filename</span><span class="o">=</span><span class="s2">"missing_atom_types.png"</span><span class="p">,</span>
                 <span class="n">highlight_atoms</span><span class="o">=</span><span class="n">untyped</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">raise</span> <span class="n">ForcefieldAssignmentError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;The molecule was successfully atom-typed&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"The molecule was successfully atom-typed"</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">atom_types</span></div>
 
@@ -620,10 +637,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <span class="n">molecule</span><span class="p">,</span>
         <span class="n">atom_types</span><span class="p">,</span>
         <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;atom_types.png&quot;</span><span class="p">,</span>
+        <span class="n">filename</span><span class="o">=</span><span class="s2">"atom_types.png"</span><span class="p">,</span>
         <span class="n">highlight_atoms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a picture of the molecule labeled by atom types.</span>
+<span class="w">        </span><span class="sd">"""Create a picture of the molecule labeled by atom types.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -632,20 +649,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <span class="sd">        atom_types : [str]</span>
 <span class="sd">            The labels for the atom types</span>
 <span class="sd">        legend : str</span>
-<span class="sd">            The legend for the picture. Defaults to &quot;Atom types for ff_file:ffname&quot;</span>
+<span class="sd">            The legend for the picture. Defaults to "Atom types for ff_file:ffname"</span>
 <span class="sd">        filename : str or pathlib.Path</span>
 <span class="sd">            The file to write the picture to.</span>
 <span class="sd">        highlight_atoms : [int]</span>
 <span class="sd">            The atoms to highlight</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">legend</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">legend</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Atom Types for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">forcefield</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">:&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">forcefield</span><span class="o">.</span><span class="n">current_forcefield</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">"Atom Types for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">forcefield</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">:"</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">forcefield</span><span class="o">.</span><span class="n">current_forcefield</span><span class="si">}</span><span class="s2">"</span>
             <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">atom</span><span class="p">,</span> <span class="n">atom_type</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">molecule</span><span class="o">.</span><span class="n">GetAtoms</span><span class="p">(),</span> <span class="n">atom_types</span><span class="p">):</span>
-            <span class="n">atom</span><span class="o">.</span><span class="n">SetProp</span><span class="p">(</span><span class="s2">&quot;atomNote&quot;</span><span class="p">,</span> <span class="n">atom_type</span><span class="p">)</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">SetProp</span><span class="p">(</span><span class="s2">"atomNote"</span><span class="p">,</span> <span class="n">atom_type</span><span class="p">)</span>
         <span class="n">rdkit</span><span class="o">.</span><span class="n">Chem</span><span class="o">.</span><span class="n">AllChem</span><span class="o">.</span><span class="n">Compute2DCoords</span><span class="p">(</span><span class="n">molecule</span><span class="p">)</span>
         <span class="n">rdkit</span><span class="o">.</span><span class="n">Chem</span><span class="o">.</span><span class="n">rdDepictor</span><span class="o">.</span><span class="n">StraightenDepiction</span><span class="p">(</span><span class="n">molecule</span><span class="p">)</span>
 
@@ -688,8 +705,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -701,7 +718,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
 </p></div>
       
     </div>
