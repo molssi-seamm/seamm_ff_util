@@ -1434,7 +1434,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 return ("explicit", key, "charges", parameters)
 
             # try equivalences
-            if "equivalence" in self.ff:
+            if self._have_equivalences("equivalence", i):
                 ieq = self.ff["equivalence"][i]["nonbond"]
                 key = (ieq,)
                 if key in self.ff["charges"]:
@@ -1461,7 +1461,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 return ("explicit", key, "shell-model", parameters)
 
             # try equivalences
-            if "equivalence" in self.ff:
+            if self._have_equivalences("equivalence", i):
                 ieq = self.ff["equivalence"][i]["nonbond"]
                 key = (ieq,)
                 if key in self.ff["shell-model"]:
@@ -1491,7 +1491,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             return ("explicit", key, "bond_increments", parameters)
 
         # try automatic equivalences
-        if "auto_equivalence" in self.ff:
+        if self._have_equivalences("auto_equivalence", i, j):
             iauto = self.ff["auto_equivalence"][i]["bond_increment"]
             jauto = self.ff["auto_equivalence"][j]["bond_increment"]
             key, flipped = self.make_canonical("like_bond", (iauto, jauto))
@@ -1506,6 +1506,41 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 return ("automatic", key, "bond_increments", parameters)
 
         raise RuntimeError("No bond increments for {}-{}".format(i, j))
+
+    def _have_equivalences(self, table, *types):
+        """Whether the equivalence table has an entry for every one of the types.
+
+        Parameters
+        ----------
+        table : str
+            Which table to look in, "equivalence" or "auto_equivalence".
+        *types : str
+            The atom types of the term. None is ignored, for the terms that take an
+            optional second type.
+
+        Returns
+        -------
+        bool
+            True if the table exists and covers every type given.
+
+        Note
+        ----
+        An equivalence table need not cover every type in the forcefield. A combined
+        forcefield such as 'oplsaa+' takes its equivalences from one of the
+        forcefields it is built from while another contributes atom types of its own,
+        which have no entry -- and need none, since it provides an explicit parameter
+        for every term those types appear in.
+
+        Testing only that the table exists, and then indexing it, raised a bare
+        ``KeyError`` naming such a type. That hid the real problem, which is that the
+        term has no parameters by any route: the type simply has no equivalences to
+        fall back on, so the lookup should move on and, if nothing else matches, fail
+        with a message saying which term is missing.
+        """
+        if table not in self.ff:
+            return False
+        known = self.ff[table]
+        return all(_type in known for _type in types if _type is not None)
 
     def bond_parameters(self, i, j):
         """Return the bond parameters given two atoms types i and j
@@ -1523,7 +1558,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 return ("explicit", key, form, self.ff[form][key])
 
         # try equivalences
-        if "equivalence" in self.ff:
+        if self._have_equivalences("equivalence", i, j):
             ieq = self.ff["equivalence"][i]["bond"]
             jeq = self.ff["equivalence"][j]["bond"]
             key, flipped = self.make_canonical("like_bond", (ieq, jeq))
@@ -1533,7 +1568,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                     return ("equivalent", key, form, self.ff[form][key])
 
         # try automatic equivalences
-        if "auto_equivalence" in self.ff:
+        if self._have_equivalences("auto_equivalence", i, j):
             iauto = self.ff["auto_equivalence"][i]["bond"]
             jauto = self.ff["auto_equivalence"][j]["bond"]
             key, flipped = self.make_canonical("like_bond", (iauto, jauto))
@@ -1564,7 +1599,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
         msg.append("\tNo explicit parameters found")
 
         # try equivalences
-        if "equivalence" in self.ff:
+        if self._have_equivalences("equivalence", i, j, k):
             ieq = self.ff["equivalence"][i]["angle"]
             jeq = self.ff["equivalence"][j]["angle"]
             keq = self.ff["equivalence"][k]["angle"]
@@ -1579,7 +1614,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             msg.append("\tNo equivalences defined")
 
         # try automatic equivalences
-        if "auto_equivalence" in self.ff:
+        if self._have_equivalences("auto_equivalence", i, j, k):
             iauto = self.ff["auto_equivalence"][i]["angle_end_atom"]
             jauto = self.ff["auto_equivalence"][j]["angle_center_atom"]
             kauto = self.ff["auto_equivalence"][k]["angle_end_atom"]
@@ -1676,7 +1711,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 return ("explicit", result[0], form, result[2])
 
         # try equivalences
-        if "equivalence" in self.ff:
+        if self._have_equivalences("equivalence", i, j, k, l):
             ieq = self.ff["equivalence"][i]["torsion"]
             jeq = self.ff["equivalence"][j]["torsion"]
             keq = self.ff["equivalence"][k]["torsion"]
@@ -1690,7 +1725,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                     return ("equivalent", result[0], form, result[2])
 
         # try automatic equivalences
-        if "auto_equivalence" in self.ff:
+        if self._have_equivalences("auto_equivalence", i, j, k, l):
             iauto = self.ff["auto_equivalence"][i]["torsion_end_atom"]
             jauto = self.ff["auto_equivalence"][j]["torsion_center_atom"]
             kauto = self.ff["auto_equivalence"][k]["torsion_center_atom"]
@@ -1808,7 +1843,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 return ("explicit", result[0], form, result[1])
 
         # try equivalences
-        if "equivalence" in self.ff:
+        if self._have_equivalences("equivalence", i, j, k, l):
             ieq = self.ff["equivalence"][i]["oop"]
             jeq = self.ff["equivalence"][j]["oop"]
             keq = self.ff["equivalence"][k]["oop"]
@@ -1820,7 +1855,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                     return ("equivalent", result[0], form, result[1])
 
         # try automatic equivalences
-        if "auto_equivalence" in self.ff:
+        if self._have_equivalences("auto_equivalence", i, j, k, l):
             iauto = self.ff["auto_equivalence"][i]["oop_end_atom"]
             jauto = self.ff["auto_equivalence"][j]["oop_center_atom"]
             kauto = self.ff["auto_equivalence"][k]["oop_end_atom"]
@@ -1927,7 +1962,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             return ("explicit", key, form, self.ff[form][key])
 
         # try equivalences
-        if "equivalence" in self.ff:
+        if self._have_equivalences("equivalence", i, j):
             ieq = self.ff["equivalence"][i]["nonbond"]
             if j is None:
                 key = (ieq,)
@@ -1939,7 +1974,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 return ("equivalent", key, form, self.ff[form][key])
 
         # try automatic equivalences
-        if "auto_equivalence" in self.ff:
+        if self._have_equivalences("auto_equivalence", i, j):
             iauto = self.ff["auto_equivalence"][i]["nonbond"]
             if j is None:
                 key = (iauto,)
@@ -2007,7 +2042,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             return ("explicit", result[0], "bond-bond", values)
 
         # try equivalences
-        if "equivalence" in self.ff:
+        if self._have_equivalences("equivalence", i, j, k):
             ieq = self.ff["equivalence"][i]["angle"]
             jeq = self.ff["equivalence"][j]["angle"]
             keq = self.ff["equivalence"][k]["angle"]
@@ -2081,7 +2116,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             return ("explicit", result[0], "bond-bond_1_3", values)
 
         # try equivalences
-        if "equivalence" in self.ff:
+        if self._have_equivalences("equivalence", i, j, k, l):
             ieq = self.ff["equivalence"][i]["torsion"]
             jeq = self.ff["equivalence"][j]["torsion"]
             keq = self.ff["equivalence"][k]["torsion"]
@@ -2142,7 +2177,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 return ("explicit", result[0], "bond-angle", parameters)
 
         # try equivalences
-        if "equivalence" in self.ff:
+        if self._have_equivalences("equivalence", i, j, k):
             ieq = self.ff["equivalence"][i]["angle"]
             jeq = self.ff["equivalence"][j]["angle"]
             keq = self.ff["equivalence"][k]["angle"]
@@ -2231,7 +2266,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 return ("explicit", result[0], "angle-angle", values)
 
         # try equivalences
-        if "equivalence" in self.ff:
+        if self._have_equivalences("equivalence", i, j, k, l):
             ieq = self.ff["equivalence"][i]["angle"]
             jeq = self.ff["equivalence"][j]["angle"]
             keq = self.ff["equivalence"][k]["angle"]
@@ -2346,7 +2381,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 return ("explicit", result[0], "end_bond-torsion_3", parameters)
 
         # try equivalences
-        if "equivalence" in self.ff:
+        if self._have_equivalences("equivalence", i, j, k, l):
             ieq = self.ff["equivalence"][i]["torsion"]
             jeq = self.ff["equivalence"][j]["torsion"]
             keq = self.ff["equivalence"][k]["torsion"]
@@ -2435,7 +2470,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             return ("explicit", result[0], "middle_bond-torsion_3", values)
 
         # try equivalences
-        if "equivalence" in self.ff:
+        if self._have_equivalences("equivalence", i, j, k, l):
             ieq = self.ff["equivalence"][i]["torsion"]
             jeq = self.ff["equivalence"][j]["torsion"]
             keq = self.ff["equivalence"][k]["torsion"]
@@ -2519,7 +2554,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 return ("explicit", result[0], "angle-torsion_3", parameters)
 
         # try equivalences
-        if "equivalence" in self.ff:
+        if self._have_equivalences("equivalence", i, j, k, l):
             ieq = self.ff["equivalence"][i]["torsion"]
             jeq = self.ff["equivalence"][j]["torsion"]
             keq = self.ff["equivalence"][k]["torsion"]
@@ -2613,7 +2648,7 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
             return ("explicit", result[0], "angle-angle-torsion_1", values)
 
         # try equivalences
-        if "equivalence" in self.ff:
+        if self._have_equivalences("equivalence", i, j, k, l):
             ieq = self.ff["equivalence"][i]["torsion"]
             jeq = self.ff["equivalence"][j]["torsion"]
             keq = self.ff["equivalence"][k]["torsion"]

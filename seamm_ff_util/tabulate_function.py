@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """Functions for creating the input for LAMMPS tabulated potentials."""
+
 import numpy as np
 
 import sympy

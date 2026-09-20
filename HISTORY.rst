@@ -1,6 +1,18 @@
 =======
 History
 =======
+2026.9.20 -- Bugfix: an atom type with no equivalence hid the real error
+    * A forcefield's equivalence table does not have to cover every atom type: a
+      combined forcefield such as 'oplsaa+' takes its equivalences from one of the
+      forcefields it is built from, while another contributes types of its own that
+      have none -- and need none, because it gives an explicit parameter for every
+      term they appear in. Looking for a parameter for such a type reported, e.g.,
+      ``KeyError: 'SBLRHMKNNHXPHG_803'``, which named the atom type and read as
+      though the type itself were unknown. The type is now recognized as simply
+      having no equivalences to fall back on, so the search carries on and, if
+      nothing matches, says which term has no parameters.
+    * Internal: reformatted a file for the current version of black.
+
 2025.8.1 -- Bugfix: tabulated angles cause a crash
    * The changes for tracking the original parameters introduced an error into the code
      handling tabulated angles. This is now fixed.
