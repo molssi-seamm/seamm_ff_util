@@ -1,6 +1,19 @@
 =======
 History
 =======
+2026.9.20.1 -- Warnings about the charges now reach the step's output
+    * When the charges from the forcefield do not add up to the charge of the
+      system, they are adjusted to compensate and a warning is issued. The warning
+      only went to the log, which in a running job is whatever its output happens
+      to be -- a queueing system's output file, or nothing at all -- so in practice
+      it was rarely seen. Assigning a forcefield now returns its warnings as well,
+      so that a step can print them in its own output alongside everything else it
+      reports.
+    * The warning said how much each atom's charge was adjusted by, rounded to
+      three decimals, which showed a real adjustment of a hundred-thousandth of an
+      electron as '0.000'. It now reports enough figures to be meaningful, as does
+      the total charge it quotes.
+
 2026.9.20 -- Bugfix: an atom type with no equivalence hid the real error
     * A forcefield's equivalence table does not have to cover every atom type: a
       combined forcefield such as 'oplsaa+' takes its equivalences from one of the
