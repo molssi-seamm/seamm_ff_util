@@ -1,6 +1,10 @@
 =======
 History
 =======
+2026.9.25 -- Internal: declare rdkit directly
+    * RDKit is imported directly but was only obtained through molsystem. It is now
+      a declared requirement, so the package's dependencies are complete on their own.
+
 2026.9.20.1 -- Warnings about the charges now reach the step's output
     * When the charges from the forcefield do not add up to the charge of the
       system, they are adjusted to compensate and a warning is issued. The warning
