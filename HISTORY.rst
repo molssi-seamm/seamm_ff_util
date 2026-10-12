@@ -1,6 +1,16 @@
 =======
 History
 =======
+2026.10.12 -- Bugfix: ReaxFF parameters kept to only 6 significant figures
+    * Converting a ReaxFF force field to SEAMM's format wrote every parameter with at
+      most 6 significant figures, so e.g. a bond energy of 142.2858 became 142.286.
+      All digits are now kept.
+    * The force-field file written for LAMMPS keeps the usual four decimals, but now
+      writes every digit of a value that has more.
+    * Terms that name an element the force field does not define, such as the stray
+      angle in LAMMPS's examples/reaxff/RDX file, are skipped with a warning instead
+      of stopping the conversion, as LAMMPS itself does.
+
 2026.9.25 -- Internal: declare rdkit directly
     * RDKit is imported directly but was only obtained through molsystem. It is now
       a declared requirement, so the package's dependencies are complete on their own.
