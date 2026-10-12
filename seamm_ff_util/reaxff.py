@@ -16,6 +16,24 @@ from .metadata import metadata as ff_metadata
 from seamm_util import element_data
 
 logger = logging.getLogger(__name__)
+
+#: Write the parameters with every digit as read: tabulate's default ("g") keeps
+#: only 6 significant figures (142.2858 -> 142.286). 15 is more than any ffield
+#: has, and "g" still writes 50 rather than 50.0.
+_FLOATFMT = ".15g"
+
+
+def _ffield_value(value, width):
+    """A parameter for LAMMPS's ffield file: the usual fixed four decimals when
+    they hold the value exactly, otherwise every digit. LAMMPS splits the lines
+    on whitespace, so a wider field is read correctly."""
+    value = float(value)
+    text = f"{value:{width}.4f}"
+    if float(text) == value:
+        return text
+    return repr(value).rjust(width)
+
+
 logger.setLevel("DEBUG")
 
 
@@ -1136,6 +1154,7 @@ def reaxff_to_molssi_format(parameters, ffname="reaxff", version=None):
         tablefmt="simple",
         colalign=("center", "right", "left", "left"),
         disable_numparse=False,
+        floatfmt=_FLOATFMT,
     ).splitlines()
     tmp[0] = "!" + tmp[0][1:]
     tmp[1] = "!" + tmp[1][1:]
@@ -1165,6 +1184,7 @@ def reaxff_to_molssi_format(parameters, ffname="reaxff", version=None):
         tablefmt="simple",
         colalign=("center", "right", "center", "decimal", "left"),
         disable_numparse=False,
+        floatfmt=_FLOATFMT,
     ).splitlines()
     tmp[0] = "!" + tmp[0][1:]
     tmp[1] = "!" + tmp[1][1:]
@@ -1187,6 +1207,30 @@ def reaxff_to_molssi_format(parameters, ffname="reaxff", version=None):
     # Create a mapping from old index to new for the bond terms, etc.
     to_new = {data[2]: index for index, data in enumerate(atomic_metadata)}
 
+    # Leave out terms naming an element the file does not define, as LAMMPS does
+    # (examples/reaxff/RDX has an angle "1 2 5" with only 4 elements). In a
+    # torsion, 0 at either end is a wildcard.
+    parameters = dict(parameters)
+    for section in (
+        "bond parameters",
+        "off-diagonal parameters",
+        "angle parameters",
+        "torsion parameters",
+        "hydrogen bond parameters",
+    ):
+        terms = parameters.get(section, {})
+        kept = {}
+        for key, value in terms.items():
+            ends = (key[0], key[-1]) if section == "torsion parameters" else ()
+            if all(i in to_new or (i == 0 and i in ends) for i in key):
+                kept[key] = value
+            else:
+                logger.warning(
+                    f"Ignoring the {section[:-11]} term {key}: the forcefield has "
+                    f"only {len(to_new)} elements."
+                )
+        parameters[section] = kept
+
     # Ordered list of symbols
     symbols = [s[1] for s in atomic_metadata]
 
@@ -1208,6 +1252,7 @@ def reaxff_to_molssi_format(parameters, ffname="reaxff", version=None):
             tablefmt="simple",
             colalign=["center", "right", "center"] + ["decimal"] * (g1 - g0),
             disable_numparse=False,
+            floatfmt=_FLOATFMT,
         ).splitlines()
         lines[0] = "!" + lines[0][1:]
         lines[1] = "!" + lines[1][1:]
@@ -1252,6 +1297,7 @@ def reaxff_to_molssi_format(parameters, ffname="reaxff", version=None):
             tablefmt="simple",
             colalign=["center", "right", "center", "center"] + ["decimal"] * (g1 - g0),
             disable_numparse=False,
+            floatfmt=_FLOATFMT,
         ).splitlines()
         lines[0] = "!" + lines[0][1:]
         lines[1] = "!" + lines[1][1:]
@@ -1293,6 +1339,7 @@ def reaxff_to_molssi_format(parameters, ffname="reaxff", version=None):
             tablefmt="simple",
             colalign=["center", "right", "center", "center"] + ["decimal"] * len(tmp),
             disable_numparse=False,
+            floatfmt=_FLOATFMT,
         ).splitlines()
         lines[0] = "!" + lines[0][1:]
         lines[1] = "!" + lines[1][1:]
@@ -1337,6 +1384,7 @@ def reaxff_to_molssi_format(parameters, ffname="reaxff", version=None):
         tablefmt="simple",
         colalign=["center", "right", "center", "center"] + ["decimal"] * len(tmp),
         disable_numparse=False,
+        floatfmt=_FLOATFMT,
     ).splitlines()
     lines[0] = "!" + lines[0][1:]
     lines[1] = "!" + lines[1][1:]
@@ -1384,6 +1432,7 @@ def reaxff_to_molssi_format(parameters, ffname="reaxff", version=None):
         tablefmt="simple",
         colalign=["center", "right", "center", "center"] + ["decimal"] * len(tmp),
         disable_numparse=False,
+        floatfmt=_FLOATFMT,
     ).splitlines()
     lines[0] = "!" + lines[0][1:]
     lines[1] = "!" + lines[1][1:]
@@ -1427,6 +1476,7 @@ def reaxff_to_molssi_format(parameters, ffname="reaxff", version=None):
             tablefmt="simple",
             colalign=["center", "right", "center", "center"] + ["decimal"] * len(tmp),
             disable_numparse=False,
+            floatfmt=_FLOATFMT,
         ).splitlines()
         lines[0] = "!" + lines[0][1:]
         lines[1] = "!" + lines[1][1:]
@@ -1563,7 +1613,7 @@ class ReaxFFMixin:
             parameter = mdata["parameter"]
             D = P[parameter]
             lines.append(
-                f" {float(D['value']):9.4f} ! {parameter}: {mdata['description']}"
+                f" {_ffield_value(D['value'], 9)} ! {parameter}: {mdata['description']}"
             )
 
         # Atomic parameters
@@ -1589,7 +1639,7 @@ class ReaxFFMixin:
             Eat[S] = P["Hat"]
             for g0 in range(0, n, 8):
                 g1 = min(g0 + 8, n)
-                tmp = [f"{float(P[k['parameter']]):8.4f}" for k in M[g0:g1]]
+                tmp = [_ffield_value(P[k["parameter"]], 8) for k in M[g0:g1]]
                 if g0 == 0:
                     lines.append(f" {S:2} " + " ".join(tmp))
                 else:
@@ -1630,7 +1680,7 @@ class ReaxFFMixin:
             j = symbols.index(j) + 1
             for g0 in range(0, n, 8):
                 g1 = min(g0 + 8, n)
-                tmp = [f"{float(P[k['parameter']]):8.4f}" for k in M[g0:g1]]
+                tmp = [_ffield_value(P[k["parameter"]], 8) for k in M[g0:g1]]
                 if g0 == 0:
                     lines.append(f"{int(i):3d}{int(j):3d} " + " ".join(tmp))
                 else:
@@ -1667,7 +1717,7 @@ class ReaxFFMixin:
             j = symbols.index(j) + 1
             for g0 in range(0, n, 8):
                 g1 = min(g0 + 8, n)
-                tmp = [f"{float(P[k['parameter']]):8.4f}" for k in M[g0:g1]]
+                tmp = [_ffield_value(P[k["parameter"]], 8) for k in M[g0:g1]]
                 if g0 == 0:
                     lines.append(f"{int(i):3d}{int(j):3d} " + " ".join(tmp))
                 else:
@@ -1705,7 +1755,7 @@ class ReaxFFMixin:
             k = symbols.index(k) + 1
             for g0 in range(0, n, 8):
                 g1 = min(g0 + 8, n)
-                tmp = [f"{float(P[k['parameter']]):8.4f}" for k in M[g0:g1]]
+                tmp = [_ffield_value(P[k["parameter"]], 8) for k in M[g0:g1]]
                 if g0 == 0:
                     lines.append(f"{int(i):3d}{int(j):3d}{int(k):3d} " + " ".join(tmp))
                 else:
@@ -1744,7 +1794,7 @@ class ReaxFFMixin:
             l = 0 if l == "*" else symbols.index(l) + 1  # noqa:E741
             for g0 in range(0, n, 8):
                 g1 = min(g0 + 8, n)
-                tmp = [f"{float(P[k['parameter']]):8.4f}" for k in M[g0:g1]]
+                tmp = [_ffield_value(P[k["parameter"]], 8) for k in M[g0:g1]]
                 if g0 == 0:
                     lines.append(
                         f"{int(i):3d}{int(j):3d}{int(k):3d}{int(l):3d} " + " ".join(tmp)
@@ -1788,7 +1838,7 @@ class ReaxFFMixin:
                 k = symbols.index(k) + 1
                 for g0 in range(0, n, 8):
                     g1 = min(g0 + 8, n)
-                    tmp = [f"{float(P[k['parameter']]):8.4f}" for k in M[g0:g1]]
+                    tmp = [_ffield_value(P[k["parameter"]], 8) for k in M[g0:g1]]
                     if g0 == 0:
                         lines.append(
                             f"{int(i):3d}{int(j):3d}{int(k):3d} " + " ".join(tmp)
