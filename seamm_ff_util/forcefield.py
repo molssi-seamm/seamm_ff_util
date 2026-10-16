@@ -1355,6 +1355,12 @@ class Forcefield(EEX_Mixin, DreidingMixin, ReaxFFMixin):
                 else:
                     terms[term] = [fform]
 
+        # Constraints (rigid bonds and angles) take precedence over the flexible
+        # terms for the same atoms, so a variant of a forcefield can make e.g. the
+        # water rigid by adding rigid_bond and rigid_angle sections.
+        for term, forms in terms.items():
+            terms[term] = sorted(forms, key=lambda form: not form.startswith("rigid_"))
+
         # Now run through the sections for the functionals forms,
         # processing each
         for fform in self.ff["functional_forms"]:

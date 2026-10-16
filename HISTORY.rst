@@ -1,6 +1,11 @@
 =======
 History
 =======
+2026.10.16 -- Rigid bonds and angles
+    * The rigid_bond and rigid_angle sections of a forcefield, which give only the
+      length or angle, take precedence over the flexible terms for the same atoms, so
+      a variant of a forcefield can make e.g. its water rigid.
+
 2026.10.12 -- Bugfix: ReaxFF parameters kept to only 6 significant figures
     * Converting a ReaxFF force field to SEAMM's format wrote every parameter with at
       most 6 significant figures, so e.g. a bond energy of 142.2858 became 142.286.
