@@ -1,7 +1,7 @@
 =======
 History
 =======
-2026.10.15 -- Rigid bonds and angles
+2026.10.16 -- Rigid bonds and angles
     * The rigid_bond and rigid_angle sections of a forcefield, which give only the
       length or angle, take precedence over the flexible terms for the same atoms, so
       a variant of a forcefield can make e.g. its water rigid.
